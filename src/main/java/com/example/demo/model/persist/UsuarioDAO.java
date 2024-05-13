@@ -3,7 +3,9 @@ package com.example.demo.model.persist;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.model.entity.Usuario;
+
 @Repository
-public interface Favorito extends JpaRepository<Favorito, Integer>{
+public interface UsuarioDAO extends JpaRepository<Usuario, Integer>{
 
 }
