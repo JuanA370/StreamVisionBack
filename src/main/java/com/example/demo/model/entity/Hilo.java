@@ -2,14 +2,15 @@ package com.example.demo.model.entity;
 
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
@@ -18,16 +19,16 @@ public class Hilo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_hilo;
+	private long id_hilo;
 	
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
-	private int id_producto;
+	private Producto id_producto;
 
 	@Column
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_usuario")
-	private int id_usuario;
+	private Usuario id_usuario;
 
 	@Column
 	private Date fecha_creacion;
@@ -40,7 +41,7 @@ public class Hilo {
 
 	}
 
-	public Hilo(int id_hilo, int id_producto, int id_usuario, Date fecha_creacion, String titulo, String contenido) {
+	public Hilo(long id_hilo, Producto id_producto, Usuario id_usuario, Date fecha_creacion, String titulo, String contenido) {
 		this.id_hilo = id_hilo;
 		this.id_producto = id_producto;
 		this.id_usuario = id_usuario;
@@ -51,32 +52,32 @@ public class Hilo {
 	}
 	
 	//Getters y Setters
-	public int getId_hilo() {
+	public long getId_hilo() {
 		return id_hilo;
 		
 	}
 
-	public void setId_hilo(int id_hilo) {
+	public void setId_hilo(long id_hilo) {
 		this.id_hilo = id_hilo;
 		
 	}
 
-	public int getId_producto() {
+	public Producto getId_producto() {
 		return id_producto;
 		
 	}
 
-	public void setId_producto(int id_producto) {
+	public void setId_producto(Producto id_producto) {
 		this.id_producto = id_producto;
 		
 	}
 
-	public int getId_usuario() {
+	public Usuario getId_usuario() {
 		return id_usuario;
 		
 	}
 
-	public void setId_usuario(int id_usuario) {
+	public void setId_usuario(Usuario id_usuario) {
 		this.id_usuario = id_usuario;
 		
 	}
@@ -117,6 +118,7 @@ public class Hilo {
 				+ ", fecha_creacion=" + fecha_creacion + ", titulo=" + titulo + ", contenido=" + contenido + "]";
 		
 	}
+
 	
 	
 	

@@ -2,23 +2,25 @@ package com.example.demo.model.entity;
 
 import java.util.Date;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class Respuesta {
 	//Variables
 	@Id
-	private int id_hilo;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id_hilo;
 
-	@OneToOne
+	@ManyToMany
 	@PrimaryKeyJoinColumn
-	private int id_usuario;
+	private long id_usuario;
 	
 
 	@Column
@@ -31,7 +33,7 @@ public class Respuesta {
 
 	}
 
-	public Respuesta(int id_usuario, int id_hilo, Date fecha_respuesta, String comentario) {
+	public Respuesta(long id_usuario, long id_hilo, Date fecha_respuesta, String comentario) {
 		this.id_usuario = id_usuario;
 		this.id_hilo = id_hilo;
 		this.fecha_respuesta = fecha_respuesta;
@@ -40,22 +42,22 @@ public class Respuesta {
 	}
 
 	//Getters y Setters
-	public int getId_hilo() {
+	public long getId_hilo() {
 		return id_hilo;
 		
 	}
 
-	public void setId_hilo(int id_hilo) {
+	public void setId_hilo(long id_hilo) {
 		this.id_hilo = id_hilo;
 		
 	}
 
-	public int getId_usuario() {
+	public long getId_usuario() {
 		return id_usuario;
 		
 	}
 
-	public void setId_usuario(int id_usuario) {
+	public void setId_usuario(long id_usuario) {
 		this.id_usuario = id_usuario;
 		
 	}

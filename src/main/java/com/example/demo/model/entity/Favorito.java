@@ -4,15 +4,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class Favorito {
 	//Variables
-	@Id
+	@ManyToMany
+	@PrimaryKeyJoinColumn
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_usuario;
-	private int id_producto;
+	private Usuario id_usuario;
+	private Producto id_producto;
 
 	@Column
 	private boolean favorito;
@@ -22,7 +24,7 @@ public class Favorito {
 
 	}
 
-	public Favorito(int id_usuario, int id_producto, boolean fecha) {
+	public Favorito(Usuario id_usuario, Producto id_producto, boolean favorito) {
 		this.id_usuario = id_usuario;
 		this.id_producto = id_producto;
 		this.favorito = favorito;
@@ -30,22 +32,22 @@ public class Favorito {
 	}
 	
 	//Getters y Setters
-	public int getId_usuario() {
+	public Usuario getId_usuario() {
 		return id_usuario;
 		
 	}
 
-	public void setId_usuario(int id_usuario) {
+	public void setId_usuario(Usuario id_usuario) {
 		this.id_usuario = id_usuario;
 		
 	}
 
-	public int getId_producto() {
+	public Producto getId_producto() {
 		return id_producto;
 		
 	}
 
-	public void setId_producto(int id_producto) {
+	public void setId_producto(Producto id_producto) {
 		this.id_producto = id_producto;
 		
 	}
