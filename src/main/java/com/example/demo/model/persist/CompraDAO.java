@@ -9,11 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.entity.Compra;
+import com.example.demo.model.entity.CompraId;
 import com.example.demo.model.entity.Producto;
 import com.example.demo.model.entity.Usuario;
 
 @Repository
-public interface CompraDAO extends JpaRepository<Compra,Integer> {
+public interface CompraDAO extends JpaRepository<Compra,CompraId> {
 	//@Query("SELECT * from Compra c WHERE id_usuario = ?1 AND id_producto = ?2")
 	//public List<Producto> findCompras(@Param("id_usuario") Usuario usuario, @Param("id_producto") Producto producto);
 
