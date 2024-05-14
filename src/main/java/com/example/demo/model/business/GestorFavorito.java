@@ -20,8 +20,7 @@ public class GestorFavorito {
 	}
 
 	public List<Producto> listarFavoritos(Usuario usuario) {
-		favoritoDAO.findFavByUser(usuario.getId_usuario());
-		return null;
+		return favoritoDAO.findFavByUser(usuario.getId_usuario());
 	}
 
 	public Favorito anadirFavorito(Favorito f) {

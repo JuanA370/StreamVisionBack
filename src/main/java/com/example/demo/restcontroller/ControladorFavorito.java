@@ -50,9 +50,9 @@ public class ControladorFavorito {
 
 			}
 			if (paux == null) {
-				return new ResponseEntity<List<Producto>>(paux, HttpStatus.OK);
-			} else {
 				return new ResponseEntity<List<Producto>>(HttpStatus.NOT_FOUND);
+			} else {
+				return new ResponseEntity<List<Producto>>(paux, HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
