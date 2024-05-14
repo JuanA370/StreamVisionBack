@@ -18,7 +18,7 @@ import com.example.demo.model.entity.Respuesta;
 import com.example.demo.model.entity.Usuario;
 
 @RestController
-public class RespuestaController {
+public class ControladorRespuesta {
 	@Autowired
 	private GestorRespuesta gr;
 	
