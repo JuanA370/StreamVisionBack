@@ -5,10 +5,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.entity.Hilo;
+import com.example.demo.model.entity.HiloId;
 
 @Repository
-public interface HiloDAO extends JpaRepository<Hilo, Integer>{
+public interface HiloDAO extends JpaRepository<Hilo, HiloId>{
 	
-	@Query(value = "SELECT * FROM Hilo h WHERE h.id_producto = ?1 AND id_hilo = ?2")
+	@Query(value = "SELECT h FROM Hilo h WHERE h.idHilo.id_producto.id_producto = ?1 AND h.idHilo.id_hilo = ?2")
 	public Hilo findHiloById(Long id_producto, Long id_hilo);
 }

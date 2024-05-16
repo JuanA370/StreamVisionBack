@@ -8,13 +8,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.entity.Respuesta;
+import com.example.demo.model.entity.RespuestaId;
 
 @Repository
-public interface RespuestaDAO extends JpaRepository<Respuesta, Long> {
+public interface RespuestaDAO extends JpaRepository<Respuesta, RespuestaId> {
+	
+	@Query(value = "SELECT r from Respuesta r where r.id_usuario = ?1")
+	public List<Respuesta> findByUsuarioId(Long id_usuario);
 
-	List<Respuesta> findByUsuarioId(Long id_usuario);
-
-	@Query("SELECT r FROM Respuesta r WHERE r.id_usuario = :id_usuario AND r.id_hilo = :id_hilo AND r.id_producto = :id_producto")
-	List<Respuesta> findByUsuarioAndHiloAndProducto(@Param("id_usuario") Long id_usuario,
-			@Param("id_hilo") Long id_hilo, @Param("id_producto") Long id_producto);
+	
+	@Query(value = "SELECT r FROM Respuesta r WHERE r.id_usuario = ?1 AND r.id_respuesta.id_hilo = ?2 AND r.id_respuesta.id_producto = ?3")
+	public List<Respuesta> findByUsuarioAndHiloAndProducto(Long id_usuario,
+			Long id_hilo, Long id_producto);
+	
 }

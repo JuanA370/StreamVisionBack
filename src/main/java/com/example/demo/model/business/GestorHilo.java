@@ -1,10 +1,12 @@
 package com.example.demo.model.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.model.entity.Hilo;
 import com.example.demo.model.persist.HiloDAO;
 
+@Service
 public class GestorHilo {
 
 	@Autowired

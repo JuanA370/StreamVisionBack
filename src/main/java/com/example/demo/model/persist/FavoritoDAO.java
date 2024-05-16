@@ -8,15 +8,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.entity.Favorito;
+import com.example.demo.model.entity.FavoritoId;
 import com.example.demo.model.entity.Producto;
-import com.example.demo.model.entity.Usuario;
 
 @Repository
-public interface FavoritoDAO extends JpaRepository<Favorito, Integer> {
+public interface FavoritoDAO extends JpaRepository<Favorito, FavoritoId> {
 
-	@Query("SELECT * FROM Producto p WHERE f.id_usuario = :usuario AND f.id_producto = :producto")
-	public Favorito findFavById(@Param("usuario") Long usuario, @Param("producto") Long producto);
+	@Query("SELECT f FROM Favorito f WHERE f.idFavorito.id_usuario.id_usuario = ?1 AND f.idFavorito.id_producto.id_producto = ?2")
+	public Favorito findFavById( Long usuario, Long producto);
 
-	@Query("SELECT * FROM Producto JOIN Favorito ON Producto.id_producto = Favorito.id_producto WHERE Favorito.favorito = true AND Favorito.id_usuario = :usuario")
-	public List<Producto> findFavByUser(@Param("usuario") Long l);
+	@Query("SELECT p FROM Producto p JOIN Favorito f ON p.id_producto = f.idFavorito.id_producto.id_producto WHERE f.favorito = true AND f.idFavorito.id_usuario.id_usuario = ?1")
+	public List<Producto> findFavByUser(Long id_usuario);
 }
