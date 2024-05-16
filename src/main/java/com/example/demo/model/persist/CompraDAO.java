@@ -15,15 +15,10 @@ import com.example.demo.model.entity.Usuario;
 
 @Repository
 public interface CompraDAO extends JpaRepository<Compra,CompraId> {
-	//@Query("SELECT * from Compra c WHERE id_usuario = ?1 AND id_producto = ?2")
-	//public List<Producto> findCompras(@Param("id_usuario") Usuario usuario, @Param("id_producto") Producto producto);
 
-	@Query("SELECT * FROM Producto JOIN Compra ON Producto.id_producto = Compra.id_producto WHERE Compra.id_usuario = :usuario")
-	public List<Producto> findCompraByUser(@Param("usuario") long l);
-
-	@Query("SELECT * FROM Producto p JOIN Compra c ON p.id_producto = c.id_producto WHERE c.id_usuario = :usuario AND c.id_producto = :producto")
-	public Compra findCompraById(@Param("usuario") Usuario usuario, @Param("producto") Producto producto);
+	@Query("SELECT p FROM Producto p JOIN Compra c ON p.id_producto = c.id_producto WHERE c.id_usuario = :usuario")
+	public List<Producto> findProductosCompradosPorUsuario(@Param("usuario") long idUsuario);
 	
-	@Query("SELECT * FROM Producto p JOIN Compra c ON p.id_producto = c.id_producto WHERE c.id_usuario = :usuario AND c.id_producto = :producto")
-	public Optional<Producto> findProductoComprado(@Param("usuario") Usuario usuario, @Param("producto") Producto producto);
+	@Query("SELECT c FROM Compra c JOIN c.idCompra.producto p WHERE c.idCompra.idUsuario = :usuario AND c.idCompra.idProducto = :producto")
+	public Compra findCompraPorUsuarioYProducto(@Param("usuario") Long usuario, @Param("producto") Long producto);
 }

@@ -24,15 +24,15 @@ public class GestorRespuesta {
 	}
 
 
-	public List<Respuesta> listarRespuestasUsuario(long id_usuario) {
+	public List<Respuesta> listarRespuestasUsuario(Long id_usuario) {
 	        return respuestaDAO.findByUsuarioId(id_usuario);
 	}
 	 
 
 
-	public List<Respuesta> buscarRespuesta(long id_usuario, long id_hilo, long id_producto) {
+	public List<Respuesta> buscarRespuesta(Long id_usuario, Long id_hilo, Long id_producto) {
 	    List<Respuesta> respuestas = respuestaDAO.findByUsuarioAndHiloAndProducto(id_usuario, id_hilo, id_producto);
-	    return respuestas; // si es null devuelve una lista vacia
+	    return respuestas;
 	}
 
 

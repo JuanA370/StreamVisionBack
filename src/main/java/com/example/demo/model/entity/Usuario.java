@@ -12,7 +12,7 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Usuario {
-	// Variables
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_usuario;
@@ -29,8 +29,7 @@ public class Usuario {
 
 	@OneToMany(mappedBy = "id_usuario", fetch = FetchType.EAGER)
 	private List<Respuesta> respuestas;
-	
-	// Constructores
+
 	public Usuario() {
 
 	}
@@ -118,6 +117,5 @@ public class Usuario {
 				+ email + ", monedas=" + monedas + ", activo=" + activo + ", hilos=" + hilos + ", respuestas="
 				+ respuestas + "]";
 	}
-	
-	
+
 }

@@ -37,7 +37,7 @@ public class ControladorHilo {
 	@GetMapping(path = "hilo/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Hilo> buscarHilo(@PathVariable("id") int id, @RequestBody Hilo h) {
 		try {
-			h = gh.buscarHilo(id);
+			h = gh.buscarHilo(h.getIdHilo().getIdProducto(),h.getIdHilo().getIdHilo());
 			if (h == null)
 				return new ResponseEntity<Hilo>(HttpStatus.NOT_FOUND);
 			else
@@ -47,24 +47,10 @@ public class ControladorHilo {
 		}
 	}
 	
-	@PutMapping(path = "hilo/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Hilo> actualizarHilo(@PathVariable("id") int id, @RequestBody Hilo h) {
-		try {
-			h.setId_hilo(id);
-			h = gh.crearActualizarHilo(h);
-			if (h != null)
-				return new ResponseEntity<Hilo>(HttpStatus.NOT_FOUND);
-			else
-				return new ResponseEntity<Hilo>(HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<Hilo>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
 	@DeleteMapping(path = "hilo/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Hilo> eliminarHilo(@PathVariable("id") int id) {
+	public ResponseEntity<Hilo> eliminarHilo(@PathVariable("id") Hilo h) {
 		try {
-			Hilo h = gh.buscarHilo(id);
+			h = gh.buscarHilo(h.getIdHilo().getIdProducto(),h.getIdHilo().getIdHilo());
 			if (h == null)
 				return new ResponseEntity<Hilo>(HttpStatus.NOT_FOUND);
 			else

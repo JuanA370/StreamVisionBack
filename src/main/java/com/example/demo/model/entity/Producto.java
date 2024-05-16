@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Producto {
-	//Variables
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +18,7 @@ public class Producto {
 	private String titulo;
 	private String imagen;
 	private String tipo;
-	
-	//@OneToMany(mappedBy = "hilo", fetch = FetchType.EAGER)
-	//private Set<Hilo> hilos;
-	
-	//@OneToMany(mappedBy="compra")
-	//private List<Compra> compra;
 
-	//Constructores
 	public Producto() {
 
 	}

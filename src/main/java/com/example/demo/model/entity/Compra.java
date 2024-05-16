@@ -14,17 +14,6 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class Compra {
-	
-	/*
-	//Variables
-	@ManyToOne
-	@Id
-	@PrimaryKeyJoinColumn(name = "id_usuario")
-	private long id_usuario;
-	@PrimaryKeyJoinColumn(name = "id_producto")
-	private long id_producto;
-	*/
-	
 	@EmbeddedId
 	private CompraId idCompra;
 	

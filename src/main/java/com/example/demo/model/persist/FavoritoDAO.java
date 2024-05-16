@@ -14,9 +14,9 @@ import com.example.demo.model.entity.Usuario;
 @Repository
 public interface FavoritoDAO extends JpaRepository<Favorito, Integer> {
 
-	@Query("SELECT * FROM Producto p WHERE f.id_usuario = :usuario AND f.id_producto = :producto AND f.favorito = true")
-	public Favorito findFavById(@Param("usuario") Usuario usuario, @Param("producto") Producto producto);
+	@Query("SELECT * FROM Producto p WHERE f.id_usuario = :usuario AND f.id_producto = :producto")
+	public Favorito findFavById(@Param("usuario") Long usuario, @Param("producto") Long producto);
 
 	@Query("SELECT * FROM Producto JOIN Favorito ON Producto.id_producto = Favorito.id_producto WHERE Favorito.favorito = true AND Favorito.id_usuario = :usuario")
-	public List<Producto> findFavByUser(@Param("usuario") long l);
+	public List<Producto> findFavByUser(@Param("usuario") Long l);
 }

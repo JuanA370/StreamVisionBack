@@ -1,7 +1,6 @@
 package com.example.demo.model.business;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,24 +13,18 @@ public class GestorCompra {
 
 	@Autowired
 	private CompraDAO compraDAO;
-	
+
 	public Compra anadirCompra(Compra c) {
-		if(c.getId_producto() == null || c.getId_usuario() == null)
-			return null;
-		return compraDAO.save(c);
+		if (compraDAO.findCompraPorUsuarioYProducto(c.getIdCompra().getIdUsuario(),
+				c.getIdCompra().getIdProducto()) == null
+				&& (c.getIdCompra().getIdUsuario() == null && c.getIdCompra().getIdProducto() == null))
+			return compraDAO.save(c);
+
+		return null;
 	}
-	
+
 	public List<Producto> listarCompras(Usuario usuario) {
-		return compraDAO.findCompraByUser(usuario.getId_usuario());
+		return compraDAO.findProductosCompradosPorUsuario(usuario.getId_usuario());
 	}
-	
-	public Producto buscarCompra(Compra c) {
-		Optional<Producto> opP;
-		opP = compraDAO.findProductoComprado(c.getId_usuario(), c.getId_producto());
-		if (opP.isPresent()) {
-			return opP.get();
-		} else {
-			return null;
-		}
-	}
+
 }

@@ -15,30 +15,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Respuesta {
-	/*
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id_respuesta;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_hilo", nullable = false)
-	private long id_hilo;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario", nullable = false)
-	private long id_usuario;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_producto", nullable = false)
-	private long id_producto;
-
-
-	@Column
-	private Date fecha_respuesta;
-	private String comentario;
-
-	 */
-	
 	@EmbeddedId
 	private RespuestaId idRespuesta;
 	

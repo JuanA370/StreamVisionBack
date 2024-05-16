@@ -13,21 +13,17 @@ public class GestorFavorito {
 	@Autowired
 	private FavoritoDAO favoritoDAO;
 
-	public Favorito actualizarFavorito(Favorito f) {
-		if (favoritoDAO.findFavById(f.getId_usuario(), f.getId_producto())!=null) {
-			return favoritoDAO.findFavById(f.getId_usuario(), f.getId_producto());
+	public Favorito actualizarCrearFavorito(Favorito f) {
+		if (favoritoDAO.findFavById(f.getIdFavorito().getIdUsuario(),f.getIdFavorito().getIdProducto())!=null) {
+			f.setFavorito(!f.isFavorito());
+			return favoritoDAO.save(f); 
+		}
+		else if (f.getIdFavorito().getIdUsuario()!=null&&f.getIdFavorito().getIdProducto()!=null) {
+			return favoritoDAO.save(f);
 		}return null;
 	}
 
 	public List<Producto> listarFavoritos(Usuario usuario) {
 		return favoritoDAO.findFavByUser(usuario.getId_usuario());
 	}
-
-	public Favorito anadirFavorito(Favorito f) {
-		if (f.getId_usuario() == null || f.getId_producto() == null) {
-			return null;
-		}
-		return favoritoDAO.save(f);
-	}
-
 }

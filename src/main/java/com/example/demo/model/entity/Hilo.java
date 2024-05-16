@@ -11,27 +11,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Hilo {
-	//Variables
-	/*
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id_hilo;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name = "id_producto")
-	private long id_producto;
 
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_usuario")
-	private long id_usuario;
-
-	@Column
-	private Date fecha_creacion;
-	private String titulo;
-	private String contenido;
-	*/
-	
 	@EmbeddedId
 	private HiloId idHilo;
 	

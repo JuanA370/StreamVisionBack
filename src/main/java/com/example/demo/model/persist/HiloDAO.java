@@ -8,6 +8,7 @@ import com.example.demo.model.entity.Hilo;
 
 @Repository
 public interface HiloDAO extends JpaRepository<Hilo, Integer>{
+	
 	@Query(value = "SELECT * FROM Hilo h WHERE h.id_producto = ?1 AND id_hilo = ?2")
-	public Hilo buscarHilo(int id_producto, int id_hilo);
+	public Hilo findHiloById(Long id_producto, Long id_hilo);
 }

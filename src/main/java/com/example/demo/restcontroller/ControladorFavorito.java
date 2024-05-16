@@ -27,7 +27,7 @@ public class ControladorFavorito {
 	@PostMapping(path = "Favorito", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Favorito> altaFavorito(@RequestBody Favorito f) {
 		try {
-			f = gf.anadirFavorito(f);
+			f = gf.actualizarCrearFavorito(f);
 			if (f != null)
 				return new ResponseEntity<Favorito>(f, HttpStatus.CREATED);
 			else
@@ -64,7 +64,7 @@ public class ControladorFavorito {
 			@PathVariable("id_producto") long id_producto, @RequestBody Favorito f) {
 		try {
 			f.setFavorito(!f.isFavorito());
-			f = gf.actualizarFavorito(f);
+			f = gf.actualizarCrearFavorito(f);
 			if (f != null)
 				return new ResponseEntity<Favorito>(f, HttpStatus.OK);
 			else

@@ -5,22 +5,7 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Favorito {
-	
-	/*
-	//Variables
-	@ManyToOne
-	@Id
-	@PrimaryKeyJoinColumn(name = "id_usuario")
-	private long id_usuario;
-	@PrimaryKeyJoinColumn(name = "id_producto")
-	@ManyToOne
-	@Id
-	private long id_producto;
 
-	@Column
-	private boolean favorito;
-
-*/
 	@EmbeddedId
 	private FavoritoId idFavorito;
 	
