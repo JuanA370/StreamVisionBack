@@ -40,7 +40,7 @@ public class UserEntity {
 	private boolean active;
 
 	@OneToMany(mappedBy = "user_id", fetch = FetchType.EAGER)
-	private List<Thread> threads;
+	private List<MyThread> threads;
 
 	@OneToMany(mappedBy = "user_id", fetch = FetchType.EAGER)
 	private List<Reply> replies;

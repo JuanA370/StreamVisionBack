@@ -5,16 +5,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.entities.Thread;
-import com.example.demo.model.persist.repository.ThreadRepository;
+import com.example.demo.model.entities.MyThread;
+import com.example.demo.model.persist.repository.MyThreadRepository;
 
 @Service
 public class ThreadsServices {
 
 	@Autowired
-	private ThreadRepository hiloDAO;
+	private MyThreadRepository hiloDAO;
 
-	public Thread saveThread(Thread h) {
+	public MyThread saveThread(MyThread h) {
 		if (h.getTitulo() == null || h.getTitulo().isEmpty()) {
 			return null;
 		}
@@ -25,8 +25,8 @@ public class ThreadsServices {
 		hiloDAO.delete(hiloDAO.findThreadById(id_producto, id_hilo));
 	}
 
-	public Thread searchThread(Long id_producto, Long id_hilo) {
-		Optional<Thread> opH;
+	public MyThread searchThread(Long id_producto, Long id_hilo) {
+		Optional<MyThread> opH;
 		opH = Optional.ofNullable(hiloDAO.findThreadById(id_producto, id_hilo));
 		if (opH.isPresent()) {
 			return opH.get();

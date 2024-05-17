@@ -30,7 +30,7 @@ public class ProductsService {
 		return productoDAO.findAll();
 	}
 
-	public Product searchProduct(int id) {
+	public Product searchProduct(Long id) {
 		Optional<Product> opP;
 		opP = productoDAO.findById(id);
 		if (opP.isPresent()) {

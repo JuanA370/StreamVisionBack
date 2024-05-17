@@ -16,13 +16,13 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Embeddable
-public class ThreadPk implements Serializable {
+public class MyThreadPk implements Serializable {
 
-	@Column(name="thread_id")
+	@Column(name="threadId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long threadId;
 	
-	@Column(name = "product_id")
+	@Column(name = "productId")
 	private long productId;
 	
 }

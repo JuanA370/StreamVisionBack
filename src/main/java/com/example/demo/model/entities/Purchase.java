@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class Purchase {
 	
 	@EmbeddedId
-	private PurchasePk purcharsePk;
+	private PurchasePk purchasePk;
 
 	@Column
 	private Date purchaseDate;

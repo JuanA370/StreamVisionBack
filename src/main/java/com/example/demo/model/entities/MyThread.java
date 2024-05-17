@@ -20,10 +20,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name="threads")
-public class Thread {
+public class MyThread {
 
 	@EmbeddedId
-	private ThreadPk threadPk;
+	private MyThreadPk threadPk;
 
 	@Column
 	private String title;

@@ -32,7 +32,7 @@ public class Reply {
 	
 	@MapsId("idHilo")
 	@ManyToOne
-	private Thread thread;	
+	private MyThread thread;	
 	
 	@Column
 	private Date replyDate;
