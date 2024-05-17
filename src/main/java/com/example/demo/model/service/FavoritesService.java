@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.entities.UserEntity;
-import com.example.demo.model.persist.repository.FavouriteRepository;
+import com.example.demo.model.persist.repository.FavoriteRepository;
 
 @Service
 public class FavoritesService {
 	@Autowired
-	private FavouriteRepository favoritoDAO;
+	private FavoriteRepository favoritoDAO;
 
 	public Favorite saveFav(Favorite f) {
 		if (favoritoDAO.findFavById(f.getIdFavorito().getId_usuario().getId_usuario(),f.getIdFavorito().getId_producto().getId_producto()) != null) {

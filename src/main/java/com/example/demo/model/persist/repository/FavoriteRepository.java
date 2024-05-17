@@ -11,7 +11,7 @@ import com.example.demo.model.entities.FavoritePk;
 import com.example.demo.model.entities.Product;
 
 @Repository
-public interface FavouriteRepository extends JpaRepository<Favorite, FavoritePk> {
+public interface FavoriteRepository extends JpaRepository<Favorite, FavoritePk> {
 
 	@Query("SELECT f FROM Favorito f WHERE f.idFavorito.id_usuario.id_usuario = ?1 AND f.idFavorito.id_producto.id_producto = ?2")
 	public Favorite findFavById(Long usuario, Long producto);
