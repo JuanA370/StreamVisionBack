@@ -7,6 +7,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,18 +18,21 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Entity
-public class Compra {
+@Table(name="purchases")
+public class Purchase {
+	
 	@EmbeddedId
-	private CompraPk CompraPk;
+	private PurchasePk purcharsePk;
 
 	@Column
-	private Date fecha;
+	private Date purchaseDate;
 
 	@ManyToOne
-	@MapsId("idUsuario")
-	private Usuario usuario;
+	@MapsId("userId")
+	private UserEntity user;
 
 	@ManyToOne
-	@MapsId("idProducto")
-	private Producto producto;
+	@MapsId("productId")
+	private Product product;
+	
 }

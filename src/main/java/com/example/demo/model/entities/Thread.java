@@ -8,24 +8,33 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 @Entity
-public class Hilo {
+@Table(name="threads")
+public class Thread {
 
 	@EmbeddedId
-	@MapsId("idHilo")
-	private HiloPk idHilo;
+	private ThreadPk threadPk;
 
 	@Column
-	private String titulo;
-	private String contenido;
-	private Date fechaCreacion;
+	private String title;
+	private String content;
+	private Date creationDate;
+	
 	@ManyToOne
-	@MapsId("idProducto")
-	private Usuario usuario;
+	@MapsId("productId")
+	private Product product;
+	
+	@ManyToOne
+	private UserEntity user;
 
 }

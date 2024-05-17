@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,20 +21,21 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Entity
-public class Respuesta {
+@Table(name="replies")
+public class Reply {
 
 	@EmbeddedId
-	private RespuestaPk respuestaPk;
+	private ReplyPk replyPk;
 
 	@ManyToOne
-	private Usuario usuario;
+	private UserEntity user;
 	
 	@MapsId("idHilo")
 	@ManyToOne
-	private Hilo hilo;	
+	private Thread thread;	
 	
 	@Column
-	private Date fechaRespuesta;
-	private String comentario;
+	private Date replyDate;
+	private String content;
 
 }

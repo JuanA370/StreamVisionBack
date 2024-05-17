@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.entities.Compra;
-import com.example.demo.model.entities.Producto;
-import com.example.demo.model.entities.Usuario;
+import com.example.demo.model.entities.Purchase;
+import com.example.demo.model.entities.Product;
+import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.service.PurchasingService;
 
 @RestController
@@ -23,31 +23,31 @@ public class ControladorCompra {
 	private PurchasingService gc;
 	
 	@PostMapping(path = "Compra", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Compra> altaCompra(@RequestBody Compra c) {
+	public ResponseEntity<Purchase> altaCompra(@RequestBody Purchase c) {
 		try {
 			c = gc.saveShopping(c);
 			if (c != null)
-				return new ResponseEntity<Compra>(c, HttpStatus.CREATED);
+				return new ResponseEntity<Purchase>(c, HttpStatus.CREATED);
 			else
-				return new ResponseEntity<Compra>(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Purchase>(HttpStatus.BAD_REQUEST);
 		}catch (Exception e) {
-			return new ResponseEntity<Compra>(c, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Purchase>(c, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@GetMapping(path = "Compra/{usuario}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Producto>> buscarProductos(@PathVariable("usuario") Usuario usuario) {
+	public ResponseEntity<List<Product>> buscarProductos(@PathVariable("usuario") UserEntity usuario) {
 		try {
-			List<Producto> paux = null;
+			List<Product> paux = null;
 			if(usuario != null) {
 				paux = gc.listShopping(usuario);
-				return new ResponseEntity<List<Producto>>(paux, HttpStatus.OK);
+				return new ResponseEntity<List<Product>>(paux, HttpStatus.OK);
 			} else {
 				paux = null;
-				return new ResponseEntity<List<Producto>>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<List<Product>>(HttpStatus.NOT_FOUND);
 			}
 		} catch(Exception e) {
-			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<Product>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

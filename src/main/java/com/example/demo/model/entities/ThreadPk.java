@@ -2,6 +2,7 @@ package com.example.demo.model.entities;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,13 +16,13 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Embeddable
-public class RespuestaPk implements Serializable {
+public class ThreadPk implements Serializable {
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long idRespuesta;
+	@Column(name="thread_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long threadId;
 	
-	private long idHilo;
+	@Column(name = "product_id")
+	private long productId;
 	
-	private long idProducto;
-
 }

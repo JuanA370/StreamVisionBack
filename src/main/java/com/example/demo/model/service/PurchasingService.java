@@ -5,18 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.entities.Compra;
-import com.example.demo.model.entities.Producto;
-import com.example.demo.model.entities.Usuario;
-import com.example.demo.model.persist.ShoppingRepository;
+import com.example.demo.model.entities.Purchase;
+import com.example.demo.model.entities.Product;
+import com.example.demo.model.entities.UserEntity;
+import com.example.demo.model.persist.repository.PurchaseRepository;
 
 @Service
 public class PurchasingService {
 
 	@Autowired
-	private ShoppingRepository compraDAO;
+	private PurchaseRepository compraDAO;
 
-	public Compra saveShopping(Compra c) {
+	public Purchase saveShopping(Purchase c) {
 		if (compraDAO.findShoppingByUserANDProduct(c.getIdCompra().getId_usuario().getId_usuario(),
 				c.getIdCompra().getId_producto().getId_producto()) == null
 				&& (c.getIdCompra().getId_usuario() == null && c.getIdCompra().getId_producto() == null))
@@ -24,7 +24,7 @@ public class PurchasingService {
 		return null;
 	}
 
-	public List<Producto> listShopping(Usuario usuario) {
+	public List<Product> listShopping(UserEntity usuario) {
 		return compraDAO.findShoppedProductsByUser(usuario.getId_usuario());
 	}
 }

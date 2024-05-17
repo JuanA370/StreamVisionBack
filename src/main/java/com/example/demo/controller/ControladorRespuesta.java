@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.entities.Respuesta;
-import com.example.demo.model.entities.Usuario;
+import com.example.demo.model.entities.Reply;
+import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.service.AnswersServices;
 
 @RestController
@@ -24,49 +24,49 @@ public class ControladorRespuesta {
 	
 	@PostMapping(path = "respuesta", consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Respuesta> altaRespuesta(@RequestBody Respuesta r) {
+	public ResponseEntity<Reply> altaRespuesta(@RequestBody Reply r) {
 		try {
 			
 			r = gr.saveAns(r);
 			if (r != null)
-				return new ResponseEntity<Respuesta>(r, HttpStatus.CREATED);
+				return new ResponseEntity<Reply>(r, HttpStatus.CREATED);
 			else
-				return new ResponseEntity<Respuesta>(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Reply>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			return new ResponseEntity<Respuesta>(r, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Reply>(r, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@GetMapping(path = "respuesta/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Respuesta>> listarRespuesta(@PathVariable long id_usuario) {
-		List<Respuesta> listaRespuestas = gr.listAns(id_usuario);
+	public ResponseEntity<List<Reply>> listarRespuesta(@PathVariable long id_usuario) {
+		List<Reply> listaRespuestas = gr.listAns(id_usuario);
 
 		
 		if(listaRespuestas != null) {
-			return new ResponseEntity<List<Respuesta>>(listaRespuestas, HttpStatus.OK);
+			return new ResponseEntity<List<Reply>>(listaRespuestas, HttpStatus.OK);
 		}else {
-			return new ResponseEntity<List<Respuesta>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<Reply>>(HttpStatus.NOT_FOUND);
 		}
 		
 
 	}
 	
 	@GetMapping(path = "respuesta/{usuario}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Respuesta>> listarRespuestaAdmin(@PathVariable Usuario usuario) {
-		List<Respuesta> listaRespuestas = gr.listAns(usuario.getId_usuario());
+	public ResponseEntity<List<Reply>> listarRespuestaAdmin(@PathVariable UserEntity usuario) {
+		List<Reply> listaRespuestas = gr.listAns(usuario.getId_usuario());
 
 		
 		if(listaRespuestas != null) {
-			return new ResponseEntity<List<Respuesta>>(listaRespuestas, HttpStatus.OK);
+			return new ResponseEntity<List<Reply>>(listaRespuestas, HttpStatus.OK);
 		}else {
-			return new ResponseEntity<List<Respuesta>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<Reply>>(HttpStatus.NOT_FOUND);
 		}
 		
 
 	}
 	
 	@DeleteMapping("/respuesta/{respuesta}")
-	public ResponseEntity<Void> borrarRespuesta(@RequestBody Respuesta respuesta) {
+	public ResponseEntity<Void> borrarRespuesta(@RequestBody Reply respuesta) {
 	    try {
 	        gr.deleteAns(respuesta);
 	        return ResponseEntity.ok().build();

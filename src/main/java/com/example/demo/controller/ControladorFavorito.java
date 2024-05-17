@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.entities.Favorito;
-import com.example.demo.model.entities.Producto;
-import com.example.demo.model.entities.Usuario;
+import com.example.demo.model.entities.Favorite;
+import com.example.demo.model.entities.Product;
+import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.service.FavoritesService;
 
 @RestController
@@ -25,23 +25,23 @@ public class ControladorFavorito {
 	private FavoritesService gf;
 
 	@PostMapping(path = "Favorito", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Favorito> altaFavorito(@RequestBody Favorito f) {
+	public ResponseEntity<Favorite> altaFavorito(@RequestBody Favorite f) {
 		try {
 			f = gf.saveFav(f);
 			if (f != null)
-				return new ResponseEntity<Favorito>(f, HttpStatus.CREATED);
+				return new ResponseEntity<Favorite>(f, HttpStatus.CREATED);
 			else
-				return new ResponseEntity<Favorito>(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Favorite>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			return new ResponseEntity<Favorito>(f, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Favorite>(f, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 
 	@GetMapping(path = "Favorito/{usuario}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Producto>> buscarProducto(@PathVariable("usuario") Usuario usuario) {
+	public ResponseEntity<List<Product>> buscarProducto(@PathVariable("usuario") UserEntity usuario) {
 		try {
-			List<Producto> paux = null;
+			List<Product> paux = null;
 			if (usuario != null) {
 				paux = gf.listFav(usuario);
 
@@ -50,27 +50,27 @@ public class ControladorFavorito {
 
 			}
 			if (paux == null) {
-				return new ResponseEntity<List<Producto>>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<List<Product>>(HttpStatus.NOT_FOUND);
 			} else {
-				return new ResponseEntity<List<Producto>>(paux, HttpStatus.OK);
+				return new ResponseEntity<List<Product>>(paux, HttpStatus.OK);
 			}
 		} catch (Exception e) {
-			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<Product>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@PutMapping(path = "Favorito/{id_usuario}/{id_producto}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Favorito> cambiarFav(@PathVariable("id_usuario") long id_usuario,
-			@PathVariable("id_producto") long id_producto, @RequestBody Favorito f) {
+	public ResponseEntity<Favorite> cambiarFav(@PathVariable("id_usuario") long id_usuario,
+			@PathVariable("id_producto") long id_producto, @RequestBody Favorite f) {
 		try {
 			f.setFavorito(!f.isFavorito());
 			f = gf.saveFav(f);
 			if (f != null)
-				return new ResponseEntity<Favorito>(f, HttpStatus.OK);
+				return new ResponseEntity<Favorite>(f, HttpStatus.OK);
 			else
-				return new ResponseEntity<Favorito>(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Favorite>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			return new ResponseEntity<Favorito>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Favorite>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}

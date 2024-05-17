@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Embeddable
-public class CompraPk implements Serializable {
+public class PurchasePk implements Serializable {
 
-	private long idUsuario;
+	private long userId;
 
-	private long idProducto;
+	private long productId;
 
 }

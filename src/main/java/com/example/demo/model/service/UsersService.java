@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.entities.Usuario;
-import com.example.demo.model.persist.UserRepository;
+import com.example.demo.model.entities.UserEntity;
+import com.example.demo.model.persist.repository.UserRepository;
 
 @Service
 public class UsersService {
@@ -15,19 +15,19 @@ public class UsersService {
 	@Autowired
 	private UserRepository UsuarioDAO;
 
-	public Usuario saveUser(Usuario u) {
+	public UserEntity saveUser(UserEntity u) {
 		if (u.getNombre() == null || u.getNombre().isEmpty()) {
 			return null;
 		}
 		return UsuarioDAO.save(u);
 	}
 
-	public List<Usuario> listUsers() {
+	public List<UserEntity> listUsers() {
 		return UsuarioDAO.findAll();
 	}
 
-	public Usuario searchUser(int id) {
-		Optional<Usuario> opU;
+	public UserEntity searchUser(int id) {
+		Optional<UserEntity> opU;
 		opU = UsuarioDAO.findById(id);
 		if (opU.isPresent()) {
 			return opU.get();
@@ -36,7 +36,7 @@ public class UsersService {
 		}
 	}
 
-	public void eliminarUsuario(Usuario u) {
+	public void eliminarUsuario(UserEntity u) {
 		UsuarioDAO.delete(u);
 	}
 }

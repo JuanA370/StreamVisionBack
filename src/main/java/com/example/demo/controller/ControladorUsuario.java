@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.entities.Usuario;
+import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.service.UsersService;
 
 @RestController
@@ -22,76 +22,76 @@ public class ControladorUsuario {
 	private UsersService gu;
 	
 	@PostMapping(path = "usuario", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> altaUsuario(@RequestBody Usuario u) {
+	public ResponseEntity<UserEntity> altaUsuario(@RequestBody UserEntity u) {
 		try {
 			u = gu.saveUser(u);
 			if (u != null)
-				return new ResponseEntity<Usuario>(u, HttpStatus.CREATED);
+				return new ResponseEntity<UserEntity>(u, HttpStatus.CREATED);
 			
 			else
-				return new ResponseEntity<Usuario>(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<UserEntity>(HttpStatus.BAD_REQUEST);
 			
 		} catch (Exception e) {
-			return new ResponseEntity<Usuario>(u, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<UserEntity>(u, HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
 
 	}
 	
 	@GetMapping(path = "usuario/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> buscarUsuario(@PathVariable("id") int id) {
+	public ResponseEntity<UserEntity> buscarUsuario(@PathVariable("id") int id) {
 		try {
-			Usuario u = gu.searchUser(id);
+			UserEntity u = gu.searchUser(id);
 			
 			if (u == null) {
-				return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<UserEntity>(HttpStatus.NOT_FOUND);
 				
 			} else {
-				return new ResponseEntity<Usuario>(u, HttpStatus.OK);
+				return new ResponseEntity<UserEntity>(u, HttpStatus.OK);
 				
 			}
 			
 		} catch (Exception e) {
-			return new ResponseEntity<Usuario>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<UserEntity>(HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
 
 	}
 	
 	@PutMapping(path = "usuario/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> actualizarUsuario(@PathVariable("id") int id,@RequestBody Usuario u) {
+	public ResponseEntity<UserEntity> actualizarUsuario(@PathVariable("id") int id,@RequestBody UserEntity u) {
 		try {
 			u.setId_usuario(id);
 			u = gu.saveUser(u);
 			
 			if (u != null)
-				return new ResponseEntity<Usuario>(u, HttpStatus.OK);
+				return new ResponseEntity<UserEntity>(u, HttpStatus.OK);
 			
 			else
-				return new ResponseEntity<Usuario>(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<UserEntity>(HttpStatus.BAD_REQUEST);
 			
 		} catch (Exception e) {
-			return new ResponseEntity<Usuario>(u, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<UserEntity>(u, HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
 
 	}
 	
 	@DeleteMapping(path = "usuario/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> eliminarUsuario(@PathVariable("id") int id) {
+	public ResponseEntity<UserEntity> eliminarUsuario(@PathVariable("id") int id) {
 		try {
-			Usuario u = gu.searchUser(id);
+			UserEntity u = gu.searchUser(id);
 			if (u == null) {
-				return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<UserEntity>(HttpStatus.NOT_FOUND);
 				
 			} else {
 				gu.eliminarUsuario(u);
-				return new ResponseEntity<Usuario>(HttpStatus.OK);
+				return new ResponseEntity<UserEntity>(HttpStatus.OK);
 				
 			}
 			
 		} catch (Exception e) {
-			return new ResponseEntity<Usuario>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<UserEntity>(HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
 
