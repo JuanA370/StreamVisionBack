@@ -5,46 +5,30 @@ import java.util.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.MapsId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
 @Entity
 public class Compra {
 	@EmbeddedId
-	private CompraId idCompra;
-	
+	private CompraPk CompraPk;
+
 	@Column
 	private Date fecha;
-	
-	//Constructores
-	public Compra() {
 
-	}
+	@ManyToOne
+	@MapsId("idUsuario")
+	private Usuario usuario;
 
-	public Compra(CompraId idCompra, Date fecha) {
-		super();
-		this.idCompra = idCompra;
-		this.fecha = fecha;
-	}
-
-	public CompraId getIdCompra() {
-		return idCompra;
-	}
-
-	public void setIdCompra(CompraId idCompra) {
-		this.idCompra = idCompra;
-	}
-
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-	
+	@ManyToOne
+	@MapsId("idProducto")
+	private Producto producto;
 }

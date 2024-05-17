@@ -26,7 +26,7 @@ public class AnswersServices {
 	}
 
 	public List<Respuesta> searchAns(Long id_usuario, Long id_hilo, Long id_producto) {
-		List<Respuesta> respuestas = respuestaDAO.findByUsuarioAndHiloAndProducto(id_usuario, id_hilo, id_producto);
+		List<Respuesta> respuestas = respuestaDAO.findAns(id_usuario, id_hilo, id_producto);
 		return respuestas;
 	}
 }

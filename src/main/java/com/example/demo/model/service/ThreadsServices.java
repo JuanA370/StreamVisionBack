@@ -22,12 +22,12 @@ public class ThreadsServices {
 	}
 
 	public void deleteThread(Long id_producto, Long id_hilo) {
-		hiloDAO.delete(hiloDAO.findHiloById(id_producto, id_hilo));
+		hiloDAO.delete(hiloDAO.findThreadById(id_producto, id_hilo));
 	}
 
 	public Hilo searchThread(Long id_producto, Long id_hilo) {
 		Optional<Hilo> opH;
-		opH = Optional.ofNullable(hiloDAO.findHiloById(id_producto, id_hilo));
+		opH = Optional.ofNullable(hiloDAO.findThreadById(id_producto, id_hilo));
 		if (opH.isPresent()) {
 			return opH.get();
 		}

@@ -26,6 +26,6 @@ public class FavoritesService {
 	}
 
 	public List<Producto> listFav(Usuario usuario) {
-		return favoritoDAO.findFavByUser(usuario.getId_usuario());
+		return favoritoDAO.findFavProductByUser(usuario.getId_usuario());
 	}
 }

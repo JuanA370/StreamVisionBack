@@ -17,7 +17,7 @@ public class PurchasingService {
 	private ShoppingRepository compraDAO;
 
 	public Compra saveShopping(Compra c) {
-		if (compraDAO.findCompraPorUsuarioYProducto(c.getIdCompra().getId_usuario().getId_usuario(),
+		if (compraDAO.findShoppingByUserANDProduct(c.getIdCompra().getId_usuario().getId_usuario(),
 				c.getIdCompra().getId_producto().getId_producto()) == null
 				&& (c.getIdCompra().getId_usuario() == null && c.getIdCompra().getId_producto() == null))
 			return compraDAO.save(c);
@@ -25,6 +25,6 @@ public class PurchasingService {
 	}
 
 	public List<Producto> listShopping(Usuario usuario) {
-		return compraDAO.findProductosCompradosPorUsuario(usuario.getId_usuario());
+		return compraDAO.findShoppedProductsByUser(usuario.getId_usuario());
 	}
 }

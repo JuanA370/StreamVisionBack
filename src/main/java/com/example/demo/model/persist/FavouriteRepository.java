@@ -4,19 +4,18 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.entities.Favorito;
-import com.example.demo.model.entities.FavoritoId;
+import com.example.demo.model.entities.FavoritoPk;
 import com.example.demo.model.entities.Producto;
 
 @Repository
-public interface FavouriteRepository extends JpaRepository<Favorito, FavoritoId> {
+public interface FavouriteRepository extends JpaRepository<Favorito, FavoritoPk> {
 
 	@Query("SELECT f FROM Favorito f WHERE f.idFavorito.id_usuario.id_usuario = ?1 AND f.idFavorito.id_producto.id_producto = ?2")
-	public Favorito findFavById( Long usuario, Long producto);
+	public Favorito findFavById(Long usuario, Long producto);
 
 	@Query("SELECT p FROM Producto p JOIN Favorito f ON p.id_producto = f.idFavorito.id_producto.id_producto WHERE f.favorito = true AND f.idFavorito.id_usuario.id_usuario = ?1")
-	public List<Producto> findFavByUser(Long id_usuario);
+	public List<Producto> findFavProductByUser(Long id_usuario);
 }
