@@ -13,9 +13,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import jakarta.persistence.JoinColumn;
-
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Usuario {
 
@@ -41,9 +43,6 @@ public class Usuario {
 	
 	private Set<RoleEntity> roles;
 
-	public Usuario() {
-
-	}
 
 	public long getId_usuario() {
 		return id_usuario;
