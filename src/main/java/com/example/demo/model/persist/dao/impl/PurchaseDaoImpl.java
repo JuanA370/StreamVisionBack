@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.entities.Purchase;
-import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.persist.dao.PurchaseDao;
 import com.example.demo.model.persist.repository.PurchaseRepository;
 

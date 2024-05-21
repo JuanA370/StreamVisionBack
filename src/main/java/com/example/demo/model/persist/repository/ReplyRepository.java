@@ -8,10 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.entities.MyThreadPk;
 import com.example.demo.model.entities.Reply;
-import com.example.demo.model.entities.ReplyPk;
 
 @Repository
-public interface ReplyRepository extends JpaRepository<Reply, ReplyPk> {
+public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
 	@Query(value = "SELECT r from Reply r where r.user.id = ?1")
 	public List<Reply> findRepliesByUserId(Long userId);
