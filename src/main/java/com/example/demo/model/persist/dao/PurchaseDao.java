@@ -8,8 +8,10 @@ import com.example.demo.model.entities.UserEntity;
 
 public interface PurchaseDao {
 
-	public Purchase saveShopping(Purchase purchase);
+	public Purchase createPurchase(Purchase purchase);
 	
-	public List<Product> listShopping(UserEntity user);
+	//public Purchase updatePurchase(Purchase purchase);
+	
+	public List<Product> readPurchases(UserEntity user);
 	
 }
