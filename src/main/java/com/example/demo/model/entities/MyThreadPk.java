@@ -20,9 +20,9 @@ public class MyThreadPk implements Serializable {
 
 	@Column(name="threadId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long threadId;
+	private Long threadId;
 	
 	@Column(name = "productId")
-	private long productId;
+	private Long productId;
 	
 }

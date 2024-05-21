@@ -30,7 +30,7 @@ public class UserEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@Column
 	private String username;
@@ -40,11 +40,9 @@ public class UserEntity {
 	private boolean active;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
 	private List<MyThread> threads;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
 	private List<Reply> replies;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)

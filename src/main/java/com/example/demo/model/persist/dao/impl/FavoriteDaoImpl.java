@@ -28,8 +28,8 @@ public class FavoriteDaoImpl implements FavoriteDao{
 	}
 	
 	@Override
-	public List<Product> readFavoriteProductsByUser(UserEntity user) {
-		List<Product> products = favoriteRep.findFavoriteProductByUserId(user.getId());
+	public List<Product> readFavoriteProductsByUserId(Long userId) {
+		List<Product> products = favoriteRep.findFavoriteProductByUserId(userId);
 		return products;
 	}
 	

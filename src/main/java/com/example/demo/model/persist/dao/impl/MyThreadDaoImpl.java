@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.model.entities.MyThread;
+import com.example.demo.model.entities.MyThreadPk;
 import com.example.demo.model.persist.dao.MyThreadDao;
 import com.example.demo.model.persist.repository.MyThreadRepository;
 
@@ -24,20 +25,20 @@ public class MyThreadDaoImpl implements MyThreadDao {
 	}
 
 	@Override
-	public void deleteThread(Long idProduct, Long idThread) {
-		threadDao.delete(threadDao.findThreadById(idProduct, idThread));
+	public void deleteThreadByThreadPk(MyThreadPk threadPk) {
+		threadDao.delete(threadDao.findThreadByThreadPk(threadPk));
 	}
 
 	@Override
-	public MyThread searchThread(Long idProduct, Long idThread) {
+	public MyThread readThreadByThreadPk(MyThreadPk threadPk) {
 		Optional<MyThread> optThread;
-		MyThread returnVar;
-		optThread = Optional.ofNullable(threadDao.findThreadById(idProduct, idThread));
+		MyThread thread;
+		optThread = Optional.ofNullable(threadDao.findThreadByThreadPk(threadPk));
 		if (optThread.isPresent())
-			returnVar = optThread.get();
+			thread = optThread.get();
 		else
-			returnVar = null;
-		return returnVar;
+			thread = null;
+		return thread;
 	}
 	
 }

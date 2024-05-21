@@ -10,7 +10,7 @@ public interface ProductDao {
 	
 	public void deleteProduct(Product product);
 	
-	public List<Product> listProducts();
+	public List<Product> readProducts();
 	
-	public Product searchProduct(Long productId);
+	public Product readProductById(Long productId);
 }

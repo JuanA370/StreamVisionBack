@@ -10,7 +10,7 @@ public interface FavoriteDao {
 	
 	public Favorite createFavorite(Favorite favorite);
 	
-	public List<Product> readFavoriteProductsByUser(UserEntity user);
+	public List<Product> readFavoriteProductsByUserId(Long userId);
 	
 	public Favorite updateFavorite(Favorite favorite);
 

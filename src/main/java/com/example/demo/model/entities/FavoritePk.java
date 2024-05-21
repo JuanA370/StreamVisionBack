@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class FavoritePk implements Serializable {
 
-	private long userId;
+	private Long userId;
 
-	private long productId;
+	private Long productId;
 
 }

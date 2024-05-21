@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class PurchasePk implements Serializable {
 
-	private long userId;
+	private Long userId;
 
-	private long productId;
+	private Long productId;
 
 }
