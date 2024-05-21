@@ -12,6 +12,6 @@ public interface PurchaseDao {
 	
 	//public Purchase updatePurchase(Purchase purchase);
 	
-	public List<Product> readPurchases(UserEntity user);
+	public List<Product> readPurchasesByUserId(Long userId);
 	
 }

@@ -42,10 +42,10 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	*/
 	
 	@Override
-	public List<Product> readPurchases(UserEntity user) {
+	public List<Product> readPurchasesByUserId(Long userId) {
 		List<Product> purchasedProducts;
-		purchasedProducts = purchaseDao.findPurchasedProductsByUserId(user.getId());
-		if (purchasedProducts == null)
+		purchasedProducts = purchaseDao.findPurchasedProductsByUserId(userId);
+		if (purchasedProducts.isEmpty())
 			throw new AppException("No products found for this user.", HttpStatus.NOT_FOUND);
 		return purchasedProducts;
 	}
