@@ -10,6 +10,5 @@ import com.example.demo.model.entities.MyThreadPk;
 @Repository
 public interface MyThreadRepository extends JpaRepository<MyThread, MyThreadPk>{
 	
-	@Query(value = "SELECT h FROM Hilo h WHERE h.idHilo.id_producto.id_producto = ?1 AND h.idHilo.id_hilo = ?2")
-	public MyThread findThreadById(Long id_producto, Long id_hilo);
+	public MyThread findThreadByThreadPk(MyThreadPk threadPk);
 }

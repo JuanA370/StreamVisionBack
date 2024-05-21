@@ -6,8 +6,12 @@ import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.entities.UserEntity;
 
-public interface FavouriteDao {
+public interface FavoriteDao {
 	
-	public Favorite saveFav(Favorite f);
-	public List<Product> listFav(UserEntity usuario);
+	public Favorite createFavorite(Favorite favorite);
+	
+	public List<Product> readFavoriteProductsByUser(UserEntity user);
+	
+	public Favorite updateFavorite(Favorite favorite);
+
 }

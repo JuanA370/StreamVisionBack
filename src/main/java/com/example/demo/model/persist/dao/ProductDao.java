@@ -12,5 +12,5 @@ public interface ProductDao {
 	
 	public List<Product> listProducts();
 	
-	public Product searchProduct(Long id);
+	public Product searchProduct(Long productId);
 }

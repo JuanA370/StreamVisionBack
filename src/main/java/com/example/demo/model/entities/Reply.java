@@ -30,9 +30,13 @@ public class Reply {
 	@ManyToOne
 	private UserEntity user;
 	
-	@MapsId("idHilo")
+	@MapsId("threadId")
 	@ManyToOne
 	private MyThread thread;	
+	
+	@MapsId("productId")
+	@ManyToOne
+	private Product product;	
 	
 	@Column
 	private Date replyDate;

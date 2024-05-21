@@ -14,7 +14,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 	private MyThreadRepository threadDao;
 	
 	@Override
-	public MyThread saveThread(MyThread thread) {
+	public MyThread createThread(MyThread thread) {
 		MyThread returnVar;
 		if(thread.getTitle() == null || thread.getTitle().isEmpty())
 			returnVar = null;
@@ -24,15 +24,15 @@ public class MyThreadDaoImpl implements MyThreadDao {
 	}
 
 	@Override
-	public void deleteThread(Long product_id, Long thread_id) {
-		threadDao.delete(threadDao.findThreadById(product_id, thread_id));
+	public void deleteThread(Long idProduct, Long idThread) {
+		threadDao.delete(threadDao.findThreadById(idProduct, idThread));
 	}
 
 	@Override
-	public MyThread searchThread(Long product_id, Long thread_id) {
+	public MyThread searchThread(Long idProduct, Long idThread) {
 		Optional<MyThread> optThread;
 		MyThread returnVar;
-		optThread = Optional.ofNullable(threadDao.findThreadById(product_id, thread_id));
+		optThread = Optional.ofNullable(threadDao.findThreadById(idProduct, idThread));
 		if (optThread.isPresent())
 			returnVar = optThread.get();
 		else

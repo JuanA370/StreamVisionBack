@@ -18,10 +18,10 @@ import lombok.NoArgsConstructor;
 public class ReplyPk implements Serializable {
 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long idRespuesta;
+	private long replyId;
 	
-	private long idHilo;
+	private long threadId;
 	
-	private long idProducto;
+	private long productId;
 
 }

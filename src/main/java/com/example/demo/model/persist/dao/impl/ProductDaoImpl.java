@@ -30,15 +30,15 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public List<Product> listProducts() {
-		List<Product> returnVar = productDao.findAll();
-		return returnVar;
+		List<Product> products = productDao.findAll();
+		return products;
 	}
 
 	@Override
-	public Product searchProduct(Long id) {
+	public Product searchProduct(Long productId) {
 		Optional<Product> optProduct;
 		Product returnVar;
-		optProduct = productDao.findById(id);
+		optProduct = productDao.findById(productId);
 		if (optProduct.isPresent())
 			returnVar = optProduct.get();
 		else

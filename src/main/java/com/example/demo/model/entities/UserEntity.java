@@ -39,10 +39,12 @@ public class UserEntity {
 	private int coins;
 	private boolean active;
 
-	@OneToMany(mappedBy = "user_id", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
 	private List<MyThread> threads;
 
-	@OneToMany(mappedBy = "user_id", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
 	private List<Reply> replies;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)

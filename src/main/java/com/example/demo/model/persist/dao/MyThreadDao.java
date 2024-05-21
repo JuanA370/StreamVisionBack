@@ -4,9 +4,11 @@ import com.example.demo.model.entities.MyThread;
 
 public interface MyThreadDao {
 
-	public MyThread saveThread (MyThread thread);
+	public MyThread createThread (MyThread thread);
 	
-	public void deleteThread(Long product_id, Long thread_id);
+	public MyThread updateThread (MyThread thread);
 	
-	public MyThread searchThread(Long product_id, Long thread_id);
+	public void deleteThread(Long productId, Long idThread);
+	
+	public MyThread searchThread(Long idProduct, Long idThread);
 }

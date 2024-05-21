@@ -7,23 +7,30 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.entities.UserEntity;
-import com.example.demo.model.persist.dao.FavouriteDao;
+import com.example.demo.model.persist.dao.FavoriteDao;
 import com.example.demo.model.persist.repository.FavoriteRepository;
 
 @Service
-public class FavoriteDaoImpl implements FavouriteDao{
+public class FavoriteDaoImpl implements FavoriteDao{
 	
 	private FavoriteRepository favoriteRep;
+	
 	@Override
-	public Favorite saveFav(Favorite favourite) {
-		Favorite fav = favoriteRep.findFavById(favourite.getFavoritePk().getProductId(), favourite.getFavoritePk().getUserId());
-		return fav;
+	public Favorite createFavorite(Favorite favorite) {
+		Favorite createdFavorite = favoriteRep.save(favorite);
+		return createdFavorite;
 	}
 
 	@Override
-	public List<Product> listFav(UserEntity usuario) {
-		List<Product> list= favoriteRep.findFavProductByUser(usuario.getId());
-		return list;
+	public Favorite updateFavorite(Favorite favorite) {
+		Favorite createdFavorite = favoriteRep.save(favorite);
+		return createdFavorite;
+	}
+	
+	@Override
+	public List<Product> readFavoriteProductsByUser(UserEntity user) {
+		List<Product> products = favoriteRep.findFavoriteProductByUserId(user.getId());
+		return products;
 	}
 	
 }

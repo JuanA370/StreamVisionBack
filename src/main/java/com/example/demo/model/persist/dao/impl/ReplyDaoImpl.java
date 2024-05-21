@@ -24,13 +24,13 @@ public class ReplyDaoImpl implements ReplyDao{
 		replyRep.delete(reply);
 	}
 
-	public List<Reply> listReply(long id_usuario) {
-		return replyRep.findAnsByUserId(id_usuario);
+	public List<Reply> listReply(long userId) {
+		return replyRep.findReplyByUserId(userId);
 	}
 
-	public List<Reply> searchReply(Long id_usuario, Long id_hilo, Long id_producto) {
-		List<Reply> respuestas = replyRep.findAns(id_usuario, id_hilo, id_producto);
-		return respuestas;
+	public List<Reply> searchReply(Long userId, Long threadId, Long productId) {
+		List<Reply> replies = replyRep.findReply(userId, threadId, productId);
+		return replies;
 	}
 
 }
