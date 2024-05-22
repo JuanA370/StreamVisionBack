@@ -17,7 +17,7 @@ import com.example.demo.model.service.ProductsService;
 
 @RestController
 public class ControladorProducto {
-
+	/*
 	@Autowired
 	private ProductsService gp;
 
@@ -83,5 +83,5 @@ public class ControladorProducto {
 		}
 
 	}
-
+	*/
 }

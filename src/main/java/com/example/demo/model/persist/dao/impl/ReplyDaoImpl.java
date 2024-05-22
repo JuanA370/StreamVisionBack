@@ -74,6 +74,7 @@ public class ReplyDaoImpl implements ReplyDao{
 		List<ReplyDto> userReplyDtos = userReplies.stream()
 				.map(reply -> ReplyDto.builder()
 						.content(reply.getContent())
+						.author(reply.getUser().getUsername())
 						.build())
 				.collect(Collectors.toList());
 		
@@ -90,6 +91,7 @@ public class ReplyDaoImpl implements ReplyDao{
 		List<ReplyDto> threadReplyDtos = threadReplies.stream()
 				.map(reply -> ReplyDto.builder()
 						.content(reply.getContent())
+						.author(reply.getUser().getUsername())
 						.build())
 				.collect(Collectors.toList());
 		

@@ -7,6 +7,7 @@ public record ReplyDto (
 	
 		Long replyId,
 		Long threadId,
+		String author,
 		String content
 		
 ) { }

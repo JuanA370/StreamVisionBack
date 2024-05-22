@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.ThreadDto;
@@ -16,6 +17,7 @@ import com.example.demo.model.persist.repository.MyThreadRepository;
 import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.UserRepository;
 
+@Service
 public class MyThreadDaoImpl implements MyThreadDao {
 	
 	@Autowired
@@ -50,6 +52,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 				.product(savedProduct)
 				.title(savedThread.getTitle())
 				.content(savedThread.getContent())
+				.author(user.getUsername())
 				.build();
 		
 		return savedThreadDto;
@@ -68,6 +71,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 				.id(updatedThread.getId())
 				.title(updatedThread.getTitle())
 				.content(updatedThread.getContent())
+				.author(updatedThread.getUser().getUsername())
 				.build();
 		
 		return updatedThreadDto;
@@ -91,6 +95,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 						.id(thread.getId())
 						.title(thread.getTitle())
 						.content(thread.getContent())
+						.author(thread.getUser().getUsername())
 						.build())
 				.collect(Collectors.toList()); 
 
@@ -110,6 +115,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 						.id(thread.getId())
 						.title(thread.getTitle())
 						.content(thread.getContent())
+						.author(thread.getUser().getUsername())
 						.build())
 				.collect(Collectors.toList()); 
 
@@ -125,11 +131,10 @@ public class MyThreadDaoImpl implements MyThreadDao {
 				.id(threadId)
 				.title(thread.getTitle())
 				.content(thread.getContent())
+				.author(thread.getUser().getUsername())
 				.build();
 		
 		return threadDto;
 	}
-
-
 	
 }
