@@ -20,5 +20,5 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 	
 	@Query(value = "SELECT r from Reply r WHERE r.thread.threadPk = ?1")
 	public List<Reply> findRepliesByThreadPk(MyThreadPk threadPk);
-	
+
 }

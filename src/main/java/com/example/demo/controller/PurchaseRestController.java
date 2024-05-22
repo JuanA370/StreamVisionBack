@@ -36,14 +36,18 @@ public class PurchaseRestController {
 		Map<String, Object> responseContent = new HashMap<>();
 		Purchase savedPurchase = null;
 		HttpStatus httpStatus;
+		
 		try {
 			savedPurchase = purchaseDao.createPurchase(product, logedUserId);
-		}catch (AppException e) {
+			responseContent.put("savedPurchase", savedPurchase);
+			httpStatus = HttpStatus.ACCEPTED;
+		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
 			httpStatus = e.getHttpStatus();
+		} catch (Exception e) {
+			responseContent.put("message", "Error while purchasing: ".concat(e.getMessage()));
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		responseContent.put("savedPurchase", savedPurchase);
-		httpStatus = HttpStatus.ACCEPTED;
 		
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
@@ -55,14 +59,19 @@ public class PurchaseRestController {
 		Map<String, Object> responseContent = new HashMap<>();
 		List<Product> savedPurchases = null;
 		HttpStatus httpStatus;
+		
 		try {
 			savedPurchases = purchaseDao.readPurchasesByUserId(logedUserId);
-		} catch(AppException e) {
+			responseContent.put("savedPurchases",savedPurchases);
+			httpStatus = HttpStatus.OK;
+		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
 			httpStatus = e.getHttpStatus();
+		} catch (Exception e) {
+			responseContent.put("message", "Error while purchasing: ".concat(e.getMessage()));
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		responseContent.put("savedPurchases",savedPurchases);
-		httpStatus = HttpStatus.OK;
+
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}

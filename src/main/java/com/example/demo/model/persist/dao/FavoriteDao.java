@@ -11,6 +11,7 @@ public interface FavoriteDao {
 	
 	public List<Product> readFavoriteProductsByUserId(Long userId);
 	
-	public Favorite updateFavorite(Favorite favorite);
+	//fav unfav para saber si se guarda
+	public Favorite updateFavorite(Product product, Long logedUserId, String action);
 
 }

@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,83 +18,73 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.Product;
-import com.example.demo.model.entities.Purchase;
-import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.persist.dao.FavoriteDao;
-import com.example.demo.model.service.FavoritesService;
 
 @RestController
 @RequestMapping("/favorite")
 public class FavoriteRestController {
 
+	private final Long logedUserId = 1L;
+	
 	@Autowired
 	private FavoriteDao favoriteDao;
 
-	@PostMapping(path = "Favorite", 
+	//SAVE UNSAVE
+	@PostMapping(path = "/interact/{action}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> addFavorite(@RequestBody Favorite favorite) {
+	public ResponseEntity<?> favoriteInteractionHnadler(@RequestBody Product product,
+			@PathVariable String action) {
+		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
-		Favorite addedFavorite = null;
+		Favorite updatedFavorite = null;
+		HttpStatus httpStatus;
+		
 		try {
-			addedFavorite = favoriteDao.createFavorite(favorite);
+			updatedFavorite = favoriteDao.updateFavorite(product, logedUserId, action);
+			responseContent.put("updatedFavorite", updatedFavorite);
+			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
-			response = new ResponseEntity<Map<String, Object>>(responseContent,e.getHttpStatus());
-		}
-		/*
-		try {
-			f = gf.saveFav(f);
-			if (f != null)
-				returnVar = new ResponseEntity<Favorite>(f, HttpStatus.CREATED);
-			else
-				returnVar = new ResponseEntity<Favorite>(HttpStatus.BAD_REQUEST);
+			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
-			returnVar = new ResponseEntity<Favorite>(f, HttpStatus.INTERNAL_SERVER_ERROR);
-		}*/
-		response = new ResponseEntity<Favorite>(addedFavorite, HttpStatus.OK);
+			responseContent.put("message", "Error while processing request: ".concat(e.getMessage()));
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
 
-	@GetMapping(path = "Favorite/{user}", 
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Product>> searchProduct(@PathVariable("user") UserEntity usuario) {
-		ResponseEntity<List<Product>> returnVar;
+	/*NO CONTENT NO ES UNA EXCEPCIÓN, HA TERMIANDO CON ÉXITO PERO EL USUARIO NO TIENE COMPRAS
+	 * HABLARLO CON EL FRONT*/
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> searchProduct() {
+		
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		
 		try {
-			List<Product> paux = null;
-			if (usuario != null) {
-				paux = gf.listFav(usuario);
-
+			List<Product> userProducts = favoriteDao.readFavoriteProductsByUserId(logedUserId);
+			if (userProducts.isEmpty()) {
+				responseContent.put("userProducts", userProducts);
+				httpStatus = HttpStatus.NO_CONTENT;
 			} else {
-				paux = null;
-
+				responseContent.put("userProducts", userProducts);
+				httpStatus = HttpStatus.OK;
 			}
-			if (paux == null) {
-				returnVar = new ResponseEntity<List<Product>>(HttpStatus.NOT_FOUND);
-			} else {
-				returnVar = new ResponseEntity<List<Product>>(paux, HttpStatus.OK);
-			}
+		} catch (AppException e) {
+			responseContent.put("message", e.getMessage());
+			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
-			returnVar = new ResponseEntity<List<Product>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			responseContent.put("message", "Error while processing request: ".concat(e.getMessage()));
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		return returnVar;
-	}
 
-	@PutMapping(path = "Favorite/{userId}/{productId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Favorite> changueisFav(@PathVariable("userId") long id_usuario,
-			@PathVariable("productId") long id_producto, @RequestBody Favorite f) {
-		ResponseEntity<Favorite> returnVar;
-		try {
-			f.setFavorite(!f.isFavorite());
-			f = gf.saveFav(f);
-			if (f != null)
-				returnVar = new ResponseEntity<Favorite>(f, HttpStatus.OK);
-			else
-				returnVar = new ResponseEntity<Favorite>(HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			returnVar = new ResponseEntity<Favorite>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return returnVar;
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
 	}
+	
 }
