@@ -6,4 +6,6 @@ import com.example.demo.model.entities.UserEntity;
 public interface UserDao {
 
 	public UserEntity saveUser(UserDto u);
+	
+	public UserEntity getUser(Long i);
 }

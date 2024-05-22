@@ -17,11 +17,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.entities.ERole;
 import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.RoleEntity;
 import com.example.demo.model.entities.UserEntity;
+import com.example.demo.model.persist.dao.impl.UserDaoImpl;
+import com.example.demo.model.persist.repository.UserRepository;
 import com.example.demo.model.service.UsersService;
 
 
@@ -29,7 +32,7 @@ import com.example.demo.model.service.UsersService;
 public class ControladorUsuario {
 	
 	@Autowired
-	private UsersService gu;
+	private UserDaoImpl userDaoImpl;
 	
 	@PostMapping(path = "/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> createUser(@RequestBody UserDto u) {
@@ -37,7 +40,7 @@ public class ControladorUsuario {
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity user = gu.saveUser(u);
+			UserEntity user = userDaoImpl.saveUser(u);
 			responseContent.put("result", u);
 			httpStatus = HttpStatus.CREATED;
 		} catch (Exception e) {
@@ -50,9 +53,24 @@ public class ControladorUsuario {
 	}
 	
 	@GetMapping(path = "usuario/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserEntity> buscarUsuario(@PathVariable("id") int id) {
-		
-
+	public ResponseEntity<UserEntity> buscarUsuario(@PathVariable("id") Long id) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			UserEntity user = userDaoImpl.getUser(id);
+			responseContent.put("result", user);
+			httpStatus = HttpStatus.OK;
+		} catch (AppException e) {
+			responseContent.put("message", e.getMessage());
+			httpStatus = e.getHttpStatus();
+		}
+		catch (Exception e) {
+			responseContent.put("message", e.getMessage());
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;	
+		} 
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
 	}
 	
 	@PutMapping(path = "usuario/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

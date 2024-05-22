@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.entities.ERole;
 import com.example.demo.model.entities.RoleEntity;
@@ -37,5 +39,9 @@ public class UserDaoImpl implements UserDao{
 		return userRepository.save(user);
 	}
 	
+	public UserEntity getUser(Long i) {
+		UserEntity user = userRepository.findById(i) .orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+		return user;
+	}
 	
 }
