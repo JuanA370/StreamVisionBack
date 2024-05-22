@@ -10,6 +10,6 @@ public interface MyThreadDao {
 	
 	public void deleteThreadById(Long threadId);
 	
-	public MyThread readThreadById(Long threadId);
+	public MyThread readThreadByUserId(Long threadId);
 	
 }
