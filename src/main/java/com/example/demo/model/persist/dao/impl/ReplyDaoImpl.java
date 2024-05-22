@@ -7,9 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.exceptions.AppException;
-import com.example.demo.model.entities.MyThreadPk;
+import com.example.demo.model.dto.ReplyDto;
+import com.example.demo.model.entities.MyThread;
 import com.example.demo.model.entities.Reply;
 import com.example.demo.model.persist.dao.ReplyDao;
+import com.example.demo.model.persist.repository.MyThreadRepository;
+import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.ReplyRepository;
 
 @Service
@@ -18,17 +21,24 @@ public class ReplyDaoImpl implements ReplyDao{
 	@Autowired
 	private ReplyRepository replyRep;
 	
+	@Autowired
+	private MyThreadRepository threadRep;
+	
+	@Autowired
+	private ProductRepository productRep;
+	
 	@Override
-	public Reply createReply(Reply reply) {
-		return replyRep.save(reply);
+	public Reply createReply(ReplyDto replyDto, Long logedUserId) {
+		MyThread thread = threadRep.findById();
+		return null;
 	}
 	
-	public void deleteReply(Reply reply) {
-		replyRep.delete(reply);
+	public void deleteReplyById(Long replyId) {
+		replyRep.deleteById(replyId);
 	}
 
-	public List<Reply> readRepliesByUserId(long userId) {
-		return replyRep.findRepliesByUserId(userId);
+	public List<Reply> readRepliesByUserId(Long logedUserId) {
+		return replyRep.findRepliesByUserId(logedUserId);
 	}
 
 	public List<Reply> readRepliesByReplyPk(MyThreadPk threadPk) {

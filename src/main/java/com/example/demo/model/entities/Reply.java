@@ -33,11 +33,9 @@ public class Reply {
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
 	
-	//@MapsId("threadId")
 	@ManyToOne
 	private MyThread thread;	
 	
-	//@MapsId("productId")
 	@ManyToOne
 	private Product product;	
 	

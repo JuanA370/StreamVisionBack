@@ -2,18 +2,18 @@ package com.example.demo.model.persist.dao;
 
 import java.util.List;
 
-import com.example.demo.model.entities.MyThreadPk;
+import com.example.demo.model.dto.ReplyDto;
 import com.example.demo.model.entities.Reply;
 
 public interface ReplyDao {
 
-	public Reply createReply(Reply reply);
+	public Reply createReply(ReplyDto replyDto, Long logedUserId);
 	
 	//public Reply updateReply(Reply reply);
 	
-	public void deleteReply(Reply reply);
+	public void deleteReplyById(Long replyId);
 	
-	public List<Reply> readRepliesByUserId(long userId);
+	public List<Reply> readRepliesByUserId(Long logedUserId);
 	
 	public List<Reply> readRepliesByReplyPk(MyThreadPk threadPk);
 	

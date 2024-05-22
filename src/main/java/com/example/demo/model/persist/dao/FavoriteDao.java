@@ -9,7 +9,7 @@ public interface FavoriteDao {
 	
 	public Favorite createFavorite(Product product, Long logeduSerId);
 	
-	public List<Product> readFavoriteProductsByUserId(Long userId);
+	public List<Product> readFavoriteProductsByUserId(Long logeduSerId);
 	
 	//fav unfav para saber si se guarda
 	public Favorite updateFavorite(Product product, Long logedUserId, String action);
