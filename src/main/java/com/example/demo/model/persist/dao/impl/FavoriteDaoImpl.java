@@ -79,6 +79,9 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	@Override
 	public List<Product> readFavoriteProductsByUserId(Long logeduSerId) {
 		List<Product> products = favoriteRep.findFavoriteProductByUserId(logeduSerId);
+		
+		if (products.isEmpty())
+			throw new AppException("No saved products found for this user", HttpStatus.NO_CONTENT);
 		return products;
 	}
 

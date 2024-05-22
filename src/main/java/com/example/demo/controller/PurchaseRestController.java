@@ -20,7 +20,7 @@ import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.PurchaseDao;
 
 @RestController
-@RequestMapping("/purchase")
+@RequestMapping("/purchases")
 public class PurchaseRestController {
 	
 	private final Long logedUserId = 1L;
@@ -32,6 +32,7 @@ public class PurchaseRestController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> purchase(@RequestBody Product product) {
+		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		Purchase savedPurchase = null;
@@ -55,6 +56,7 @@ public class PurchaseRestController {
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findProducts() {
+		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		List<Product> savedPurchases = null;

@@ -12,9 +12,9 @@ import com.example.demo.model.entities.MyThread;
 public interface MyThreadRepository extends JpaRepository<MyThread, Long>{
 
 	@Query("SELECT t FROM Thread t WHERE Thread.user.id =?1")
-	public List<Thread> findThreadsByUserId(Long userId);
+	public List<MyThread> findThreadsByUserId(Long userId);
 	
 	@Query("SELECT t FROM Thread t WHERE Thread.product.id =?1")
-	public List<Thread> findThreadsByProductId(Long productId);
+	public List<MyThread> findThreadsByProductId(Long productId);
 	
 }

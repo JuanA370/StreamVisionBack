@@ -25,22 +25,19 @@ import com.example.demo.model.persist.dao.FavoriteDao;
 public class FavoriteRestController {
 
 	private final Long logedUserId = 1L;
-	
+
 	@Autowired
 	private FavoriteDao favoriteDao;
 
-	//SAVE UNSAVE
-	@PostMapping(path = "/interact/{action}",
-			consumes = MediaType.APPLICATION_JSON_VALUE, 
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> favoriteInteractionHnadler(@RequestBody Product product,
-			@PathVariable String action) {
-		
+	// SAVE UNSAVE
+	@PostMapping(path = "/interact/{action}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> favoriteInteractionHnadler(@RequestBody Product product, @PathVariable String action) {
+
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		Favorite updatedFavorite = null;
 		HttpStatus httpStatus;
-		
+
 		try {
 			updatedFavorite = favoriteDao.updateFavorite(product, logedUserId, action);
 			responseContent.put("updatedFavorite", updatedFavorite);
@@ -57,24 +54,21 @@ public class FavoriteRestController {
 		return response;
 	}
 
-	/*NO CONTENT NO ES UNA EXCEPCIÓN, HA TERMIANDO CON ÉXITO PERO EL USUARIO NO TIENE COMPRAS
-	 * HABLARLO CON EL FRONT*/
+	/*
+	 * NO CONTENT NO ES UNA EXCEPCIÓN, HA TERMIANDO CON ÉXITO PERO EL USUARIO NO
+	 * TIENE COMPRAS HABLARLO CON EL FRONT
+	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchProduct() {
-		
+
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
-		
+
 		try {
 			List<Product> userProducts = favoriteDao.readFavoriteProductsByUserId(logedUserId);
-			if (userProducts.isEmpty()) {
-				responseContent.put("userProducts", userProducts);
-				httpStatus = HttpStatus.NO_CONTENT;
-			} else {
-				responseContent.put("userProducts", userProducts);
-				httpStatus = HttpStatus.OK;
-			}
+			responseContent.put("userProducts", userProducts);
+			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
 			httpStatus = e.getHttpStatus();
@@ -86,5 +80,5 @@ public class FavoriteRestController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
-	
+
 }

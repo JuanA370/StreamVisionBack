@@ -12,7 +12,7 @@ public interface MyThreadDao {
 	
 	public void deleteThreadById(Long threadId);
 	
-	public List<ThreadDto> readThreadsByUserId(Long threadId);
+	public List<ThreadDto> readThreadsByUserId(Long userId);
 	
 	public List<ThreadDto> readThreadsByProductId(Long productId);
 	

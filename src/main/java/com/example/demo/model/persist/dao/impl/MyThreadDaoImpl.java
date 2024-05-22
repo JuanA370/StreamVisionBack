@@ -1,6 +1,7 @@
 package com.example.demo.model.persist.dao.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 	@Override
 	public ThreadDto createThread(ThreadDto threadDto, Long logedUserId) {
 		
-		Product savedProduct = productRep.findById(threadDto.threadId()).orElse(null);
+		Product savedProduct = productRep.findById(threadDto.id()).orElse(null);
 		if (savedProduct == null)
 			savedProduct = productRep.save(threadDto.product());
 			
@@ -45,7 +46,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 		
 		MyThread savedThread = threadRep.save(thread);
 		ThreadDto savedThreadDto = ThreadDto.builder()
-				.threadId(savedThread.getId())
+				.id(savedThread.getId())
 				.product(savedProduct)
 				.title(savedThread.getTitle())
 				.content(savedThread.getContent())
@@ -56,32 +57,77 @@ public class MyThreadDaoImpl implements MyThreadDao {
 
 	@Override
 	public ThreadDto updateThread(ThreadDto threadDto) {
-		MyThread updatedThread = threadRep.findById(threadDto.threadId())
+		
+		MyThread savedThread = threadRep.findById(threadDto.id())
 				.orElseThrow(() -> new AppException("Thread not found", HttpStatus.NOT_FOUND));
-		return null;
+		savedThread.setTitle(threadDto.title());
+		savedThread.setContent(threadDto.content());
+		
+		MyThread updatedThread = threadRep.save(savedThread);
+		ThreadDto updatedThreadDto = ThreadDto.builder()
+				.id(updatedThread.getId())
+				.title(updatedThread.getTitle())
+				.content(updatedThread.getContent())
+				.build();
+		
+		return updatedThreadDto;
 	}
 
 	@Override
 	public void deleteThreadById(Long threadId) {
-		
+		threadRep.deleteById(threadId);
 	}
 
 	@Override
-	public List<ThreadDto> readThreadsByUserId(Long threadId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ThreadDto> readThreadsByUserId(Long userId) {
+		
+		List<MyThread> userThreads = threadRep.findThreadsByUserId(userId);
+		
+		if (userThreads.isEmpty())
+			throw new AppException("No products found for this user.", HttpStatus.NO_CONTENT);
+		
+		List<ThreadDto> userThreadDtos = userThreads
+				.stream().map(thread -> ThreadDto.builder()
+						.id(thread.getId())
+						.title(thread.getTitle())
+						.content(thread.getContent())
+						.build())
+				.collect(Collectors.toList()); 
+
+		return userThreadDtos;
 	}
 
 	@Override
 	public List<ThreadDto> readThreadsByProductId(Long productId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<MyThread> productThreads = threadRep.findThreadsByProductId(productId);
+		
+		if (productThreads.isEmpty())
+			throw new AppException("No products found for this user.", HttpStatus.NO_CONTENT);
+		
+		List<ThreadDto> productThreadDtos = productThreads
+				.stream().map(thread -> ThreadDto.builder()
+						.id(thread.getId())
+						.title(thread.getTitle())
+						.content(thread.getContent())
+						.build())
+				.collect(Collectors.toList()); 
+
+		return productThreadDtos;
 	}
 
 	@Override
 	public ThreadDto readThreadById(Long threadId) {
-		// TODO Auto-generated method stub
-		return null;
+		MyThread thread = threadRep.findById(threadId)
+				.orElseThrow(() -> new AppException("Thread not found", HttpStatus.NOT_FOUND));
+		
+		ThreadDto threadDto = ThreadDto.builder()
+				.id(threadId)
+				.title(thread.getTitle())
+				.content(thread.getContent())
+				.build();
+		
+		return threadDto;
 	}
 
 
