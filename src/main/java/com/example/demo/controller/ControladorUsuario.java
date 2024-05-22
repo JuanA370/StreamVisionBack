@@ -1,5 +1,10 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,8 +17,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.dto.UserDto;
+import com.example.demo.model.entities.ERole;
+import com.example.demo.model.entities.Favorite;
+import com.example.demo.model.entities.RoleEntity;
 import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.service.UsersService;
+
 
 @RestController
 public class ControladorUsuario {
@@ -21,40 +31,27 @@ public class ControladorUsuario {
 	@Autowired
 	private UsersService gu;
 	
-	@PostMapping(path = "usuario", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserEntity> altaUsuario(@RequestBody UserEntity u) {
+	@PostMapping(path = "/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> createUser(@RequestBody UserDto u) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
 		try {
-			u = gu.saveUser(u);
-			if (u != null)
-				return new ResponseEntity<UserEntity>(u, HttpStatus.CREATED);
-			
-			else
-				return new ResponseEntity<UserEntity>(HttpStatus.BAD_REQUEST);
-			
+			UserEntity user = gu.saveUser(u);
+			responseContent.put("result", u);
+			httpStatus = HttpStatus.CREATED;
 		} catch (Exception e) {
-			return new ResponseEntity<UserEntity>(u, HttpStatus.INTERNAL_SERVER_ERROR);
-			
+			responseContent.put("message", e);
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
 	}
 	
 	@GetMapping(path = "usuario/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserEntity> buscarUsuario(@PathVariable("id") int id) {
-		try {
-			UserEntity u = gu.searchUser(id);
-			
-			if (u == null) {
-				return new ResponseEntity<UserEntity>(HttpStatus.NOT_FOUND);
-				
-			} else {
-				return new ResponseEntity<UserEntity>(u, HttpStatus.OK);
-				
-			}
-			
-		} catch (Exception e) {
-			return new ResponseEntity<UserEntity>(HttpStatus.INTERNAL_SERVER_ERROR);
-			
-		}
+		
 
 	}
 	
