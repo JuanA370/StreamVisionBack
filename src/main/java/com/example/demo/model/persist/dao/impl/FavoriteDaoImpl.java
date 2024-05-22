@@ -80,7 +80,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	public List<Product> readFavoriteProductsByUserId(Long logeduSerId) {
 		List<Product> products = favoriteRep.findFavoriteProductByUserId(logeduSerId);
 		
-		if (products.isEmpty())
+		if (products == null || products.isEmpty())
 			throw new AppException("No saved products found for this user", HttpStatus.NO_CONTENT);
 		return products;
 	}

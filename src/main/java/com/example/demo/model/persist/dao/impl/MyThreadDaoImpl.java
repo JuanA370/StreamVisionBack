@@ -83,7 +83,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 		
 		List<MyThread> userThreads = threadRep.findThreadsByUserId(userId);
 		
-		if (userThreads.isEmpty())
+		if (userThreads == null || userThreads.isEmpty())
 			throw new AppException("No products found for this user.", HttpStatus.NO_CONTENT);
 		
 		List<ThreadDto> userThreadDtos = userThreads
@@ -102,7 +102,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 		
 		List<MyThread> productThreads = threadRep.findThreadsByProductId(productId);
 		
-		if (productThreads.isEmpty())
+		if (productThreads == null || productThreads.isEmpty())
 			throw new AppException("No products found for this user.", HttpStatus.NO_CONTENT);
 		
 		List<ThreadDto> productThreadDtos = productThreads

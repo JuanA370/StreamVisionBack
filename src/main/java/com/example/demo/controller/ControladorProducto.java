@@ -21,7 +21,9 @@ public class ControladorProducto {
 	@Autowired
 	private ProductsService gp;
 
-	@PostMapping(path = "producto", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "producto",
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Product> altaProducto(@RequestBody Product p) {
 		try {
 			p = gp.saveProduct(p);
@@ -35,7 +37,8 @@ public class ControladorProducto {
 
 	}
 
-	@GetMapping(path = "producto/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "producto/{id}",
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Product> buscarProducto(@PathVariable("id") int id) {
 		try {
 			Product p = gp.searchProduct(id);
@@ -49,7 +52,9 @@ public class ControladorProducto {
 		}
 
 	}
-	@PutMapping(path = "producto/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(path = "producto/{id}",
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Product> actualizarProducto(@PathVariable("id") int id,@RequestBody Product p) {
 		try {
 			p.setId_producto(id);
