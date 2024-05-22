@@ -23,22 +23,29 @@ import com.example.demo.model.persist.dao.PurchaseDao;
 @RequestMapping("/purchase")
 public class PurchaseRestController {
 	
+	private final Long logedUserId = 1L;
+	
 	@Autowired
 	private PurchaseDao purchaseDao;
 	
+	//REGISTRAR UNA COMPRA
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> purchase(@RequestBody Purchase purchase) {
+	public ResponseEntity<?> purchase(@RequestBody Product product) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		Purchase savedPurchase = null;
+		HttpStatus httpStatus;
 		try {
-			savedPurchase = purchaseDao.createPurchase(purchase);
+			savedPurchase = purchaseDao.createPurchase(product, logedUserId);
 		}catch (AppException e) {
 			responseContent.put("message", e.getMessage());
-			response = new ResponseEntity<Map<String, Object>>(responseContent,e.getHttpStatus());
+			httpStatus = e.getHttpStatus();
 		}
-		response = new ResponseEntity<Purchase>(savedPurchase, HttpStatus.OK);
+		responseContent.put("savedPurchase", savedPurchase);
+		httpStatus = HttpStatus.ACCEPTED;
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
 	
@@ -47,13 +54,16 @@ public class PurchaseRestController {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		List<Product> savedPurchases = null;
+		HttpStatus httpStatus;
 		try {
-			savedPurchases = purchaseDao.readPurchasesByUserId(1L);
+			savedPurchases = purchaseDao.readPurchasesByUserId(logedUserId);
 		} catch(AppException e) {
 			responseContent.put("message", e.getMessage());
-			response = new ResponseEntity<Map<String, Object>>(responseContent,e.getHttpStatus());
+			httpStatus = e.getHttpStatus();
 		}
-		response = new ResponseEntity<List<Product>>(savedPurchases, HttpStatus.OK);
+		responseContent.put("savedPurchases",savedPurchases);
+		httpStatus = HttpStatus.OK;
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
 }

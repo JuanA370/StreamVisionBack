@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,22 +13,38 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exceptions.AppException;
 import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.Product;
+import com.example.demo.model.entities.Purchase;
 import com.example.demo.model.entities.UserEntity;
+import com.example.demo.model.persist.dao.FavoriteDao;
 import com.example.demo.model.service.FavoritesService;
 
 @RestController
+@RequestMapping("/favorite")
 public class FavoriteRestController {
 
 	@Autowired
-	private FavoritesService gf;
+	private FavoriteDao favoriteDao;
 
-	@PostMapping(path = "Favorite", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Favorite> addFavorite(@RequestBody Favorite f) {
-		ResponseEntity<Favorite> returnVar;
+	@PostMapping(path = "Favorite", 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> addFavorite(@RequestBody Favorite favorite) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		Favorite addedFavorite = null;
+		try {
+			addedFavorite = favoriteDao.createFavorite(favorite);
+		} catch (AppException e) {
+			responseContent.put("message", e.getMessage());
+			response = new ResponseEntity<Map<String, Object>>(responseContent,e.getHttpStatus());
+		}
+		/*
 		try {
 			f = gf.saveFav(f);
 			if (f != null)
@@ -35,11 +53,13 @@ public class FavoriteRestController {
 				returnVar = new ResponseEntity<Favorite>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			returnVar = new ResponseEntity<Favorite>(f, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return returnVar;
+		}*/
+		response = new ResponseEntity<Favorite>(addedFavorite, HttpStatus.OK);
+		return response;
 	}
 
-	@GetMapping(path = "Favorite/{user}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "Favorite/{user}", 
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Product>> searchProduct(@PathVariable("user") UserEntity usuario) {
 		ResponseEntity<List<Product>> returnVar;
 		try {

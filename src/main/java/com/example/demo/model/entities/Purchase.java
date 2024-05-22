@@ -2,6 +2,8 @@ package com.example.demo.model.entities;
 
 import java.util.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -25,6 +27,7 @@ public class Purchase {
 	private PurchasePk purchasePk;
 
 	@Column
+	@CreationTimestamp
 	private Date purchaseDate;
 
 	@ManyToOne

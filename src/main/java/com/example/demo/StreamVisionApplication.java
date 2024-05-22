@@ -23,6 +23,5 @@ public class StreamVisionApplication {
         ProductsService gp = context.getBean(ProductsService.class);
         AnswersServices gr = context.getBean(AnswersServices.class);
         UsersService gu = context.getBean(UsersService.class);
-        ((ConfigurableApplicationContext)context).close();
 	}
 }

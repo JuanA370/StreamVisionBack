@@ -4,13 +4,10 @@ import java.util.List;
 
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.entities.Purchase;
-import com.example.demo.model.entities.UserEntity;
 
 public interface PurchaseDao {
 
-	public Purchase createPurchase(Purchase purchase);
-	
-	//public Purchase updatePurchase(Purchase purchase);
+	public Purchase createPurchase(Product product, Long logedUserId);
 	
 	public List<Product> readPurchasesByUserId(Long userId);
 	
