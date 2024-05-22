@@ -1,15 +1,21 @@
 package com.example.demo.model.persist.dao;
 
-import com.example.demo.model.entities.MyThread;
+import java.util.List;
+
+import com.example.demo.model.dto.ThreadDto;
 
 public interface MyThreadDao {
 
-	public MyThread createThread (MyThread thread);
+	public ThreadDto createThread (ThreadDto threadDto, Long logedUserId);
 	
-	//public MyThread updateThread (MyThread thread);
+	public ThreadDto updateThread (ThreadDto threadDto);
 	
 	public void deleteThreadById(Long threadId);
 	
-	public MyThread readThreadByUserId(Long threadId);
+	public List<ThreadDto> readThreadsByUserId(Long threadId);
+	
+	public List<ThreadDto> readThreadsByProductId(Long productId);
+	
+	public ThreadDto readThreadById(Long threadId);
 	
 }

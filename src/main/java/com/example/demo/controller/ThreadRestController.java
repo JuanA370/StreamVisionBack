@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,11 @@ public class ThreadRestController {
 		return null;
 	}
 	
+	@PutMapping(path = "/update")
+	public ResponseEntity<?> updateThread(@RequestBody ThreadDto thread){
+		return null;
+	}
+	
 	@GetMapping(path = "/product/{id}")
 	public ResponseEntity<?> forumThreads(@PathVariable Long id){
 		return null;
@@ -39,4 +45,5 @@ public class ThreadRestController {
 	public ResponseEntity<?> threadById(@PathVariable Long id){
 		return null;
 	}
+	
 }

@@ -1,8 +1,14 @@
 package com.example.demo.model.dto;
 
+import com.example.demo.model.entities.Product;
+
+import lombok.Builder;
+
+@Builder
 public record ThreadDto (
 		
-		Long productId,
+		Long id,
+		Product product,
 		String title,
 		String content
 		
