@@ -22,16 +22,12 @@ import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.persist.dao.impl.UserDaoImpl;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserRestController {
 
 	@Autowired
 	private UserDaoImpl userDaoImpl;
 
-	@GetMapping("/hello")
-	public String hello() {
-		return "Hello World Not Secured";
-	}
 	@PostMapping
 	public ResponseEntity<?> createUser(@RequestBody UserDto userDto) {
 		ResponseEntity<?> response;
@@ -50,7 +46,8 @@ public class UserRestController {
 		return response;
 	}
 
-	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{id}",
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchUser(@PathVariable("id") Long id) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
@@ -70,7 +67,8 @@ public class UserRestController {
 		return response;
 	}
 
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateUser(@RequestBody UserDto userDto) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
@@ -92,7 +90,8 @@ public class UserRestController {
 
 	}
 
-	@DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "/{id}",
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
