@@ -61,8 +61,8 @@ public class PurchaseRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			List<Product> savedProducts = purchaseDao.readPurchasesByUserId(logedUserId);
-			responseContent.put("result",savedProducts);
+			List<Product> purchasedProducts = purchaseDao.readPurchasesByUserId(logedUserId);
+			responseContent.put("result", purchasedProducts);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
