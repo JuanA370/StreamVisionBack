@@ -30,7 +30,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 	private UserRepository userRep;
 	
 	@Override
-	public ThreadDto createThread(ThreadDto threadDto, Long logedUserId) {
+	public MyThread createThread(ThreadDto threadDto, Long logedUserId) {
 		
 		Product savedProduct = productRep.findById(threadDto.id()).orElse(null);
 		if (savedProduct == null)
@@ -39,27 +39,19 @@ public class MyThreadDaoImpl implements MyThreadDao {
 		UserEntity user = userRep.findById(logedUserId)
 				.orElseThrow(() -> new AppException("Loged user not found", HttpStatus.NOT_FOUND));
 		
-		MyThread thread = MyThread.builder()
+		MyThread creatingThread = MyThread.builder()
 				.title(threadDto.title())
 				.content(threadDto.content())
 				.product(savedProduct)
 				.user(user)
 				.build();
 		
-		MyThread savedThread = threadRep.save(thread);
-		ThreadDto savedThreadDto = ThreadDto.builder()
-				.id(savedThread.getId())
-				.product(savedProduct)
-				.title(savedThread.getTitle())
-				.content(savedThread.getContent())
-				.author(user.getUsername())
-				.build();
-		
-		return savedThreadDto;
+		MyThread savedThread = threadRep.save(creatingThread);
+		return savedThread;
 	}
 
 	@Override
-	public ThreadDto updateThread(ThreadDto threadDto) {
+	public MyThread updateThread(ThreadDto threadDto) {
 		
 		MyThread savedThread = threadRep.findById(threadDto.id())
 				.orElseThrow(() -> new AppException("Thread not found", HttpStatus.NOT_FOUND));
@@ -67,74 +59,46 @@ public class MyThreadDaoImpl implements MyThreadDao {
 		savedThread.setContent(threadDto.content());
 		
 		MyThread updatedThread = threadRep.save(savedThread);
-		ThreadDto updatedThreadDto = ThreadDto.builder()
-				.id(updatedThread.getId())
-				.title(updatedThread.getTitle())
-				.content(updatedThread.getContent())
-				.author(updatedThread.getUser().getUsername())
-				.build();
-		
-		return updatedThreadDto;
+		return updatedThread;
 	}
 
 	@Override
 	public void deleteThreadById(Long threadId) {
+		
+		threadRep.findById(threadId)
+			.orElseThrow(() -> new AppException("Thread not found", HttpStatus.NOT_FOUND));
+		
 		threadRep.deleteById(threadId);
 	}
 
 	@Override
-	public List<ThreadDto> readThreadsByUserId(Long userId) {
+	public List<MyThread> readThreadsByUserId(Long userId) {
 		
 		List<MyThread> userThreads = threadRep.findThreadsByUserId(userId);
 		
 		if (userThreads == null || userThreads.isEmpty())
 			throw new AppException("No products found for this user.", HttpStatus.NO_CONTENT);
-		
-		List<ThreadDto> userThreadDtos = userThreads
-				.stream().map(thread -> ThreadDto.builder()
-						.id(thread.getId())
-						.title(thread.getTitle())
-						.content(thread.getContent())
-						.author(thread.getUser().getUsername())
-						.build())
-				.collect(Collectors.toList()); 
 
-		return userThreadDtos;
+		return userThreads;
 	}
 
 	@Override
-	public List<ThreadDto> readThreadsByProductId(Long productId) {
+	public List<MyThread> readThreadsByProductId(Long productId) {
 		
 		List<MyThread> productThreads = threadRep.findThreadsByProductId(productId);
 		
 		if (productThreads == null || productThreads.isEmpty())
 			throw new AppException("No products found for this user.", HttpStatus.NO_CONTENT);
-		
-		List<ThreadDto> productThreadDtos = productThreads
-				.stream().map(thread -> ThreadDto.builder()
-						.id(thread.getId())
-						.title(thread.getTitle())
-						.content(thread.getContent())
-						.author(thread.getUser().getUsername())
-						.build())
-				.collect(Collectors.toList()); 
 
-		return productThreadDtos;
+		return productThreads;
 	}
 
 	@Override
-	public ThreadDto readThreadById(Long threadId) {
-		MyThread thread = threadRep.findById(threadId)
+	public MyThread readThreadById(Long threadId) {
+		MyThread foundThread = threadRep.findById(threadId)
 				.orElseThrow(() -> new AppException("Thread not found", HttpStatus.NOT_FOUND));
 		
-		ThreadDto threadDto = ThreadDto.builder()
-				.id(threadId)
-				.title(thread.getTitle())
-				.content(thread.getContent())
-				.author(thread.getUser().getUsername())
-				.build();
-		
-		return threadDto;
+		return foundThread;
 	}
 	
 }

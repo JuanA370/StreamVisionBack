@@ -9,7 +9,6 @@ public record ThreadDto (
 		
 		Long id,
 		Product product,
-		String author,
 		String title,
 		String content
 		
