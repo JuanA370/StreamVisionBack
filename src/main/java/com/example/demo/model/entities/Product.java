@@ -36,6 +36,6 @@ public class Product {
 	//AL DEVOLVER LOS PRODUCTOS FAVORITOS DE UN USUARIO SE GENERA JSON INFINITO
 	@OneToMany(mappedBy = "product")
 	@JsonIgnore
-	private List<MyThread> threads;
+	private List<Post> posts;
 
 }

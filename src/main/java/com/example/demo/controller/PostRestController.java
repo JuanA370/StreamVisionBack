@@ -18,42 +18,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
-import com.example.demo.model.dto.ThreadDto;
-import com.example.demo.model.dto.ThreadResponseDto;
-import com.example.demo.model.entities.MyThread;
-import com.example.demo.model.persist.dao.MyThreadDao;
-import com.example.demo.service.ThreadDtoService;
+import com.example.demo.model.dto.PostDto;
+import com.example.demo.model.dto.PostResponseDto;
+import com.example.demo.model.entities.Post;
+import com.example.demo.model.persist.dao.PostDao;
+import com.example.demo.service.PostDtoService;
 
 @RestController
-@RequestMapping(path = "/threads")
-public class ThreadRestController {
+@RequestMapping(path = "/posts")
+public class PostRestController {
 	
 	private final Long logedUserId = 1L;
 	
 	@Autowired
-	private MyThreadDao threadDao;
+	private PostDao postDao;
 	
 	@Autowired
-	private ThreadDtoService threadDtoService;
+	private PostDtoService PostDtoService;
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createThread(@RequestBody ThreadDto threadDto){
+	public ResponseEntity<?> createPost(@RequestBody PostDto postDto){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			MyThread createdThread = threadDao.createThread(threadDto, logedUserId);
-			ThreadResponseDto createdThreadDto = threadDtoService.createThreadResponseDto(createdThread);
-			responseContent.put("result", createdThreadDto);
+			Post createdPost = postDao.createPost(postDto, logedUserId);
+			PostResponseDto createdPostDto = PostDtoService.createPostResponseDto(createdPost);
+			responseContent.put("result", createdPostDto);
 			httpStatus = HttpStatus.CREATED;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
 			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
-			responseContent.put("message", "Error while creating thread: ".concat(e.getMessage()));
+			responseContent.put("message", "Error while creating post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		
@@ -64,21 +64,21 @@ public class ThreadRestController {
 	@DeleteMapping(path = "/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> deleteThread(@PathVariable Long id){
+	public ResponseEntity<?> deletePost(@PathVariable Long id){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			threadDao.deleteThreadById(id);
-			responseContent.put("message", "thread removed");
+			postDao.deletePostById(id);
+			responseContent.put("message", "post removed");
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
 			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
-			responseContent.put("message", "Error while removing thread: ".concat(e.getMessage()));
+			responseContent.put("message", "Error while removing post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		
@@ -88,22 +88,22 @@ public class ThreadRestController {
 	
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateThread(@RequestBody ThreadDto threadDto){
+	public ResponseEntity<?> updatePost(@RequestBody PostDto postDto){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			MyThread updatedThread = threadDao.updateThread(threadDto);
-			ThreadResponseDto updatedThreadDto = threadDtoService.createThreadResponseDto(updatedThread);
-			responseContent.put("result", updatedThreadDto);
+			Post updatedPost = postDao.updatePost(postDto);
+			PostResponseDto updatedPostDto = PostDtoService.createPostResponseDto(updatedPost);
+			responseContent.put("result", updatedPostDto);
 			httpStatus = HttpStatus.CREATED;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
 			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
-			responseContent.put("message", "Error while updating thread: ".concat(e.getMessage()));
+			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		
@@ -114,22 +114,22 @@ public class ThreadRestController {
 	@GetMapping(path = "/product/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> productThreads(@PathVariable Long id){
+	public ResponseEntity<?> productPosts(@PathVariable Long id){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			List<MyThread> forumThreads = threadDao.readThreadsByProductId(id);
-			List<ThreadResponseDto> forumThreadDtos = threadDtoService.threadListToThreadResponseDtoList(forumThreads);
-			responseContent.put("result", forumThreadDtos);
+			List<Post> forumPosts = postDao.readPostsByProductId(id);
+			List<PostResponseDto> forumPostsDtos = PostDtoService.postListToPostResponseDtoList(forumPosts);
+			responseContent.put("result", forumPostsDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
 			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
-			responseContent.put("message", "Error while updating thread: ".concat(e.getMessage()));
+			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		
@@ -140,16 +140,16 @@ public class ThreadRestController {
 	@GetMapping(path= "/user/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> userThreads(@PathVariable Long id){
+	public ResponseEntity<?> userPosts(@PathVariable Long id){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			List<MyThread> userThreads = threadDao.readThreadsByUserId(id);
-			List<ThreadResponseDto> userThreadDtos = threadDtoService.threadListToThreadResponseDtoList(userThreads);
-			responseContent.put("result", userThreadDtos);
+			List<Post> userPosts = postDao.readPostsByUserId(id);
+			List<PostResponseDto> userPostDtos = PostDtoService.postListToPostResponseDtoList(userPosts);
+			responseContent.put("result", userPostDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -166,22 +166,46 @@ public class ThreadRestController {
 	@GetMapping(path = "/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> threadById(@PathVariable Long id){
+	public ResponseEntity<?> postById(@PathVariable Long id){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			MyThread foundThread = threadDao.readThreadById(id);
-			ThreadResponseDto foundThreadDto = threadDtoService.createThreadResponseDto(foundThread);
-			responseContent.put("result", foundThreadDto);
+			Post foundPost = postDao.readPostById(id);
+			PostResponseDto foundPostDto = PostDtoService.createPostResponseDto(foundPost);
+			responseContent.put("result", foundPostDto);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
 			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while updating thread: ".concat(e.getMessage()));
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
+	
+	@GetMapping("/thread/{id}")
+	public ResponseEntity<?> getReplies(@PathVariable Long id){
+		
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		
+		try {
+			List<Post> postReplies = postDao.readRepliesByPostId(id);
+			List<PostResponseDto> postRepliesDtos = PostDtoService.postListToPostResponseDtoList(postReplies);
+			responseContent.put("result", postRepliesDtos);
+			httpStatus = HttpStatus.OK;
+		} catch (AppException e) {
+			responseContent.put("message", e.getMessage());
+			httpStatus = e.getHttpStatus();
+		} catch (Exception e) {
+			responseContent.put("message", "Error while reading replies: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		

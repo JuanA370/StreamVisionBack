@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
-import com.example.demo.model.services.APIService;
+import com.example.demo.service.APIService;
 
 @RestController
 @RequestMapping("")
 public class APIController {
+	
 	private final AppException appException = new AppException("Api external error", HttpStatus.INTERNAL_SERVER_ERROR);
+	
 	@Autowired
 	private APIService apiService;
 
