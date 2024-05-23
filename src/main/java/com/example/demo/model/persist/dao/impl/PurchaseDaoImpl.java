@@ -48,8 +48,8 @@ public class PurchaseDaoImpl implements PurchaseDao {
 				.product(savedProduct)
 				.user(user)
 				.build();
-		Purchase createdPurchase = purchaseRep.save(purchase);
 		
+		Purchase createdPurchase = purchaseRep.save(purchase);
 		return createdPurchase;
 	}
 

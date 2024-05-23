@@ -28,7 +28,7 @@ public class MyThreadDaoImpl implements MyThreadDao {
 	
 	@Autowired
 	private UserRepository userRep;
-
+	
 	@Override
 	public ThreadDto createThread(ThreadDto threadDto, Long logedUserId) {
 		

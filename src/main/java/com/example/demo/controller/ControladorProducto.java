@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.entities.Product;
-import com.example.demo.model.service.ProductsService;
+import com.example.demo.model.services.ProductsService;
 
 @RestController
 public class ControladorProducto {
