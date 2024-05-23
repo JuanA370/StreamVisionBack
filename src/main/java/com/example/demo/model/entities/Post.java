@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,6 +16,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,8 +34,11 @@ public class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+	@Nonnull
+	@Size(max = 100,message = "Title must not have more than 100 characteres")
 	private String title;
+	@Nonnull
+	@Size(max = 400,message = "Content must not have more than 400 characteres")
 	private String content;
 	
 	@CreationTimestamp
