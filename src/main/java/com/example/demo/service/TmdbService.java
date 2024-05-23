@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class APIService {
+public class TmdbService {
 	@Autowired
 	private RestTemplate restTemplate;
 

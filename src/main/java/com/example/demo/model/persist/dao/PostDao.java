@@ -19,6 +19,6 @@ public interface PostDao {
 	
 	public List<Post> readRepliesByPostId(Long postId);
 	
-	public Post readPostById(Long threadId);
+	public Post readPostById(Long postId);
 	
 }

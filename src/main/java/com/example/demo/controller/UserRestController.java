@@ -20,7 +20,7 @@ import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.dto.UserLoginDto;
 import com.example.demo.model.entities.UserEntity;
-import com.example.demo.model.persist.dao.impl.UserDaoImpl;
+import com.example.demo.model.persist.dao.UserDao;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class UserRestController {
 
 	@Autowired
-	private UserDaoImpl userDaoImpl;
+	private UserDao userDao;
 
 
 	@GetMapping("/login")
@@ -41,8 +41,8 @@ public class UserRestController {
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity user = userDaoImpl.saveUser(userDto);
-			responseContent.put("result", user);
+			UserEntity createdUser = userDao.createUser(userDto);
+			responseContent.put("result", createdUser);
 			httpStatus = HttpStatus.CREATED;
 		} catch (Exception e) {
 			responseContent.put("message", e);
@@ -60,7 +60,7 @@ public class UserRestController {
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity user = userDaoImpl.getUser(id);
+			UserEntity user = userDao.readUserById(id);
 			responseContent.put("result", user);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
@@ -81,8 +81,8 @@ public class UserRestController {
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity updateUser = userDaoImpl.updateUser(userDto);
-			responseContent.put("Updated user", updateUser);
+			UserEntity updatedUser = userDao.updateUser(userDto);
+			responseContent.put("result", updatedUser);
 			httpStatus = HttpStatus.CREATED;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -104,8 +104,8 @@ public class UserRestController {
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity deleteUser = userDaoImpl.getUser(id);
-			responseContent.put("Deleted user", deleteUser);
+			userDao.deleteUserById(id);
+			responseContent.put("message", "User deleted");
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
