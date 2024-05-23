@@ -46,11 +46,11 @@ public class Post {
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
 
-	@OneToMany(mappedBy = "replies")
+	@ManyToOne
 	@JoinColumn(name = "replied_post_id")
 	private Post repliedPost;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "repliedPost", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<Post> replies;
 	
 }

@@ -23,7 +23,7 @@ import com.example.demo.model.persist.dao.FavoriteDao;
 import com.example.demo.service.FavoriteDtoService;
 
 @RestController
-@RequestMapping("/favorite")
+@RequestMapping("/favorites")
 public class FavoriteRestController {
 
 	private final Long logedUserId = 1L;
@@ -35,7 +35,9 @@ public class FavoriteRestController {
 	private FavoriteDtoService favoriteDtoService;
 
 	// SAVE UNSAVE
-	@PostMapping(path = "/interact/{action}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "/interact/{action}", 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> favoriteInteractionHnadler(@RequestBody Product product, @PathVariable String action) {
 
 		ResponseEntity<?> response;

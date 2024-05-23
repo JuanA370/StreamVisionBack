@@ -53,7 +53,7 @@ public class PostDaoImpl implements PostDao {
 	public Post updatePost(PostDto postDto) {
 		
 		Post savedPost = postRep.findById(postDto.id())
-				.orElseThrow(() -> new AppException("Thread not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new AppException("Post not found", HttpStatus.NOT_FOUND));
 		savedPost.setTitle(postDto.title());
 		savedPost.setContent(postDto.content());
 		
@@ -65,7 +65,7 @@ public class PostDaoImpl implements PostDao {
 	public void deletePostById(Long threadId) {
 		
 		postRep.findById(threadId)
-			.orElseThrow(() -> new AppException("Thread not found", HttpStatus.NOT_FOUND));
+			.orElseThrow(() -> new AppException("Post not found", HttpStatus.NOT_FOUND));
 		
 		postRep.deleteById(threadId);
 	}
@@ -76,7 +76,7 @@ public class PostDaoImpl implements PostDao {
 		List<Post> postReplies = postRep.findRepliesByPostId(postId);
 		
 		if (postReplies == null || postReplies.isEmpty())
-			throw new AppException("No replies found for the post.", HttpStatus.NO_CONTENT);
+			throw new AppException("No replies found for the post", HttpStatus.NO_CONTENT);
 
 		return postReplies;
 	}
@@ -87,7 +87,7 @@ public class PostDaoImpl implements PostDao {
 		List<Post> userPosts = postRep.findPostsByUserId(userId);
 		
 		if (userPosts == null || userPosts.isEmpty())
-			throw new AppException("No products found for this user.", HttpStatus.NO_CONTENT);
+			throw new AppException("No posts aviables", HttpStatus.NO_CONTENT);
 
 		return userPosts;
 	}
@@ -98,7 +98,7 @@ public class PostDaoImpl implements PostDao {
 		List<Post> productPosts = postRep.findPostsByProductId(productId);
 		
 		if (productPosts == null || productPosts.isEmpty())
-			throw new AppException("No products found for this user.", HttpStatus.NO_CONTENT);
+			throw new AppException("No posts aviables", HttpStatus.NO_CONTENT);
 
 		return productPosts;
 	}
@@ -107,7 +107,7 @@ public class PostDaoImpl implements PostDao {
 	public Post readPostById(Long postId) {
 		
 		Post foundPost = postRep.findById(postId)
-				.orElseThrow(() -> new AppException("Thread not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new AppException("Post not found", HttpStatus.NOT_FOUND));
 		
 		return foundPost;
 	}

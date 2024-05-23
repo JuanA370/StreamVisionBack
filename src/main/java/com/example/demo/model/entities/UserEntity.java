@@ -40,10 +40,10 @@ public class UserEntity {
 	private boolean active;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private List<Post> threads;
+	private List<Post> posts;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private List<Reply> replies;
+	private List<Post> replies;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

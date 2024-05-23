@@ -38,14 +38,14 @@ public class PostRestController {
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createPost(@RequestBody PostDto threadDto){
+	public ResponseEntity<?> createPost(@RequestBody PostDto postDto){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			Post createdPost = postDao.createPost(threadDto, logedUserId);
+			Post createdPost = postDao.createPost(postDto, logedUserId);
 			PostResponseDto createdPostDto = PostDtoService.createPostResponseDto(createdPost);
 			responseContent.put("result", createdPostDto);
 			httpStatus = HttpStatus.CREATED;
@@ -88,14 +88,14 @@ public class PostRestController {
 	
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updatePost(@RequestBody PostDto threadDto){
+	public ResponseEntity<?> updatePost(@RequestBody PostDto postDto){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			Post updatedPost = postDao.updatePost(threadDto);
+			Post updatedPost = postDao.updatePost(postDto);
 			PostResponseDto updatedPostDto = PostDtoService.createPostResponseDto(updatedPost);
 			responseContent.put("result", updatedPostDto);
 			httpStatus = HttpStatus.CREATED;
