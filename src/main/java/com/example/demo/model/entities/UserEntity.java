@@ -37,10 +37,10 @@ public class UserEntity {
 	private Long id;
 	@Column
 	@Nonnull
-	@Size(max=30,message = "The username should not has more than 30 characteres")
-	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "El nombre de usuario no debe contener caracteres especiales")
+	@Size(max=30,message = "Username must not have more than 30 characteres")
+	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Username must not contain special characters")
 	private String username;
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$" , message = "The password must have one capital letter, one lower case letter , at least 8 of lentgh")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$" , message ="Password must be 8 characters long and contain a lower case letter, an upper case letter and a number")
 	private String password;
 	@Email
 	@Nonnull
