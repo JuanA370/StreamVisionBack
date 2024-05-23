@@ -36,8 +36,7 @@ public class ThreadRestController {
 	@Autowired
 	private ThreadDtoService threadDtoService;
 
-	@PostMapping(path = "/create",
-			consumes = MediaType.APPLICATION_JSON_VALUE, 
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> createThread(@RequestBody ThreadDto threadDto){
 		
@@ -62,7 +61,7 @@ public class ThreadRestController {
 		return response;
 	}
 	
-	@DeleteMapping(path = "/delete/{id}",
+	@DeleteMapping(path = "/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteThread(@PathVariable Long id){
@@ -87,8 +86,7 @@ public class ThreadRestController {
 		return response;
 	}
 	
-	@PutMapping(path = "/update",
-			consumes = MediaType.APPLICATION_JSON_VALUE, 
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateThread(@RequestBody ThreadDto threadDto){
 		
@@ -116,7 +114,7 @@ public class ThreadRestController {
 	@GetMapping(path = "/product/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> forumThreads(@PathVariable Long id){
+	public ResponseEntity<?> productThreads(@PathVariable Long id){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
