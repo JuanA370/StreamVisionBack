@@ -18,19 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.UserDto;
+import com.example.demo.model.dto.UserLoginDto;
 import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.persist.dao.impl.UserDaoImpl;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/user")
+@Tag(name="Endpoint Usuarios")
 public class UserRestController {
 
 	@Autowired
 	private UserDaoImpl userDaoImpl;
 
-	@GetMapping("/hello")
-	public String hello() {
-		return "Hello World Not Secured";
+	@GetMapping("/login")
+	public void login(@RequestBody UserLoginDto user) {
 	}
 	@PostMapping
 	public ResponseEntity<?> createUser(@RequestBody UserDto userDto) {
