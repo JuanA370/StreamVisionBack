@@ -22,16 +22,16 @@ public class UserDaoImpl implements UserDao{
 	private UserRepository userRepository;
 	
 	@Override
-	public UserEntity saveUser(UserDto u) {
+	public UserEntity saveUser(UserDto userDto) {
 		RoleEntity role = RoleEntity.builder()
 				.name(ERole.valueOf("USER"))
 				.build();
 		Set<RoleEntity> roles = new HashSet<>();
 		roles.add(role);
 		UserEntity user=  UserEntity.builder()
-				.username(u.getUsername())
-				.password(u.getPassword())
-				.email(u.getEmail())
+				.username(userDto.username())
+				.password(userDto.password())
+				.email(userDto.email())
 				.coins(100)
 				.active(true)
 				.roles(roles)
@@ -44,4 +44,17 @@ public class UserDaoImpl implements UserDao{
 		return user;
 	}
 	
+	@Override
+	public void deleteUserByID(Long id) {
+		userRepository.deleteById(id);
+	}
+	
+	@Override
+	public UserEntity updateUser(UserDto userDto) {
+		UserEntity savedUser = userRepository.findById(userDto.id()).orElseThrow(() -> new AppException("Could not find original user", HttpStatus.NOT_FOUND));
+		savedUser.setActive(userDto.active());
+		savedUser.setPassword(userDto.password());
+		savedUser.setUsername(userDto.username());
+		return savedUser;
+	}
 }

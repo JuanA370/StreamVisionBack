@@ -8,4 +8,8 @@ public interface UserDao {
 	public UserEntity saveUser(UserDto u);
 	
 	public UserEntity getUser(Long i);
+
+	void deleteUserByID(Long id);
+
+	UserEntity updateUser(UserDto userDto);
 }
