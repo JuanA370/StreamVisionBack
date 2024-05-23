@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
+import com.example.demo.model.dto.FavoriteResponseDto;
 import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.FavoriteDao;
+import com.example.demo.service.FavoriteDtoService;
 
 @RestController
 @RequestMapping("/favorite")
@@ -28,6 +30,9 @@ public class FavoriteRestController {
 
 	@Autowired
 	private FavoriteDao favoriteDao;
+	
+	@Autowired
+	private FavoriteDtoService favoriteDtoService;
 
 	// SAVE UNSAVE
 	@PostMapping(path = "/interact/{action}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,12 +40,12 @@ public class FavoriteRestController {
 
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
-		Favorite updatedFavorite = null;
 		HttpStatus httpStatus;
 
 		try {
-			updatedFavorite = favoriteDao.updateFavorite(product, logedUserId, action);
-			responseContent.put("updatedFavorite", updatedFavorite);
+			Favorite updatedFavorite = favoriteDao.updateFavorite(product, logedUserId, action);
+			FavoriteResponseDto favoriteResponseDto = favoriteDtoService.createFavoriteResponseDto(updatedFavorite);
+			responseContent.put("result", favoriteResponseDto);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -67,7 +72,7 @@ public class FavoriteRestController {
 
 		try {
 			List<Product> userProducts = favoriteDao.readFavoriteProductsByUserId(logedUserId);
-			responseContent.put("userProducts", userProducts);
+			responseContent.put("result", userProducts);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());

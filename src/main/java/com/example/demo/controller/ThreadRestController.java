@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.ThreadDto;
+import com.example.demo.model.dto.ThreadResponseDto;
+import com.example.demo.model.entities.MyThread;
 import com.example.demo.model.persist.dao.MyThreadDao;
+import com.example.demo.service.ThreadDtoService;
 
 @RestController
 @RequestMapping(path = "/threads")
@@ -29,9 +32,11 @@ public class ThreadRestController {
 	
 	@Autowired
 	private MyThreadDao threadDao;
+	
+	@Autowired
+	private ThreadDtoService threadDtoService;
 
-	@PostMapping(path = "/create",
-			consumes = MediaType.APPLICATION_JSON_VALUE, 
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> createThread(@RequestBody ThreadDto threadDto){
 		
@@ -40,8 +45,9 @@ public class ThreadRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			ThreadDto createdThread = threadDao.createThread(threadDto, logedUserId);
-			responseContent.put("createdThread", createdThread);
+			MyThread createdThread = threadDao.createThread(threadDto, logedUserId);
+			ThreadResponseDto createdThreadDto = threadDtoService.createThreadResponseDto(createdThread);
+			responseContent.put("result", createdThreadDto);
 			httpStatus = HttpStatus.CREATED;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -55,7 +61,7 @@ public class ThreadRestController {
 		return response;
 	}
 	
-	@DeleteMapping(path = "/delete/{id}",
+	@DeleteMapping(path = "/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteThread(@PathVariable Long id){
@@ -68,6 +74,9 @@ public class ThreadRestController {
 			threadDao.deleteThreadById(id);
 			responseContent.put("message", "thread removed");
 			httpStatus = HttpStatus.OK;
+		} catch (AppException e) {
+			responseContent.put("message", e.getMessage());
+			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while removing thread: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -77,8 +86,7 @@ public class ThreadRestController {
 		return response;
 	}
 	
-	@PutMapping(path = "/update",
-			consumes = MediaType.APPLICATION_JSON_VALUE, 
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateThread(@RequestBody ThreadDto threadDto){
 		
@@ -87,8 +95,9 @@ public class ThreadRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			ThreadDto updatedThread = threadDao.updateThread(threadDto);
-			responseContent.put("updatedThread", updatedThread);
+			MyThread updatedThread = threadDao.updateThread(threadDto);
+			ThreadResponseDto updatedThreadDto = threadDtoService.createThreadResponseDto(updatedThread);
+			responseContent.put("result", updatedThreadDto);
 			httpStatus = HttpStatus.CREATED;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -105,15 +114,16 @@ public class ThreadRestController {
 	@GetMapping(path = "/product/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> forumThreads(@PathVariable Long id){
+	public ResponseEntity<?> productThreads(@PathVariable Long id){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			List<ThreadDto> forumThreads = threadDao.readThreadsByProductId(id);
-			responseContent.put("forumThreads", forumThreads);
+			List<MyThread> forumThreads = threadDao.readThreadsByProductId(id);
+			List<ThreadResponseDto> forumThreadDtos = threadDtoService.threadListToThreadResponseDtoList(forumThreads);
+			responseContent.put("result", forumThreadDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -137,8 +147,9 @@ public class ThreadRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			List<ThreadDto> userThreads = threadDao.readThreadsByUserId(id);
-			responseContent.put("forumThreads", userThreads);
+			List<MyThread> userThreads = threadDao.readThreadsByUserId(id);
+			List<ThreadResponseDto> userThreadDtos = threadDtoService.threadListToThreadResponseDtoList(userThreads);
+			responseContent.put("result", userThreadDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -162,8 +173,9 @@ public class ThreadRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			ThreadDto thread = threadDao.readThreadById(id);
-			responseContent.put("thread", thread);
+			MyThread foundThread = threadDao.readThreadById(id);
+			ThreadResponseDto foundThreadDto = threadDtoService.createThreadResponseDto(foundThread);
+			responseContent.put("result", foundThreadDto);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());

@@ -35,12 +35,11 @@ public class PurchaseRestController {
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
-		Purchase savedPurchase = null;
 		HttpStatus httpStatus;
 		
 		try {
-			savedPurchase = purchaseDao.createPurchase(product, logedUserId);
-			responseContent.put("savedPurchase", savedPurchase);
+			Purchase savedPurchase = purchaseDao.createPurchase(product, logedUserId);
+			responseContent.put("result", savedPurchase);
 			httpStatus = HttpStatus.ACCEPTED;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -59,12 +58,11 @@ public class PurchaseRestController {
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
-		List<Product> savedPurchases = null;
 		HttpStatus httpStatus;
 		
 		try {
-			savedPurchases = purchaseDao.readPurchasesByUserId(logedUserId);
-			responseContent.put("savedPurchases",savedPurchases);
+			List<Product> savedProducts = purchaseDao.readPurchasesByUserId(logedUserId);
+			responseContent.put("result",savedProducts);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());

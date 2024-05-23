@@ -7,15 +7,21 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.ReplyDto;
+import com.example.demo.model.dto.ReplyResponseDto;
+import com.example.demo.model.entities.Reply;
 import com.example.demo.model.persist.dao.ReplyDao;
+import com.example.demo.service.ReplyDtoService;
 
 @RestController
 @RequestMapping("/replies")
@@ -23,6 +29,9 @@ public class ReplyRestController {
 	
 	@Autowired
 	private ReplyDao replyDao;
+	
+	@Autowired
+	private ReplyDtoService replyDtoService;
 	
 	private final Long logedUserId = 1L;
 	
@@ -34,8 +43,9 @@ public class ReplyRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			List<ReplyDto> threadReplies = replyDao.readRepliesByThreadId(id);
-			responseContent.put("threadReplies", threadReplies);
+			List<Reply> threadReplies = replyDao.readRepliesByThreadId(id);
+			List<ReplyResponseDto> threadReplieDtos = replyDtoService.replyListToReplyResponseDtoList(threadReplies);
+			responseContent.put("result", threadReplieDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -57,8 +67,9 @@ public class ReplyRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			List<ReplyDto> userReplies = replyDao.readRepliesByUserId(id);
-			responseContent.put("userReplies", userReplies);
+			List<Reply> userReplies = replyDao.readRepliesByUserId(id);
+			List<ReplyResponseDto> userReplyDtos = replyDtoService.replyListToReplyResponseDtoList(userReplies);
+			responseContent.put("result", userReplyDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -72,7 +83,7 @@ public class ReplyRestController {
 		return response;
 	}
 	
-	@GetMapping("/create")
+	@PostMapping
 	public ResponseEntity<?> createReply(@RequestBody ReplyDto replyDto){
 		
 		ResponseEntity<?> response;
@@ -80,8 +91,9 @@ public class ReplyRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			ReplyDto createdReply = replyDao.createReply(replyDto, logedUserId);
-			responseContent.put("createdReply", createdReply);
+			Reply createdReply = replyDao.createReply(replyDto, logedUserId);
+			ReplyResponseDto createdReplyDto = replyDtoService.createReplyResponseDto(createdReply); 
+			responseContent.put("result", createdReplyDto);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -95,7 +107,7 @@ public class ReplyRestController {
 		return response;
 	}
 	
-	@GetMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteReply(@PathVariable Long id){
 		
 		ResponseEntity<?> response;
@@ -115,16 +127,17 @@ public class ReplyRestController {
 		return response;
 	}
 	
-	@GetMapping("/update")
-	public ResponseEntity<?> getThreadReplies(@RequestBody ReplyDto replyDto){
+	@PutMapping
+	public ResponseEntity<?> updateReply(@RequestBody ReplyDto replyDto){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			ReplyDto updatedReply = replyDao.updateReply(replyDto);
-			responseContent.put("updatedReply", updatedReply);
+			Reply updatedReply = replyDao.updateReply(replyDto);
+			ReplyResponseDto updatedReplyDto = replyDtoService.createReplyResponseDto(updatedReply);
+			responseContent.put("result", updatedReplyDto);
 			httpStatus = HttpStatus.CREATED;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());

@@ -1,7 +1,6 @@
 package com.example.demo.model.persist.dao.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +29,7 @@ public class ReplyDaoImpl implements ReplyDao{
 	private UserRepository userRep;
 
 	@Override
-	public ReplyDto createReply(ReplyDto replyDto, Long logedUserId) {
+	public Reply createReply(ReplyDto replyDto, Long logedUserId) {
 		
 		UserEntity user = userRep.findById(logedUserId)
 				.orElseThrow(() -> new AppException("Loged user not found", HttpStatus.NOT_FOUND));
@@ -44,58 +43,46 @@ public class ReplyDaoImpl implements ReplyDao{
 				.content(replyDto.content())
 				.build();
 		
-		replyRep.save(reply); 
-		return replyDto;
+		Reply createdReply = replyRep.save(reply); 
+		return createdReply;
 	}
 
 	@Override
-	public ReplyDto updateReply(ReplyDto replyDto) {
+	public Reply updateReply(ReplyDto replyDto) {
 		
 		Reply savedReply = replyRep.findById(replyDto.replyId())
 				.orElseThrow(() -> new AppException("Could not find original reply", HttpStatus.NOT_FOUND));
 		
 		savedReply.setContent(replyDto.content());
-		replyRep.save(savedReply);
-		return replyDto;
+		Reply updatedReply = replyRep.save(savedReply);
+		return updatedReply;
 	}
 
 	@Override
 	public void deleteReplyById(Long replyId) {
+		
+		replyRep.findById(replyId).orElseThrow(() -> new AppException("Reply not found", HttpStatus.NOT_FOUND));
 		replyRep.deleteById(replyId);
 	}
 
 	@Override
-	public List<ReplyDto> readRepliesByUserId(Long userId) {
+	public List<Reply> readRepliesByUserId(Long userId) {
 		
 		List<Reply> userReplies = replyRep.findRepliesByUserId(userId);
 		if (userReplies == null || userReplies.isEmpty())
 			throw new AppException("No replies found", HttpStatus.NO_CONTENT);
 		
-		List<ReplyDto> userReplyDtos = userReplies.stream()
-				.map(reply -> ReplyDto.builder()
-						.content(reply.getContent())
-						.author(reply.getUser().getUsername())
-						.build())
-				.collect(Collectors.toList());
-		
-		return userReplyDtos;
+		return userReplies;
 	}
 
 	@Override
-	public List<ReplyDto> readRepliesByThreadId(Long threadId) {
+	public List<Reply> readRepliesByThreadId(Long threadId) {
 		
 		List<Reply> threadReplies = replyRep.findRepliesByThreadId(threadId);
 		if (threadReplies == null || threadReplies.isEmpty())
 			throw new AppException("No replies found", HttpStatus.NO_CONTENT);
 		
-		List<ReplyDto> threadReplyDtos = threadReplies.stream()
-				.map(reply -> ReplyDto.builder()
-						.content(reply.getContent())
-						.author(reply.getUser().getUsername())
-						.build())
-				.collect(Collectors.toList());
-		
-		return threadReplyDtos;
+		return threadReplies;
 	}
 	
 
