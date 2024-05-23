@@ -1,0 +1,484 @@
+package com.example.demo.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.exceptions.AppException;
+import com.example.demo.model.services.APIService;
+
+@RestController
+@RequestMapping("")
+public class APIController {
+	private final AppException appException = new AppException("Api external error", HttpStatus.INTERNAL_SERVER_ERROR);
+	@Autowired
+	private APIService apiService;
+
+	// LISTA de GENEROS de películas
+	@GetMapping("/movies/genrelist")
+	public ResponseEntity<?> getMovieGenreList() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String genre = apiService.getMovieGenreList();
+			responseContent.put("result", genre);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+	
+	
+
+	// Peliculas populares ESPAÑOLAS
+	@GetMapping("/movies/spanish")
+	public ResponseEntity<?> getSpanishMovie() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String spanishMovie = apiService.getSpanishMovie();
+			responseContent.put("result", spanishMovie);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	// Peliculas de ACCION
+	@GetMapping("/movies/genre/action")
+	public ResponseEntity<?> getActionMovie() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String actionMovies = apiService.getActionMovie();
+			responseContent.put("result", actionMovies);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	
+	// Peliculas de DRAMA
+	@GetMapping("/movies/genre/drama")
+	public ResponseEntity<?> getDramaMovie() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String dramaMovies = apiService.getDramaMovie();
+			responseContent.put("result", dramaMovies);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	
+	// Películas populares
+	@GetMapping("/movies/popular")
+	public ResponseEntity<?> getPopularMovies() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String popularMovies = apiService.getPopularMovies();
+			responseContent.put("result", popularMovies);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	
+	// Películas en cartelera
+	@GetMapping("/movies/current")
+	public ResponseEntity<?> getCurrentMovies() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String currentMovies = apiService.getCurrentMovies();
+			responseContent.put("result", currentMovies);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	
+	// Películas próximas
+	@GetMapping("/movies/upcoming")
+	public ResponseEntity<?> getUpcomingMovies() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String upcomingMovies = apiService.getUpcomingMovies();
+			responseContent.put("result", upcomingMovies);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	
+	// Películas mejor valoradas
+	@GetMapping("/movies/toprated")
+	public ResponseEntity<?> getTopRatedMovies() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String topRatedMovies = apiService.getTopRatedMovies();
+			responseContent.put("result", topRatedMovies);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
+
+	
+	// Filtrar Películas por genero
+	@GetMapping("/movies/genre/{id_genre}")
+	public ResponseEntity<?> getMoviesByGenre(@PathVariable int id_genre) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String moviesByGenre = apiService.getMoviesByGenre(id_genre);
+			responseContent.put("result", moviesByGenre);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	
+	// Buscar Películas por ID
+	@GetMapping("/movies/search/{id_movie}")
+	public ResponseEntity<?> getMovieById(@PathVariable long id_movie) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String movieById = apiService.getMovieById(id_movie);
+			responseContent.put("result", movieById);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+//SERIES
+
+	
+	// LISTA de GENEROS de series
+	@GetMapping("/series/genrelist")
+	public ResponseEntity<?> getSerieGenreList() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String serieGenreList = apiService.getSerieGenreList();
+			responseContent.put("result", serieGenreList);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	// Series populares ESPAÑOLAS
+	@GetMapping("/series/spanish")
+	public ResponseEntity<?> getSpanishSerie() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String spanishSerie = 	apiService.getSpanishSerie();;
+			responseContent.put("result", spanishSerie);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	
+	// Series de ACCION
+	@GetMapping("/series/genre/action")
+	public ResponseEntity<?> getActionSerie() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String actionSerie = apiService.getActionSerie();
+			responseContent.put("result", actionSerie);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	
+	// Series de DRAMA
+	@GetMapping("/series/genre/drama")
+	public ResponseEntity<?> getDramaSerie() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String dramaSerie = apiService.getDramaSerie();
+			responseContent.put("result", dramaSerie);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response; 
+
+	}
+
+	
+	// Series populares
+	@GetMapping("/series/popular")
+	public ResponseEntity<?> getPopularSeries() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String popularSeries = apiService.getPopularSeries();
+			responseContent.put("result", popularSeries);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response; 
+
+	}
+
+	
+	// Series que se emiten hoy
+	@GetMapping("/series/today")
+	public ResponseEntity<?> getSeriesAiringToday() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String seriesAiringToday = apiService.getSeriesAiringToday();
+			responseContent.put("result", seriesAiringToday);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response; 
+
+	}
+
+	 
+	// Series en emisión
+	@GetMapping("/series/onair")
+	public ResponseEntity<?> getSeriesOnAir() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String seriesOnAir = apiService.getSeriesOnAir();
+			responseContent.put("result", seriesOnAir);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	
+	// Series mejor valoradas
+	@GetMapping("/series/toprated")
+	public ResponseEntity<?> getTopRatedSeries() {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String topRatedSeries = apiService.getTopRatedSeries();
+			responseContent.put("result", topRatedSeries);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response; 
+
+	}
+
+	
+	// Filtrar Series por genero
+	@GetMapping("/series/genre/{id_genre}")
+	public ResponseEntity<?> getSeriesByGenre(@PathVariable int id_genre) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String seriesByGenre = apiService.getSeriesByGenre(id_genre);
+			responseContent.put("result", seriesByGenre);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response; 
+
+	}
+
+	
+	// Buscar serie por ID
+	@GetMapping("/series/search/{id_serie}")
+	public ResponseEntity<?> getSeriesById(@PathVariable long id_serie) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String seriesById = apiService.getSeriesById(id_serie);;
+			responseContent.put("result", seriesById);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response; 
+
+	}
+
+	 
+	// Buscar películas o series por palabra clave
+	@GetMapping("/search")
+	public ResponseEntity<?> searchMulti(@RequestParam String query) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String multiSearch = apiService.multiSearch(query);
+			responseContent.put("result", multiSearch);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
+}
