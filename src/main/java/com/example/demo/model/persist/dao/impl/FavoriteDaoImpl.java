@@ -16,8 +16,6 @@ import com.example.demo.model.persist.repository.FavoriteRepository;
 import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.UserRepository;
 
-import jakarta.transaction.Transactional;
-
 @Service
 public class FavoriteDaoImpl implements FavoriteDao {
 
@@ -46,8 +44,8 @@ public class FavoriteDaoImpl implements FavoriteDao {
 				.user(user)
 				.isFavorite(false)
 				.build();
+		
 		Favorite createdFavorite = favoriteRep.save(favorite);
-
 		return createdFavorite;
 	}
 
@@ -78,9 +76,10 @@ public class FavoriteDaoImpl implements FavoriteDao {
 
 	@Override
 	public List<Product> readFavoriteProductsByUserId(Long logeduSerId) {
+		
 		List<Product> products = favoriteRep.findFavoriteProductByUserId(logeduSerId);
 		
-		if (products.isEmpty())
+		if (products == null || products.isEmpty())
 			throw new AppException("No saved products found for this user", HttpStatus.NO_CONTENT);
 		return products;
 	}

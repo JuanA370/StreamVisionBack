@@ -11,10 +11,10 @@ import com.example.demo.model.entities.MyThread;
 @Repository
 public interface MyThreadRepository extends JpaRepository<MyThread, Long>{
 
-	@Query("SELECT t FROM Thread t WHERE Thread.user.id =?1")
+	@Query("SELECT t FROM MyThread t WHERE t.user.id =?1")
 	public List<MyThread> findThreadsByUserId(Long userId);
 	
-	@Query("SELECT t FROM Thread t WHERE Thread.product.id =?1")
+	@Query("SELECT t FROM MyThread t WHERE t.product.id =?1")
 	public List<MyThread> findThreadsByProductId(Long productId);
 	
 }

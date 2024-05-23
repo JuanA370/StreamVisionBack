@@ -35,11 +35,13 @@ public class Reply {
 	
 	@ManyToOne
 	@JoinColumn(name = "thread_id")
-	private MyThread thread;	
+	private MyThread thread;
 	
+	/*
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;	
+	*/
 	
 	@Column
 	@CreationTimestamp

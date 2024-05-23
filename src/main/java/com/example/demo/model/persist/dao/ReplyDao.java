@@ -7,14 +7,14 @@ import com.example.demo.model.entities.Reply;
 
 public interface ReplyDao {
 
-	public Reply createReply(ReplyDto replyDto, Long logedUserId);
+	public ReplyDto createReply(ReplyDto replyDto, Long logedUserId);
 	
-	//public Reply updateReply(Reply reply);
+	public ReplyDto updateReply(ReplyDto replydto);
 	
 	public void deleteReplyById(Long replyId);
 	
-	public List<Reply> readRepliesByUserId(Long logedUserId);
+	public List<ReplyDto> readRepliesByUserId(Long userId);
 	
-	public List<Reply> readRepliesByReplyPk(MyThreadPk threadPk);
+	public List<ReplyDto> readRepliesByThreadId(Long threadId);
 	
 }

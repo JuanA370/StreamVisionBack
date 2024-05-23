@@ -27,9 +27,9 @@ public class UsersService {
 		Set<RoleEntity> roles = new HashSet<>();
 		roles.add(role);
 		UserEntity user=  UserEntity.builder()
-				.username(u.getUsername())
-				.password(u.getPassword())
-				.email(u.getEmail())
+				.username(u.username())
+				.password(u.password())
+				.email(u.email())
 				.coins(100)
 				.active(true)
 				.roles(roles)
@@ -41,7 +41,7 @@ public class UsersService {
 		return UsuarioDAO.findAll();
 	}
 
-	public UserEntity searchUser(int id) {
+	public UserEntity searchUser(Long id) {
 		Optional<UserEntity> opU;
 		opU = UsuarioDAO.findById(id);
 		if (opU.isPresent()) {
