@@ -7,9 +7,12 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.example.demo.model.persist.dao.UserDao;
+import com.example.demo.model.persist.dao.impl.UserDaoImpl;
 import com.example.demo.security.jwt.JwtUtils;
 
 import jakarta.servlet.FilterChain;
@@ -23,7 +26,7 @@ public class JwtAuthorizationFilter  extends OncePerRequestFilter{
 	private JwtUtils JwtUtil;
 	
 	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
+	private UserDetailsService userDetailsService;
 
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, 

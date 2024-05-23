@@ -28,6 +28,10 @@ public class UserRestController {
 	@Autowired
 	private UserDaoImpl userDaoImpl;
 
+	@GetMapping("/hello")
+	public String hello() {
+		return "Hello World Not Secured";
+	}
 	@PostMapping
 	public ResponseEntity<?> createUser(@RequestBody UserDto userDto) {
 		ResponseEntity<?> response;

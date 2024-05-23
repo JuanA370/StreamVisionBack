@@ -1,5 +1,7 @@
 package com.example.demo.model.persist.dao;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.entities.UserEntity;
 
@@ -12,4 +14,6 @@ public interface UserDao {
 	void deleteUserByID(Long id);
 
 	UserEntity updateUser(UserDto userDto);
+	
+
 }
