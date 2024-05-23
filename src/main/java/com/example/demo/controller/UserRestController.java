@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.dto.UserLoginDto;
 import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.persist.dao.UserDao;
+import com.example.demo.security.jwt.JwtUtils;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -30,6 +32,9 @@ public class UserRestController {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
 
 
 	@GetMapping("/login")
@@ -52,7 +57,9 @@ public class UserRestController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
-
+	
+	
+	
 	@GetMapping(path = "/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchUser(@PathVariable("id") Long id) {

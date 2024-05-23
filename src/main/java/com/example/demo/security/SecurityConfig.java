@@ -76,4 +76,5 @@ public class SecurityConfig {
 				.passwordEncoder(passwordEncoder)
 				.and().build();
 		}
+	
 }
