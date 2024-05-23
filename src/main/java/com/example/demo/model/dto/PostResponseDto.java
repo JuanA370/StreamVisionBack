@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ThreadResponseDto {
+public class PostResponseDto {
 
 	private Long id;
 	private String author;
