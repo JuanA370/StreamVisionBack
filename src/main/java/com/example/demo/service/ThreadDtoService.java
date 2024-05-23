@@ -1,4 +1,4 @@
-package com.example.demo.model.services;
+package com.example.demo.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,7 +9,7 @@ import com.example.demo.model.dto.ThreadResponseDto;
 import com.example.demo.model.entities.MyThread;
 
 @Service
-public abstract class ThreadDtoService {
+public class ThreadDtoService {
 
 	public ThreadResponseDto createThreadResponseDto(MyThread thread) {
 		ThreadResponseDto threadResponseDto = ThreadResponseDto.builder()

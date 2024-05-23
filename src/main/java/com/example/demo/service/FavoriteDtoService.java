@@ -1,8 +1,11 @@
-package com.example.demo.model.services;
+package com.example.demo.service;
+
+import org.springframework.stereotype.Service;
 
 import com.example.demo.model.dto.FavoriteResponseDto;
 import com.example.demo.model.entities.Favorite;
 
+@Service
 public class FavoriteDtoService {
 	
 	public FavoriteResponseDto createFavoriteResponseDto(Favorite favorite) {

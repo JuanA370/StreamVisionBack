@@ -21,7 +21,7 @@ import com.example.demo.model.dto.ReplyDto;
 import com.example.demo.model.dto.ReplyResponseDto;
 import com.example.demo.model.entities.Reply;
 import com.example.demo.model.persist.dao.ReplyDao;
-import com.example.demo.model.services.ReplyDtoService;
+import com.example.demo.service.ReplyDtoService;
 
 @RestController
 @RequestMapping("/replies")

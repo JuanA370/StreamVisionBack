@@ -20,7 +20,7 @@ import com.example.demo.model.dto.FavoriteResponseDto;
 import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.FavoriteDao;
-import com.example.demo.model.services.FavoriteDtoService;
+import com.example.demo.service.FavoriteDtoService;
 
 @RestController
 @RequestMapping("/favorite")

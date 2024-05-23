@@ -22,7 +22,7 @@ import com.example.demo.model.dto.ThreadDto;
 import com.example.demo.model.dto.ThreadResponseDto;
 import com.example.demo.model.entities.MyThread;
 import com.example.demo.model.persist.dao.MyThreadDao;
-import com.example.demo.model.services.ThreadDtoService;
+import com.example.demo.service.ThreadDtoService;
 
 @RestController
 @RequestMapping(path = "/threads")

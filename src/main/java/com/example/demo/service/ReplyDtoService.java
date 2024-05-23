@@ -1,11 +1,14 @@
-package com.example.demo.model.services;
+package com.example.demo.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
 import com.example.demo.model.dto.ReplyResponseDto;
 import com.example.demo.model.entities.Reply;
 
+@Service
 public class ReplyDtoService {
 
 	public ReplyResponseDto createReplyResponseDto(Reply reply) {
