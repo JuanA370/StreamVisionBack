@@ -3,6 +3,7 @@ package com.example.demo.model.entities;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +15,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,10 +35,15 @@ public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	@Column
+	@Nonnull
+	@Size(max=30,message = "The username should not has more than 30 characteres")
+	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "El nombre de usuario no debe contener caracteres especiales")
 	private String username;
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$" , message = "The password must have one capital letter, one lower case letter , at least 8 of lentgh")
 	private String password;
+	@Email
+	@Nonnull
 	private String email;
 	private int coins;
 	private boolean active;
