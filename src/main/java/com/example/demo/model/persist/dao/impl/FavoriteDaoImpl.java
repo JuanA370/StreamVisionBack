@@ -91,10 +91,10 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	@Override
 	public List<Product> readFavoriteProductsByUserId(String token) {
 		
+		token = token.substring(7);
 		Long logedUserId = jwtUtils.getUserIdFromToken(token);
 		
 		List<Product> products = favoriteRep.findFavoriteProductByUserId(logedUserId);
-		
 		if (products == null || products.isEmpty())
 			throw new AppException("No saved products found for this user", HttpStatus.NO_CONTENT);
 		return products;
