@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,14 +32,15 @@ public class PurchaseRestController {
 	//REGISTRAR UNA COMPRA
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> purchase(@RequestBody Product product) {
+	public ResponseEntity<?> purchase(@RequestBody Product product ,@RequestHeader("Authorization") String token) {
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			Purchase savedPurchase = purchaseDao.createPurchase(product, logedUserId);
+			token = token.substring(7);
+			Purchase savedPurchase = purchaseDao.createPurchase(product, token);
 			responseContent.put("result", savedPurchase);
 			httpStatus = HttpStatus.ACCEPTED;
 		} catch (AppException e) {

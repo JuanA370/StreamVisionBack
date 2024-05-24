@@ -13,14 +13,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
-import com.example.demo.model.services.APIService;
+import com.example.demo.service.TmdbService;
 
 @RestController
 @RequestMapping("")
-public class APIController {
+public class TmdbController {
+	
 	private final AppException appException = new AppException("Api external error", HttpStatus.INTERNAL_SERVER_ERROR);
+	
 	@Autowired
-	private APIService apiService;
+	private TmdbService apiService;
 
 	// LISTA de GENEROS de películas
 	@GetMapping("/movies/genrelist")

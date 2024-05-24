@@ -15,26 +15,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.UserDto;
+import com.example.demo.model.dto.UserLoginDto;
 import com.example.demo.model.entities.UserEntity;
-import com.example.demo.model.persist.dao.impl.UserDaoImpl;
+import com.example.demo.model.persist.dao.UserDao;
+import com.example.demo.security.jwt.JwtUtils;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserRestController {
 
 	@Autowired
-	private UserDaoImpl userDaoImpl;
+	private UserDao userDao;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
 
-	@GetMapping("/hello")
-	public String hello() {
-		return "Hello World Not Secured";
+
+	@GetMapping("/login")
+	public void login(@RequestBody UserLoginDto user) {
 	}
 	@PostMapping
 	public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
@@ -49,8 +57,8 @@ public class UserRestController {
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity user = userDaoImpl.saveUser(userDto);
-			responseContent.put("result", user);
+			UserEntity createdUser = userDao.createUser(userDto);
+			responseContent.put("result", createdUser);
 			httpStatus = HttpStatus.CREATED;
 		} catch (Exception e) {
 			responseContent.put("message", e.getMessage());
@@ -60,14 +68,17 @@ public class UserRestController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
-
-	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	
+	
+	
+	@GetMapping(path = "/{id}",
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchUser(@PathVariable("id") Long id) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity user = userDaoImpl.getUser(id);
+			UserEntity user = userDao.readUserById(id);
 			responseContent.put("result", user);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
@@ -81,14 +92,15 @@ public class UserRestController {
 		return response;
 	}
 
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateUser(@RequestBody UserDto userDto) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity updateUser = userDaoImpl.updateUser(userDto);
-			responseContent.put("Updated user", updateUser);
+			UserEntity updatedUser = userDao.updateUser(userDto);
+			responseContent.put("result", updatedUser);
 			httpStatus = HttpStatus.CREATED;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
@@ -103,14 +115,15 @@ public class UserRestController {
 
 	}
 
-	@DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "/{id}",
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity deleteUser = userDaoImpl.getUser(id);
-			responseContent.put("Deleted user", deleteUser);
+			userDao.deleteUserById(id);
+			responseContent.put("message", "User deleted");
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());

@@ -1,17 +1,15 @@
 package com.example.demo.model.persist.dao;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.entities.UserEntity;
 
 public interface UserDao {
 
-	public UserEntity saveUser(UserDto u);
+	public UserEntity createUser(UserDto userDto);
 	
-	public UserEntity getUser(Long i);
+	public UserEntity readUserById(Long userId);
 
-	void deleteUserByID(Long id);
+	void deleteUserById(Long id);
 
 	UserEntity updateUser(UserDto userDto);
 	

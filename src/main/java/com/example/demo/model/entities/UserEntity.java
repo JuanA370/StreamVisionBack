@@ -42,11 +42,14 @@ public class UserEntity {
 	@Size(max=30,message = "Username must not have more than 30 characteres")
 	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Username must not contain special characters")
 	private String username;
-	@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message="Password must be 8 characters long and contain a lower case letter, an upper case letter and a number")	
+	
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$" , message ="Password must be 8 characters long and contain a lower case letter, an upper case letter and a number")
 	private String password;
+	
 	@Email
 	@Column(nullable = false, unique = true)
 	private String email;
+
 	private int coins;
 	private boolean active;
 

@@ -49,6 +49,11 @@ public class JwtUtils {
 		}
 	}
 	
+	public Long getUserIdFromToken(String token) {
+	    return getClaim(token, claims -> claims.get("userId", Long.class));
+	}
+
+	
 	//Obtener el username del token
 	public String getUsernameFromToken(String token) {
 		return getClaim(token, Claims::getSubject);
