@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.entities.Purchase;
 import com.example.demo.exceptions.AppException;
+import com.example.demo.model.dto.InteractDto;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.PurchaseDao;
 
@@ -32,7 +33,7 @@ public class PurchaseRestController {
 	//REGISTRAR UNA COMPRA
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> purchase(@RequestBody Product product ,@RequestHeader("Authorization") String token) {
+	public ResponseEntity<?> purchase(@RequestBody InteractDto interactDto ,@RequestHeader("Authorization") String token) {
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
@@ -40,7 +41,7 @@ public class PurchaseRestController {
 		
 		try {
 			token = token.substring(7);
-			Purchase savedPurchase = purchaseDao.createPurchase(product, token);
+			Purchase savedPurchase = purchaseDao.createPurchase(interactDto, token);
 			responseContent.put("result", savedPurchase);
 			httpStatus = HttpStatus.ACCEPTED;
 		} catch (AppException e) {

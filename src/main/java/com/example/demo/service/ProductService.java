@@ -2,20 +2,25 @@ package com.example.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.InteractDto;
 import com.example.demo.model.entities.Product;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Service
 public class ProductService {
 	
 	@Autowired
 	private TmdbService tmdbService;
 
+	
 	public Product extractProductFromTmdbJsonApi(InteractDto interactDto) {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		Product extractedProduct = null;
 
 		String json = null;
@@ -29,10 +34,12 @@ public class ProductService {
 		
         try {
 			extractedProduct = objectMapper.readValue(json, Product.class);
+			System.out.println(extractedProduct);
+			
 			extractedProduct.setFilm(interactDto.isFilm());
 			extractedProduct.setTmdbId(interactDto.tmdbId());
 		} catch (Exception e) {
-			throw new AppException("Error extacting information from json", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new AppException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
         
 		return extractedProduct;
