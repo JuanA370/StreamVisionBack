@@ -15,6 +15,7 @@ public class FavoriteDtoService {
 				.title(favorite.getProduct().getOriginal_title())
 				.saved(favorite.isFavorite())
 				.build();
+
 		return favoriteResponseDto;
 	}
 	

@@ -38,13 +38,9 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	private JwtUtils jwtUtils;
 	
 	@Override
-	public Favorite createFavorite(InteractDto interactDto, Long logedUserId) {
+	public Favorite createFavorite(Product savedProduct, Long logedUserId) {
 		
-		Product savedProduct = productRep.findProductByIsFilmAndTmdbId(interactDto.isFilm(), interactDto.tmdbId());
-		if (savedProduct == null) {
-			Product externalProduct = productService.extractProductFromTmdbJsonApi(interactDto);
-			savedProduct = productRep.save(externalProduct);
-		}
+
 			
 		UserEntity user = userRep.findById(logedUserId)
 				.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
@@ -72,24 +68,23 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		}
 		
 		FavoritePk favoritePk = new FavoritePk(savedProduct.getProductId(), logedUserId);
-		
-		if (!action.equals("SAVE") && !action.equals("UNSAVE"))
+		if (!"SAVE".equals(action) && !"UNSAVE".equals(action))
 				throw new AppException("Unknown action", HttpStatus.BAD_REQUEST);
 		
-		Favorite favorite = favoriteRep.findFavoriteByFavoritePk(favoritePk);
-		if (favorite == null)
-			createFavorite(interactDto, logedUserId);
+		Favorite savedfavorite = favoriteRep.findFavoriteByFavoritePk(favoritePk);
+		if (savedfavorite == null)
+			savedfavorite = createFavorite(savedProduct, logedUserId);
 		
-		if (action == "SAVE" && favorite.isFavorite())
+		if ("SAVE".equals(action) && savedfavorite.isFavorite())
 			throw new AppException("Product already saved", HttpStatus.FORBIDDEN);
-		else if (action == "SAVE" && !favorite.isFavorite())
-			favorite.setFavorite(true);
-		else if (action == "UNSAVE" && !favorite.isFavorite())
+		else if ("SAVE".equals(action) && !savedfavorite.isFavorite())
+			savedfavorite.setFavorite(true);
+		else if ("UNSAVE".equals(action) && !savedfavorite.isFavorite())
 			throw new AppException("Product already unsaved", HttpStatus.FORBIDDEN);
-		else if (action == "UNSAVE" && favorite.isFavorite())
-			favorite.setFavorite(false);
-			
-		Favorite updatedFavorite = favoriteRep.save(favorite);
+		else if ("UNSAVE".equals(action) && savedfavorite.isFavorite())
+			savedfavorite.setFavorite(false);
+
+		Favorite updatedFavorite = favoriteRep.save(savedfavorite);
 		return updatedFavorite;
 	}
 
