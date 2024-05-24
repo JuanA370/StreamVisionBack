@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.FavoriteResponseDto;
+import com.example.demo.model.dto.InteractDto;
 import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.FavoriteDao;
@@ -25,8 +27,6 @@ import com.example.demo.service.FavoriteDtoService;
 @RestController
 @RequestMapping("/favorites")
 public class FavoriteRestController {
-
-	private final Long logedUserId = 1L;
 
 	@Autowired
 	private FavoriteDao favoriteDao;
@@ -38,14 +38,14 @@ public class FavoriteRestController {
 	@PostMapping(path = "/interact/{action}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> favoriteInteractionHnadler(@RequestBody Product product, @PathVariable String action) {
+	public ResponseEntity<?> favoriteInteractionHnadler(@RequestBody InteractDto interactDto, @RequestHeader("Authorization") String token, @PathVariable String action) {
 
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 
 		try {
-			Favorite updatedFavorite = favoriteDao.updateFavorite(product, logedUserId, action);
+			Favorite updatedFavorite = favoriteDao.updateFavorite(interactDto, token, action);
 			FavoriteResponseDto favoriteResponseDto = favoriteDtoService.createFavoriteResponseDto(updatedFavorite);
 			responseContent.put("result", favoriteResponseDto);
 			httpStatus = HttpStatus.OK;
@@ -66,14 +66,14 @@ public class FavoriteRestController {
 	 * TIENE COMPRAS HABLARLO CON EL FRONT
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> searchProduct() {
+	public ResponseEntity<?> searchProduct(@RequestHeader("Authorization") String token) {
 
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 
 		try {
-			List<Product> userProducts = favoriteDao.readFavoriteProductsByUserId(logedUserId);
+			List<Product> userProducts = favoriteDao.readFavoriteProductsByUserId(token);
 			responseContent.put("result", userProducts);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {

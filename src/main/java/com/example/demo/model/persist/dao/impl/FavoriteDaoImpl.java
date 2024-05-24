@@ -18,7 +18,6 @@ import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.service.ProductService;
-import com.example.demo.service.TmdbService;
 
 @Service
 public class FavoriteDaoImpl implements FavoriteDao {
@@ -39,9 +38,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	private JwtUtils jwtUtils;
 	
 	@Override
-	public Favorite createFavorite(InteractDto interactDto, String token) {
-
-		Long logedUserId = jwtUtils.getUserIdFromToken(token);
+	public Favorite createFavorite(InteractDto interactDto, Long logedUserId) {
 		
 		Product savedProduct = productRep.findProductByIsFilmAndTmdbId(interactDto.isFilm(), interactDto.tmdbId());
 		if (savedProduct == null) {
@@ -67,15 +64,15 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	public Favorite updateFavorite(InteractDto interactDto, String token, String action) {
 		
 		Long logedUserId = jwtUtils.getUserIdFromToken(token);
-		
-		FavoritePk favoritePk = new FavoritePk(product.getProductId(), logedUserId);
+		Product extractedProduct = productService.extractProductFromTmdbJsonApi(interactDto);
+		FavoritePk favoritePk = new FavoritePk(extractedProduct.getProductId(), logedUserId);
 		
 		if (!action.equals("SAVE") && !action.equals("UNSAVE"))
 				throw new AppException("Unknown action", HttpStatus.BAD_REQUEST);
 		
 		Favorite favorite = favoriteRep.findFavoriteByFavoritePk(favoritePk);
 		if (favorite == null)
-			createFavorite(product, logedUserId);
+			createFavorite(interactDto, logedUserId);
 		
 		if (action == "SAVE" && favorite.isFavorite())
 			throw new AppException("Product already saved", HttpStatus.FORBIDDEN);
@@ -91,9 +88,11 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	}
 
 	@Override
-	public List<Product> readFavoriteProductsByUserId(Long logeduSerId) {
+	public List<Product> readFavoriteProductsByUserId(String token) {
 		
-		List<Product> products = favoriteRep.findFavoriteProductByUserId(logeduSerId);
+		Long logedUserId = jwtUtils.getUserIdFromToken(token);
+		
+		List<Product> products = favoriteRep.findFavoriteProductByUserId(logedUserId);
 		
 		if (products == null || products.isEmpty())
 			throw new AppException("No saved products found for this user", HttpStatus.NO_CONTENT);

@@ -12,7 +12,7 @@ public class FavoriteDtoService {
 		
 		FavoriteResponseDto favoriteResponseDto = FavoriteResponseDto.builder()
 				.username(favorite.getUser().getUsername())
-				.title(favorite.getProduct().getTitle())
+				.title(favorite.getProduct().getOriginal_title())
 				.saved(favorite.isFavorite())
 				.build();
 		return favoriteResponseDto;
