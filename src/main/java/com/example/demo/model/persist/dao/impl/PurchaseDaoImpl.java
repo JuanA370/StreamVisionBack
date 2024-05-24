@@ -15,6 +15,7 @@ import com.example.demo.model.persist.dao.PurchaseDao;
 import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.PurchaseRepository;
 import com.example.demo.model.persist.repository.UserRepository;
+import com.example.demo.security.jwt.JwtUtils;
 
 @Service
 public class PurchaseDaoImpl implements PurchaseDao {
@@ -27,11 +28,15 @@ public class PurchaseDaoImpl implements PurchaseDao {
 
 	@Autowired
 	private ProductRepository productRep;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
 
 	// CREAR COMPRA
 	@Override
-	public Purchase createPurchase(Product product, Long logedUserId) {
+	public Purchase createPurchase(Product product, String token) {
 		
+		Long logedUserId = jwtUtils.getUserIdFromToken(token);
 		PurchasePk purchasePk = new PurchasePk(product.getId(), logedUserId);
 		if (purchaseRep.findPurchaseByPurchasePk(purchasePk) != null)
 			throw new AppException("You have already bought this product", HttpStatus.LOCKED);
