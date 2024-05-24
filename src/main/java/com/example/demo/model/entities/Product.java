@@ -30,8 +30,8 @@ public class Product {
 	private Long tmdbId;
 
 	@Column
-	private String title;
-	private String imageUrl;
+	private String original_title;
+	private String poster_path;
 	private boolean isFilm;
 	
 	//AL DEVOLVER LOS PRODUCTOS FAVORITOS DE UN USUARIO SE GENERA JSON INFINITO

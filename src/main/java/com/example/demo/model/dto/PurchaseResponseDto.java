@@ -7,7 +7,7 @@ import com.example.demo.model.entities.PurchasePk;
 import lombok.Builder;
 
 @Builder
-public class purchaseResponseDto {
+public class PurchaseResponseDto {
 
 	private PurchasePk purchasePk;
 	private Date purchaseDate;

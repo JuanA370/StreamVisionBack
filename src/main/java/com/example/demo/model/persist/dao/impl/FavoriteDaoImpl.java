@@ -16,6 +16,9 @@ import com.example.demo.model.persist.dao.FavoriteDao;
 import com.example.demo.model.persist.repository.FavoriteRepository;
 import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.UserRepository;
+import com.example.demo.security.jwt.JwtUtils;
+import com.example.demo.service.ProductService;
+import com.example.demo.service.TmdbService;
 
 @Service
 public class FavoriteDaoImpl implements FavoriteDao {
@@ -29,18 +32,28 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	@Autowired
 	private UserRepository userRep;
 
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
+	
 	@Override
-	public Favorite createFavorite(InteractDto interactDto, Long logedUserId) {
+	public Favorite createFavorite(InteractDto interactDto, String token) {
 
-		Product savedProduct = productRep.findProductByIsFilmAndTmdbId(false, logedUserId, null);
-		if (savedProduct == null)
-			savedProduct = productRep.save(product);
+		Long logedUserId = jwtUtils.getUserIdFromToken(token);
 		
+		Product savedProduct = productRep.findProductByIsFilmAndTmdbId(interactDto.isFilm(), interactDto.tmdbId());
+		if (savedProduct == null) {
+			Product externalProduct = productService.extractProductFromTmdbJsonApi(interactDto);
+			savedProduct = productRep.save(externalProduct);
+		}
+			
 		UserEntity user = userRep.findById(logedUserId)
 				.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
 		
 		Favorite favorite = Favorite.builder()
-				.favoritePk(new FavoritePk(logedUserId, product.getProductId()))
+				.favoritePk(new FavoritePk(logedUserId, savedProduct.getProductId()))
 				.product(savedProduct)
 				.user(user)
 				.isFavorite(false)
@@ -51,7 +64,9 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	}
 
 	@Override
-	public Favorite updateFavorite(Product product, Long logedUserId, String action) {
+	public Favorite updateFavorite(InteractDto interactDto, String token, String action) {
+		
+		Long logedUserId = jwtUtils.getUserIdFromToken(token);
 		
 		FavoritePk favoritePk = new FavoritePk(product.getProductId(), logedUserId);
 		
