@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.exceptions.AppException;
-import com.example.demo.model.dto.interactDto;
+import com.example.demo.model.dto.InteractDto;
 import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.FavoritePk;
 import com.example.demo.model.entities.Product;
@@ -30,9 +30,9 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	private UserRepository userRep;
 
 	@Override
-	public Favorite createFavorite(interactDto interactDto, Long logedUserId) {
+	public Favorite createFavorite(InteractDto interactDto, Long logedUserId) {
 
-		Product savedProduct = productRep.findById(product.getProductId()).orElse(null);
+		Product savedProduct = productRep.findProductByIsFilmAndTmdbId(false, logedUserId, null);
 		if (savedProduct == null)
 			savedProduct = productRep.save(product);
 		
