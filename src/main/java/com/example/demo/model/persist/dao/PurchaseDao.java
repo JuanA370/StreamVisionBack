@@ -10,6 +10,6 @@ public interface PurchaseDao {
 
 	public Purchase createPurchase(InteractDto interactDto, String token);
 	
-	public List<Product> readPurchasesByUserId(Long userId);
+	public List<Product> readPurchasesByUserId(String token);
 	
 }

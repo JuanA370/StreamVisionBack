@@ -25,7 +25,6 @@ import com.example.demo.model.persist.dao.PurchaseDao;
 @RequestMapping("/purchases")
 public class PurchaseRestController {
 	
-	private final Long logedUserId = 1L;
 	
 	@Autowired
 	private PurchaseDao purchaseDao;
@@ -40,7 +39,6 @@ public class PurchaseRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			token = token.substring(7);
 			Purchase savedPurchase = purchaseDao.createPurchase(interactDto, token);
 			responseContent.put("result", savedPurchase);
 			httpStatus = HttpStatus.ACCEPTED;
@@ -57,14 +55,14 @@ public class PurchaseRestController {
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> findProducts() {
+	public ResponseEntity<?> findProducts(@RequestHeader("Authorization") String token) {
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			List<Product> purchasedProducts = purchaseDao.readPurchasesByUserId(logedUserId);
+			List<Product> purchasedProducts = purchaseDao.readPurchasesByUserId(token);
 			responseContent.put("result", purchasedProducts);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {

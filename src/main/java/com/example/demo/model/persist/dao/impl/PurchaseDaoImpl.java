@@ -39,16 +39,15 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	// CREAR COMPRA
 	@Override
 	public Purchase createPurchase(InteractDto interactDto, String token) {
-		Long productId ;
+		
+		token = token.substring(7);
 		Long logedUserId = jwtUtils.getUserIdFromToken(token);
+		
 		Product product = productRep.findProductByIsFilmAndTmdbId(interactDto.isFilm(), interactDto.tmdbId());
 		if (product == null) {
 			Product createdProduct = productService.extractProductFromTmdbJsonApi(interactDto);
 			product = productRep.save(createdProduct);
-			productId = product.getProductId();
 		}
-		else 
-			productId = product.getProductId();
 		
 		PurchasePk purchasePk = new PurchasePk(product.getProductId(), logedUserId);
 		if (purchaseRep.findPurchaseByPurchasePk(purchasePk) != null)
@@ -67,9 +66,14 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		Purchase createdPurchase = purchaseRep.save(purchase);
 		return createdPurchase;
 	}
+	
+	
 
 	@Override
-	public List<Product> readPurchasesByUserId(Long userId) {
+	public List<Product> readPurchasesByUserId(String token) {
+		
+		token = token.substring(7);
+		Long userId = jwtUtils.getUserIdFromToken(token);
 		
 		List<Product> purchasedProducts = purchaseRep.findPurchasedProductsByUserId(userId);
 		
