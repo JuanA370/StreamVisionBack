@@ -16,6 +16,7 @@ import com.example.demo.model.entities.RoleEntity;
 import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.persist.dao.UserDao;
 import com.example.demo.model.persist.repository.UserRepository;
+import com.example.demo.security.jwt.JwtUtils;
 
 import jakarta.validation.Valid;
 
@@ -27,6 +28,9 @@ public class UserDaoImpl implements UserDao {
 	
 	@Autowired
     private UserRepository userRep;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
     
     @Override
     public UserEntity createUser(UserDto userDto) {
@@ -51,16 +55,18 @@ public class UserDaoImpl implements UserDao {
         return createdUser;
     }
 
-    public UserEntity readUserById(Long id) {
-    	
+    public UserEntity readUserById(String token) {
+    	token= token.substring(7);
+    	Long id = jwtUtils.getUserIdFromToken(token);
         UserEntity user = userRep.findById(id)
         		.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
         return user;
     }
 
     @Override
-    public void deleteUserById(Long userId) {
-    	
+    public void deleteUserById(String token) {
+    	token= token.substring(7);
+    	Long userId = jwtUtils.getUserIdFromToken(token);
     	userRep.findById(userId).orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
     	userRep.deleteById(userId);
     }

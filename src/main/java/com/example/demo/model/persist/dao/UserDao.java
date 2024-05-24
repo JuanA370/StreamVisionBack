@@ -7,9 +7,9 @@ public interface UserDao {
 
 	public UserEntity createUser(UserDto userDto);
 	
-	public UserEntity readUserById(Long userId);
+	public UserEntity readUserById(String token);
 
-	void deleteUserById(Long id);
+	void deleteUserById(String token);
 
 	UserEntity updateUser(UserDto userDto);
 	

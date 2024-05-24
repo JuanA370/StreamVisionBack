@@ -32,6 +32,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
+@Tag(name="Endpoint Usuarios")
 public class UserRestController {
 
 	@Autowired
@@ -71,21 +72,20 @@ public class UserRestController {
 	
 	
 	
-	@GetMapping(path = "/{id}",
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> searchUser(@PathVariable("id") Long id) {
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> searchUser(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity user = userDao.readUserById(id);
+			UserEntity user = userDao.readUserById(token);
 			responseContent.put("result", user);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());
 			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
-			responseContent.put("message", e.getMessage());
+			responseContent.put("messager", e.getMessage());
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
@@ -115,14 +115,14 @@ public class UserRestController {
 
 	}
 
-	@DeleteMapping(path = "/{id}",
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
+	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			userDao.deleteUserById(id);
+			
+			userDao.deleteUserById(token);
 			responseContent.put("message", "User deleted");
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
