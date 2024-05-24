@@ -16,6 +16,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -35,15 +36,16 @@ public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column
+	
+	@Column(unique = true)
 	@Nonnull
 	@Size(max=30,message = "Username must not have more than 30 characteres")
 	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Username must not contain special characters")
 	private String username;
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$" , message ="Password must be 8 characters long and contain a lower case letter, an upper case letter and a number")
+	@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message="Password must be 8 characters long and contain a lower case letter, an upper case letter and a number")	
 	private String password;
 	@Email
-	@Nonnull
+	@Column(nullable = false, unique = true)
 	private String email;
 	private int coins;
 	private boolean active;

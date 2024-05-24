@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,8 @@ import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.persist.dao.impl.UserDaoImpl;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/user")
 public class UserRestController {
@@ -33,7 +37,14 @@ public class UserRestController {
 		return "Hello World Not Secured";
 	}
 	@PostMapping
-	public ResponseEntity<?> createUser(@RequestBody UserDto userDto) {
+	public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, Object> responseContent = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(fieldError ->
+                responseContent.put(fieldError.getField(), fieldError.getDefaultMessage())
+            );
+            return new ResponseEntity<>(responseContent, HttpStatus.BAD_REQUEST);
+        }
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
@@ -42,7 +53,7 @@ public class UserRestController {
 			responseContent.put("result", user);
 			httpStatus = HttpStatus.CREATED;
 		} catch (Exception e) {
-			responseContent.put("message", e);
+			responseContent.put("message", e.getMessage());
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 

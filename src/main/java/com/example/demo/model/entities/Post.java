@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,14 +26,16 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Entity
-@Table(name="threads")
+@Table(name="posts")
 public class Post {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank(message = "Title can not be blank")
 	private String title;
+	@NotBlank(message = "Content can not be blank")
 	private String content;
 	
 	@CreationTimestamp

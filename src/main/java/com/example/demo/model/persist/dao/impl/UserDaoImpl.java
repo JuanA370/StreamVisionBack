@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.UserDto;
@@ -23,6 +24,8 @@ import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.persist.dao.UserDao;
 import com.example.demo.model.persist.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
+
+import jakarta.validation.Valid;
 
 @Service
 public class UserDaoImpl implements UserDao {
