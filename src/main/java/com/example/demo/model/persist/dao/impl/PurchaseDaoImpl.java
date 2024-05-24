@@ -37,11 +37,11 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	public Purchase createPurchase(Product product, String token) {
 		
 		Long logedUserId = jwtUtils.getUserIdFromToken(token);
-		PurchasePk purchasePk = new PurchasePk(product.getId(), logedUserId);
+		PurchasePk purchasePk = new PurchasePk(product.getProductId(), logedUserId);
 		if (purchaseRep.findPurchaseByPurchasePk(purchasePk) != null)
 			throw new AppException("You have already bought this product", HttpStatus.LOCKED);
 		
-		Product savedProduct = productRep.findById(product.getId()).orElse(null);
+		Product savedProduct = productRep.findById(product.getProductId()).orElse(null);
 		if (savedProduct == null)
 			savedProduct = productRep.save(product);
 		

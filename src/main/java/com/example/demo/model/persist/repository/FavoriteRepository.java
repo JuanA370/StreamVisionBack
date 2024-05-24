@@ -15,6 +15,6 @@ public interface FavoriteRepository extends JpaRepository<Favorite, FavoritePk> 
 
 	public Favorite findFavoriteByFavoritePk(FavoritePk favoritePk);
 
-	@Query("SELECT p FROM Product p JOIN Favorite f ON p.id = f.product.id WHERE f.isFavorite = true AND f.user.id = ?1")
+	@Query("SELECT p FROM Product p JOIN Favorite f ON p.id = f.product.productId WHERE f.isFavorite = true AND f.user.id = ?1")
 	public List<Product> findFavoriteProductByUserId(Long userId);
 }

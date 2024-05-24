@@ -13,7 +13,7 @@ import com.example.demo.model.entities.Product;
 @Repository
 public interface PurchaseRepository extends JpaRepository<Purchase, PurchasePk> {
 
-	@Query("SELECT p FROM Product p JOIN Purchase pur ON p.id = pur.product.id WHERE pur.user.id = ?1")
+	@Query("SELECT p FROM Product p JOIN Purchase pur ON p.productId = pur.product.productId WHERE pur.user.id = ?1")
 	public List<Product> findPurchasedProductsByUserId(Long userId);
 
 	public Purchase findPurchaseByPurchasePk(PurchasePk purchasePk);

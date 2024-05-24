@@ -31,7 +31,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	@Override
 	public Favorite createFavorite(Product product, Long logedUserId) {
 
-		Product savedProduct = productRep.findById(product.getId()).orElse(null);
+		Product savedProduct = productRep.findById(product.getProductId()).orElse(null);
 		if (savedProduct == null)
 			savedProduct = productRep.save(product);
 		
@@ -39,7 +39,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 				.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
 		
 		Favorite favorite = Favorite.builder()
-				.favoritePk(new FavoritePk(logedUserId, product.getId()))
+				.favoritePk(new FavoritePk(logedUserId, product.getProductId()))
 				.product(savedProduct)
 				.user(user)
 				.isFavorite(false)
@@ -52,7 +52,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	@Override
 	public Favorite updateFavorite(Product product, Long logedUserId, String action) {
 		
-		FavoritePk favoritePk = new FavoritePk(product.getId(), logedUserId);
+		FavoritePk favoritePk = new FavoritePk(product.getProductId(), logedUserId);
 		
 		if (!action.equals("SAVE") && !action.equals("UNSAVE"))
 				throw new AppException("Unknown action", HttpStatus.BAD_REQUEST);

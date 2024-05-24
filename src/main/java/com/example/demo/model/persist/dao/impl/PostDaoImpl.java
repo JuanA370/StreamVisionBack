@@ -31,7 +31,7 @@ public class PostDaoImpl implements PostDao {
 	@Override
 	public Post createPost(PostDto postDto, Long logedUserId) {
 
-		Product savedProduct = productRep.findById(postDto.product().getId()).orElse(null);
+		Product savedProduct = productRep.findById(postDto.product().getProductId()).orElse(null);
 		if (savedProduct == null)
 				savedProduct = productRep.save(postDto.product());
 
