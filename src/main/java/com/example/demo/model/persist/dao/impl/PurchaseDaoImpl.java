@@ -17,6 +17,7 @@ import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.PurchaseRepository;
 import com.example.demo.model.persist.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
+import com.example.demo.service.ProductService;
 
 @Service
 public class PurchaseDaoImpl implements PurchaseDao {
@@ -32,15 +33,19 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	
 	@Autowired
 	private JwtUtils jwtUtils;
+	@Autowired
+	private ProductService productService;
 
 	// CREAR COMPRA
 	@Override
 	public Purchase createPurchase(InteractDto interactDto, String token) {
-		Long productId;
+		Long productId ;
 		Long logedUserId = jwtUtils.getUserIdFromToken(token);
 		Product product = productRep.findProductByIsFilmAndTmdbId(interactDto.isFilm(), interactDto.tmdbId());
 		if (product == null) {
-			
+			Product createdProduct = productService.extractProductFromTmdbJsonApi(interactDto);
+			product = productRep.save(createdProduct);
+			productId = product.getProductId();
 		}
 		else 
 			productId = product.getProductId();
@@ -49,16 +54,13 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		if (purchaseRep.findPurchaseByPurchasePk(purchasePk) != null)
 			throw new AppException("You have already bought this product", HttpStatus.LOCKED);
 		
-		Product savedProduct = productRep.findById(product.getProductId()).orElse(null);
-		if (savedProduct == null)
-			savedProduct = productRep.save(product);
-		
+
 		UserEntity user = userRep.findById(logedUserId)
 				.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
 		
 		Purchase purchase = Purchase.builder()
 				.purchasePk(purchasePk)
-				.product(savedProduct)
+				.product(product)
 				.user(user)
 				.build();
 		
