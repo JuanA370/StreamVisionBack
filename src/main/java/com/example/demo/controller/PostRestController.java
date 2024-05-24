@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -114,15 +115,15 @@ public class PostRestController {
 	@GetMapping(path = "/product/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> productPosts(@PathVariable Long id){
+	public ResponseEntity<?> productPosts(@PathVariable Long id, Pageable pageable){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			List<Post> forumPosts = postDao.readPostsByProductId(id);
-			List<PostResponseDto> forumPostsDtos = PostDtoService.postListToPostResponseDtoList(forumPosts);
+			Page<Post> forumPosts = postDao.readPostsByProductId(pageable, id);
+			Page<PostResponseDto> forumPostsDtos = PostDtoService.postListToPostResponseDtoList(forumPosts);
 			responseContent.put("result", forumPostsDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
@@ -140,15 +141,15 @@ public class PostRestController {
 	@GetMapping(path= "/user/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> userPosts(@PathVariable Long id){
+	public ResponseEntity<?> userPosts(@PathVariable Long id, Pageable pageable){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			List<Post> userPosts = postDao.readPostsByUserId(id);
-			List<PostResponseDto> userPostDtos = PostDtoService.postListToPostResponseDtoList(userPosts);
+			Page<Post> userPosts = postDao.readPostsByUserId(pageable, id);
+			Page<PostResponseDto> userPostDtos = PostDtoService.postListToPostResponseDtoList(userPosts);
 			responseContent.put("result", userPostDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
@@ -190,15 +191,15 @@ public class PostRestController {
 	}
 	
 	@GetMapping("/thread/{id}")
-	public ResponseEntity<?> getReplies(@PathVariable Long id){
+	public ResponseEntity<?> getReplies(@PathVariable Long id, Pageable pageable){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			List<Post> postReplies = postDao.readRepliesByPostId(id);
-			List<PostResponseDto> postRepliesDtos = PostDtoService.postListToPostResponseDtoList(postReplies);
+			Page<Post> postReplies = postDao.readRepliesByPostId(pageable, id);
+			Page<PostResponseDto> postRepliesDtos = PostDtoService.postListToPostResponseDtoList(postReplies);
 			responseContent.put("result", postRepliesDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {

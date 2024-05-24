@@ -1,8 +1,8 @@
 package com.example.demo.model.persist.dao.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -71,9 +71,9 @@ public class PostDaoImpl implements PostDao {
 	}
 	
 	@Override
-	public List<Post> readRepliesByPostId(Long postId) {
+	public Page<Post> readRepliesByPostId(Pageable pageable, Long postId) {
 		
-		List<Post> postReplies = postRep.findRepliesByPostId(postId);
+		Page<Post> postReplies = postRep.findRepliesByPostId(pageable, postId);
 		
 		if (postReplies == null || postReplies.isEmpty())
 			throw new AppException("No replies found for the post", HttpStatus.NO_CONTENT);
@@ -82,9 +82,9 @@ public class PostDaoImpl implements PostDao {
 	}
 
 	@Override
-	public List<Post> readPostsByUserId(Long userId) {
+	public Page<Post> readPostsByUserId(Pageable pageable, Long userId) {
 		
-		List<Post> userPosts = postRep.findPostsByUserId(userId);
+		Page<Post> userPosts = postRep.findPostsByUserId(pageable, userId);
 		
 		if (userPosts == null || userPosts.isEmpty())
 			throw new AppException("No posts aviables", HttpStatus.NO_CONTENT);
@@ -93,9 +93,9 @@ public class PostDaoImpl implements PostDao {
 	}
 
 	@Override
-	public List<Post> readPostsByProductId(Long productId) {
+	public Page<Post> readPostsByProductId(Pageable pageable, Long productId) {
 		
-		List<Post> productPosts = postRep.findPostsByProductId(productId);
+		Page<Post> productPosts = postRep.findPostsByProductId(pageable, productId);
 		
 		if (productPosts == null || productPosts.isEmpty())
 			throw new AppException("No posts aviables", HttpStatus.NO_CONTENT);

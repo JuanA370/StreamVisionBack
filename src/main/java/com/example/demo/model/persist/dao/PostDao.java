@@ -1,6 +1,6 @@
 package com.example.demo.model.persist.dao;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.example.demo.model.dto.PostDto;
 import com.example.demo.model.entities.Post;
@@ -13,11 +13,11 @@ public interface PostDao {
 	
 	public void deletePostById(Long postId);
 	
-	public List<Post> readPostsByUserId(Long userId);
+	public Page<Post> readPostsByUserId(Pageable pageable, Long userId);
 	
-	public List<Post> readPostsByProductId(Long productId);
+	public Page<Post> readPostsByProductId(Pageable pageable, Long productId);
 	
-	public List<Post> readRepliesByPostId(Long postId);
+	public Page<Post> readRepliesByPostId(Pageable pageable, Long postId);
 	
 	public Post readPostById(Long postId);
 	
