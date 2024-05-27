@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.FavoriteResponseDto;
-import com.example.demo.model.dto.InteractDto;
+import com.example.demo.model.dto.InteractionDto;
 import com.example.demo.model.entities.Favorite;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.FavoriteDao;
-import com.example.demo.service.FavoriteDtoService;
+import com.example.demo.service.InteractionDtoService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,14 +36,14 @@ public class FavoriteRestController {
 	private FavoriteDao favoriteDao;
 	
 	@Autowired
-	private FavoriteDtoService favoriteDtoService;
+	private InteractionDtoService favoriteDtoService;
 
 	// SAVE UNSAVE
 	@Operation(summary = "Añadir o eliminar de favoritos atraves del token", description = "El endpoint permite añadir o eliminar de favoritos.'SAVE' sirve para añadir a favoritos y 'UNSAVE' sirve para eliminar de favoritos")
 	@PostMapping(path = "/interact/{action}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> favoriteInteractionHnadler(@RequestBody InteractDto interactDto, @RequestHeader("Authorization") String token, @PathVariable String action) {
+	public ResponseEntity<?> favoriteInteractionHnadler(@RequestBody InteractionDto interactDto, @RequestHeader("Authorization") String token, @PathVariable String action) {
 
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();

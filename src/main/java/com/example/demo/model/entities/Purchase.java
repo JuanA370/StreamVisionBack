@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -32,10 +34,12 @@ public class Purchase {
 
 	@ManyToOne
 	@MapsId("userId")
+	@JsonIgnore
 	private UserEntity user;
 
 	@ManyToOne
 	@MapsId("productId")
+	@JsonIgnore
 	private Product product;
 	
 }

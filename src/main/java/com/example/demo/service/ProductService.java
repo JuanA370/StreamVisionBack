@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.exceptions.AppException;
-import com.example.demo.model.dto.InteractDto;
+import com.example.demo.model.dto.InteractionDto;
 import com.example.demo.model.entities.Product;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +17,7 @@ public class ProductService {
 	private TmdbService tmdbService;
 
 	
-	public Product extractProductFromTmdbJsonApi(InteractDto interactDto) {
+	public Product extractProductFromTmdbJsonApi(InteractionDto interactDto) {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

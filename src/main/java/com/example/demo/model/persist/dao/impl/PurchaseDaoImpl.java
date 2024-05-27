@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.exceptions.AppException;
-import com.example.demo.model.dto.InteractDto;
+import com.example.demo.model.dto.InteractionDto;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.entities.Purchase;
 import com.example.demo.model.entities.PurchasePk;
@@ -38,7 +38,7 @@ public class PurchaseDaoImpl implements PurchaseDao {
 
 	// CREAR COMPRA
 	@Override
-	public Purchase createPurchase(InteractDto interactDto, String token) {
+	public Purchase createPurchase(InteractionDto interactDto, String token) {
 		
 		token = token.substring(7);
 		Long logedUserId = jwtUtils.getUserIdFromToken(token);
@@ -50,7 +50,8 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		}
 		
 		PurchasePk purchasePk = new PurchasePk(product.getProductId(), logedUserId);
-		if (purchaseRep.findPurchaseByPurchasePk(purchasePk) != null)
+		Purchase savedPurchase = purchaseRep.findPurchaseByPurchasePk(purchasePk);
+		if (savedPurchase != null)
 			throw new AppException("You have already bought this product", HttpStatus.LOCKED);
 		
 

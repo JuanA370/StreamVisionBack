@@ -1,6 +1,6 @@
 package com.example.demo.model.dto;
 
-public record InteractDto (
+public record InteractionDto (
 
 		Long tmdbId,
 		boolean isFilm

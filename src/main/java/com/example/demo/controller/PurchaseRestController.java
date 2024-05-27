@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.entities.Purchase;
 import com.example.demo.exceptions.AppException;
-import com.example.demo.model.dto.InteractDto;
+import com.example.demo.model.dto.InteractionDto;
+import com.example.demo.model.dto.PurchaseResponseDto;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.PurchaseDao;
+import com.example.demo.service.InteractionDtoService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,11 +35,14 @@ public class PurchaseRestController {
 	@Autowired
 	private PurchaseDao purchaseDao;
 	
+	@Autowired
+	private InteractionDtoService favoriteDtoService;
+	
 	//REGISTRAR UNA COMPRA
 	@Operation(summary = "Comprar pelicula atraves de token")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> purchase(@RequestBody InteractDto interactDto ,@RequestHeader("Authorization") String token) {
+	public ResponseEntity<?> purchase(@RequestBody InteractionDto interactDto ,@RequestHeader("Authorization") String token) {
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
@@ -45,7 +50,8 @@ public class PurchaseRestController {
 		
 		try {
 			Purchase savedPurchase = purchaseDao.createPurchase(interactDto, token);
-			responseContent.put("result", savedPurchase);
+			PurchaseResponseDto savedPurchaseDto = favoriteDtoService.createPurchaseResponseDto(savedPurchase);
+			responseContent.put("result", savedPurchaseDto);
 			httpStatus = HttpStatus.ACCEPTED;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());

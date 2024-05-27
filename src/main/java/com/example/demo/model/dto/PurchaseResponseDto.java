@@ -3,10 +3,10 @@ package com.example.demo.model.dto;
 import lombok.Builder;
 
 @Builder
-public record FavoriteResponseDto (
+public record PurchaseResponseDto (
 		
 		String username,
 		String title,
-		boolean saved
+		boolean purchased
 		
 ) { }
