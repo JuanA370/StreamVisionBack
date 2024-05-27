@@ -26,12 +26,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class JwtAuthentificationFilter extends UsernamePasswordAuthenticationFilter{
-private JwtUtils Jwtutils;
+	private JwtUtils jwtutils;
 	
 	private UserRepository userRepository;
 	
 	public JwtAuthentificationFilter(JwtUtils Jwtutils, UserRepository userRepository) {
-		this.Jwtutils = Jwtutils;
+		this.jwtutils = Jwtutils;
 		this.userRepository = userRepository;
 	}
 	
@@ -62,26 +62,37 @@ private JwtUtils Jwtutils;
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, 
-										HttpServletResponse response, 
-										FilterChain chain,
-										Authentication authResult) throws IOException, ServletException {
-		
-		User user =  (User) authResult.getPrincipal();
-		Optional<UserEntity> userEntityOptional = userRepository.findByUsername(user.getUsername());
-		UserEntity userEntity = userEntityOptional.get();
-		String token = Jwtutils.generateAccesToken(userEntity.getUsername(), userEntity.getId());
-		
-		response.addHeader("Authorization", token);
-		
-		Map<String, Object> httpResponse = new HashMap<>();
-		httpResponse.put("token", token);
-		httpResponse.put("Message", "Autenticacion correcta");
-	    httpResponse.put("Username", user.getUsername());
-	    
-	    response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
-	    response.setStatus(HttpStatus.OK.value());
+	                                        HttpServletResponse response, 
+	                                        FilterChain chain,
+	                                        Authentication authResult) throws IOException, ServletException {
+
+	    User user = (User) authResult.getPrincipal();
+	    Optional<UserEntity> userEntityOptional = userRepository.findByUsername(user.getUsername());
+
+	    Map<String, Object> httpResponse = new HashMap<>();
 	    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+	    if (userEntityOptional.isPresent()) {
+	        UserEntity userEntity = userEntityOptional.get();
+
+	        if (userEntity.isActive()) {
+	            String token = jwtutils.generateAccesToken(userEntity.getUsername(), userEntity.getId());
+	            response.addHeader("Authorization", token);
+	            httpResponse.put("token", token);
+	            httpResponse.put("Message", "Authentication successful");
+	            httpResponse.put("Username", user.getUsername());
+	            response.setStatus(HttpStatus.OK.value());
+	        } else {
+	            httpResponse.put("Message", "User is not active and cannot log in");
+	            response.setStatus(HttpStatus.FORBIDDEN.value());
+	        }
+	    } else {
+	        httpResponse.put("Message", "User not found");
+	        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+	    }
+
+	    response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
 	    response.getWriter().flush();
-		super.successfulAuthentication(request, response, chain, authResult);
+	    super.successfulAuthentication(request, response, chain, authResult);
 	}
 }

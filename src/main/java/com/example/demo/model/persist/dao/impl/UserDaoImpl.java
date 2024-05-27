@@ -60,25 +60,35 @@ public class UserDaoImpl implements UserDao {
     	Long id = jwtUtils.getUserIdFromToken(token);
         UserEntity user = userRep.findById(id)
         		.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+        
         return user;
     }
 
     @Override
-    public void deleteUserById(String token) {
+    public UserEntity deleteUserById(String token) {
     	token= token.substring(7);
     	Long userId = jwtUtils.getUserIdFromToken(token);
-    	userRep.findById(userId).orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
-    	userRep.deleteById(userId);
+    	UserEntity savedUser = userRep.findById(userId).orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+    	savedUser.setActive(false);
+    	return userRep.save(savedUser);
     }
 
     @Override
-    public UserEntity updateUser(UserDto userDto) {
-    	
-        UserEntity savedUser = userRep.findById(userDto.id())
-        		.orElseThrow(() -> new AppException("Could not find original user", HttpStatus.NOT_FOUND));
-        savedUser.setActive(userDto.active());
-        savedUser.setPassword(passwordEncoder.encode(userDto.password()));
-        savedUser.setUsername(userDto.username());
+    public UserEntity updateUser(UserDto userDto, String token) {
+    	token = token.substring(7);
+    	Long userID = jwtUtils.getUserIdFromToken(token);
+        UserEntity savedUser = userRep.findById(userID)
+        		.orElseThrow( () -> new AppException("Could not find original user", HttpStatus.NOT_FOUND));
+        savedUser = UserEntity.builder()
+        		.id(savedUser.getId())
+        		.username(userDto.username())
+                .password(passwordEncoder.encode(userDto.password()))
+                .email(userDto.email())
+                .coins(savedUser.getCoins())
+                .active(savedUser.isActive())
+                .roles(savedUser.getRoles())
+                .build();
+        
         
         UserEntity updatedUser = userRep.save(savedUser);
         return updatedUser;

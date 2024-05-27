@@ -40,13 +40,13 @@ public class SecurityConfig {
 		
 		JwtAuthentificationFilter jwtAuthentificationFilter = new JwtAuthentificationFilter(JwtUtils, userRepository);
 		jwtAuthentificationFilter.setAuthenticationManager(authenticationManager);
-		jwtAuthentificationFilter.setFilterProcessesUrl("/user/login");
+		jwtAuthentificationFilter.setFilterProcessesUrl("/users/login");
 
 		return httpSecurity
 				.csrf(config -> config.disable())
 				.authorizeHttpRequests(auth -> {
-					auth.requestMatchers("/user/hello").authenticated();
-					//auth.requestMatchers(HttpMethod.POST, "/purchases").authenticated();
+					auth.requestMatchers("/users/").authenticated();
+					auth.requestMatchers(HttpMethod.POST, "/purchases").authenticated();
 					auth.anyRequest().permitAll();
 				})
 				.sessionManagement(session -> {

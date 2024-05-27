@@ -26,6 +26,7 @@ import com.example.demo.model.entities.UserEntity;
 import com.example.demo.model.persist.dao.UserDao;
 import com.example.demo.security.jwt.JwtUtils;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.Valid;
@@ -38,13 +39,12 @@ public class UserRestController {
 	@Autowired
 	private UserDao userDao;
 	
-	@Autowired
-	private JwtUtils jwtUtils;
-
-
+	@Operation(summary = "Iniciar de sesion y crea token atraves de JWT")
 	@GetMapping("/login")
 	public void login(@RequestBody UserLoginDto user) {
 	}
+	
+	@Operation(summary = "Crea un usuario")
 	@PostMapping
 	public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -72,6 +72,7 @@ public class UserRestController {
 	
 	
 	
+	@Operation(summary = "Devuelve los datos de un usuario atraves del token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchUser(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
@@ -91,15 +92,17 @@ public class UserRestController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
-
+	
+	
+	@Operation(summary = "Edita los datos de un usuario atraves del token")
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateUser(@RequestBody UserDto userDto) {
+	public ResponseEntity<?> updateUser(@RequestBody UserDto userDto,@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity updatedUser = userDao.updateUser(userDto);
+			UserEntity updatedUser = userDao.updateUser(userDto,token);
 			responseContent.put("result", updatedUser);
 			httpStatus = HttpStatus.CREATED;
 		} catch (AppException e) {
@@ -115,6 +118,7 @@ public class UserRestController {
 
 	}
 
+	@Operation(summary = "Deshabilita usuario atraves del token")
 	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
@@ -122,8 +126,8 @@ public class UserRestController {
 		HttpStatus httpStatus;
 		try {
 			
-			userDao.deleteUserById(token);
-			responseContent.put("message", "User deleted");
+			UserEntity updatedUser = userDao.deleteUserById(token);
+			responseContent.put("message", updatedUser);
 			httpStatus = HttpStatus.OK;
 		} catch (AppException e) {
 			responseContent.put("message", e.getMessage());

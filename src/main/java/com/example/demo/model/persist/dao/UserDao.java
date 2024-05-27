@@ -9,9 +9,9 @@ public interface UserDao {
 	
 	public UserEntity readUserById(String token);
 
-	void deleteUserById(String token);
+	UserEntity deleteUserById(String token);
 
-	UserEntity updateUser(UserDto userDto);
+	UserEntity updateUser(UserDto userDto, String token);
 	
 
 }
