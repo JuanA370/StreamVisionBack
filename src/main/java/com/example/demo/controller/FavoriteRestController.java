@@ -24,8 +24,12 @@ import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.FavoriteDao;
 import com.example.demo.service.FavoriteDtoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/favorites")
+@Tag(name="Endpoint favoritos")
 public class FavoriteRestController {
 
 	@Autowired
@@ -35,6 +39,7 @@ public class FavoriteRestController {
 	private FavoriteDtoService favoriteDtoService;
 
 	// SAVE UNSAVE
+	@Operation(summary = "Añadir o eliminar de favoritos atraves del token", description = "El endpoint permite añadir o eliminar de favoritos.'SAVE' sirve para añadir a favoritos y 'UNSAVE' sirve para eliminar de favoritos")
 	@PostMapping(path = "/interact/{action}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -65,6 +70,7 @@ public class FavoriteRestController {
 	 * NO CONTENT NO ES UNA EXCEPCIÓN, HA TERMIANDO CON ÉXITO PERO EL USUARIO NO
 	 * TIENE COMPRAS HABLARLO CON EL FRONT
 	 */
+	@Operation(summary = "Mostrar favoritos de un usuario atraves del token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchProduct(@RequestHeader("Authorization") String token) {
 
