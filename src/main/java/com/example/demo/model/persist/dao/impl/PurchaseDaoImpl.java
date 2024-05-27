@@ -77,9 +77,6 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		
 		List<Product> purchasedProducts = purchaseRep.findPurchasedProductsByUserId(userId);
 		
-		if (purchasedProducts == null || purchasedProducts.isEmpty())
-			throw new AppException("No products found for this user.", HttpStatus.NO_CONTENT);
-		
 		return purchasedProducts;
 	}
 
