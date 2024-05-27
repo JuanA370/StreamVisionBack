@@ -51,7 +51,6 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		
 		PurchasePk purchasePk = new PurchasePk(product.getProductId(), logedUserId);
 		Purchase savedPurchase = purchaseRep.findPurchaseByPurchasePk(purchasePk);
-		System.err.println(savedPurchase);
 		if (savedPurchase != null)
 			throw new AppException("You have already bought this product", HttpStatus.LOCKED);
 
