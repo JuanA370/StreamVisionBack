@@ -53,9 +53,6 @@ public class PurchaseRestController {
 			PurchaseResponseDto savedPurchaseDto = favoriteDtoService.createPurchaseResponseDto(savedPurchase);
 			responseContent.put("result", savedPurchaseDto);
 			httpStatus = HttpStatus.ACCEPTED;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while purchasing: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -77,9 +74,6 @@ public class PurchaseRestController {
 			List<Product> purchasedProducts = purchaseDao.readPurchasesByUserId(token);
 			responseContent.put("result", purchasedProducts);
 			httpStatus = HttpStatus.OK;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while purchasing: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;

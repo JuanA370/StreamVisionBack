@@ -50,9 +50,6 @@ public class PostRestController {
 			PostResponseDto createdPostDto = PostDtoService.createPostResponseDto(createdPost);
 			responseContent.put("result", createdPostDto);
 			httpStatus = HttpStatus.CREATED;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while creating post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -75,9 +72,6 @@ public class PostRestController {
 			postDao.deletePostById(id);
 			responseContent.put("message", "post removed");
 			httpStatus = HttpStatus.OK;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while removing post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -100,9 +94,6 @@ public class PostRestController {
 			PostResponseDto updatedPostDto = PostDtoService.createPostResponseDto(updatedPost);
 			responseContent.put("result", updatedPostDto);
 			httpStatus = HttpStatus.CREATED;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -126,9 +117,6 @@ public class PostRestController {
 			Page<PostResponseDto> forumPostsDtos = PostDtoService.postListToPostResponseDtoList(forumPosts);
 			responseContent.put("result", forumPostsDtos);
 			httpStatus = HttpStatus.OK;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -152,9 +140,6 @@ public class PostRestController {
 			Page<PostResponseDto> userPostDtos = PostDtoService.postListToPostResponseDtoList(userPosts);
 			responseContent.put("result", userPostDtos);
 			httpStatus = HttpStatus.OK;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while updating thread: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -178,9 +163,6 @@ public class PostRestController {
 			PostResponseDto foundPostDto = PostDtoService.createPostResponseDto(foundPost);
 			responseContent.put("result", foundPostDto);
 			httpStatus = HttpStatus.OK;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while updating thread: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -202,9 +184,6 @@ public class PostRestController {
 			Page<PostResponseDto> postRepliesDtos = PostDtoService.postListToPostResponseDtoList(postReplies);
 			responseContent.put("result", postRepliesDtos);
 			httpStatus = HttpStatus.OK;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while reading replies: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
