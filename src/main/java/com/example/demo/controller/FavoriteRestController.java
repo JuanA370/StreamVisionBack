@@ -54,9 +54,6 @@ public class FavoriteRestController {
 			FavoriteResponseDto favoriteResponseDto = favoriteDtoService.createFavoriteResponseDto(updatedFavorite);
 			responseContent.put("result", favoriteResponseDto);
 			httpStatus = HttpStatus.OK;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while processing request: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -82,9 +79,6 @@ public class FavoriteRestController {
 			List<Product> userProducts = favoriteDao.readFavoriteProductsByUserId(token);
 			responseContent.put("result", userProducts);
 			httpStatus = HttpStatus.OK;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while processing request: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;

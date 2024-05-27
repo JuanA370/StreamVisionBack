@@ -82,9 +82,6 @@ public class UserRestController {
 			UserEntity user = userDao.readUserById(token);
 			responseContent.put("result", user);
 			httpStatus = HttpStatus.OK;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("messager", e.getMessage());
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -105,9 +102,6 @@ public class UserRestController {
 			UserEntity updatedUser = userDao.updateUser(userDto,token);
 			responseContent.put("result", updatedUser);
 			httpStatus = HttpStatus.CREATED;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while updating user: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -129,9 +123,6 @@ public class UserRestController {
 			UserEntity updatedUser = userDao.deleteUserById(token);
 			responseContent.put("message", updatedUser);
 			httpStatus = HttpStatus.OK;
-		} catch (AppException e) {
-			responseContent.put("message", e.getMessage());
-			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while deleting user ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
