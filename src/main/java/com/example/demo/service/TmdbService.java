@@ -5,6 +5,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 @Service
 public class TmdbService {
 	@Autowired
@@ -87,12 +91,6 @@ public class TmdbService {
 		return restTemplate.getForObject(search, String.class);
 
 	}
-
-	public String searchMovies(String query) {
-		String search = url + "/search/movie"+ "?api_key=" + apiKey+ "&query=" + query + "&language=es-ES";
-	      
-	    return restTemplate.getForObject(search, String.class);	    
-	}
 	
 	//SERIES
 	public String getSerieGenreList() {
@@ -162,16 +160,21 @@ public class TmdbService {
 		return restTemplate.getForObject(search, String.class);
 
 	}
-	
-	public String searchSeries(String query) {
-		String search = url + "/search/tv"+ "?api_key=" + apiKey+ "&query=" + query + "&language=es-ES";
-	      
-	    return restTemplate.getForObject(search, String.class);	    
-	}
-	
-	public String multiSearch(String query){
-		String j = "";
-		j+= searchMovies(query);
-		return j+= searchSeries(query);
-	}
+	public JsonNode searchMovies(String word) {
+        String search = url + "/search/movie?api_key=" + apiKey + "&query=" + word + "&language=es-ES";
+        return restTemplate.getForObject(search, JsonNode.class);
+    }
+ 
+    public JsonNode searchSeries(String word) {
+        String search = url + "/search/tv?api_key=" + apiKey + "&query=" + word + "&language=es-ES";
+        return restTemplate.getForObject(search, JsonNode.class);
+    }
+ 
+    public JsonNode multiSearch(String word) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode result = mapper.createObjectNode();
+        result.set("movies", searchMovies(word));
+        result.set("series", searchSeries(word));
+        return result;
+    }
 }

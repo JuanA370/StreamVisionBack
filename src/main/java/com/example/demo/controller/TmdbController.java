@@ -17,6 +17,7 @@ import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.ProductResponseDto;
 import com.example.demo.service.ProductDtoService;
 import com.example.demo.service.TmdbService;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -493,7 +494,7 @@ public class TmdbController {
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			String multiSearch = apiService.multiSearch(query);
+			JsonNode multiSearch = apiService.multiSearch(query);
 			responseContent.put("result", multiSearch);
 			httpStatus = HttpStatus.OK;
 			
