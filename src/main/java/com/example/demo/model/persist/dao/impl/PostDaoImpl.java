@@ -80,9 +80,6 @@ public class PostDaoImpl implements PostDao {
 	public Page<Post> readRepliesByPostId(Pageable pageable, Long postId) {
 		
 		Page<Post> postReplies = postRep.findRepliesByPostId(pageable, postId);
-		
-		if (postReplies == null || postReplies.isEmpty())
-			throw new AppException("No replies found for the post", HttpStatus.NO_CONTENT);
 
 		return postReplies;
 	}
@@ -91,9 +88,6 @@ public class PostDaoImpl implements PostDao {
 	public Page<Post> readPostsByUserId(Pageable pageable, Long userId) {
 		
 		Page<Post> userPosts = postRep.findPostsByUserId(pageable, userId);
-		
-		if (userPosts == null || userPosts.isEmpty())
-			throw new AppException("No posts aviables", HttpStatus.NO_CONTENT);
 
 		return userPosts;
 	}
@@ -102,9 +96,6 @@ public class PostDaoImpl implements PostDao {
 	public Page<Post> readPostsByProductId(Pageable pageable, Long productId) {
 		
 		Page<Post> productPosts = postRep.findPostsByProductId(pageable, productId);
-		
-		if (productPosts == null || productPosts.isEmpty())
-			throw new AppException("No posts aviables", HttpStatus.NO_CONTENT);
 
 		return productPosts;
 	}
