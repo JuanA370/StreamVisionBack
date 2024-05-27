@@ -47,12 +47,12 @@ public class ProductDtoService {
 				token = token.substring(7);
 				Long loggedUserId = jwtUtils.getUserIdFromToken(token);
 
-				FavoritePk favoritePk = new FavoritePk(savedProduct.getProductId(), loggedUserId);
+				FavoritePk favoritePk = new FavoritePk(loggedUserId, savedProduct.getProductId());
 				Favorite favorite = favoriteRep.findById(favoritePk).orElse(null);
 				if(favorite != null)
 					productResponseDto.setSaved(favorite.isFavorite());
 				
-				PurchasePk purchasePk = new PurchasePk(savedProduct.getProductId(), loggedUserId);
+				PurchasePk purchasePk = new PurchasePk(loggedUserId,savedProduct.getProductId());
 				Purchase purchase = purchaseRep.findById(purchasePk).orElse(null);
 				if(purchase != null)
 					productResponseDto.setPurchased(true);
