@@ -53,6 +53,9 @@ public class PurchaseRestController {
 			PurchaseResponseDto savedPurchaseDto = favoriteDtoService.createPurchaseResponseDto(savedPurchase);
 			responseContent.put("result", savedPurchaseDto);
 			httpStatus = HttpStatus.ACCEPTED;
+		} catch (AppException e) {
+			responseContent.put("message", "Error while processing request: ".concat(e.getMessage()));
+			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while purchasing: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;

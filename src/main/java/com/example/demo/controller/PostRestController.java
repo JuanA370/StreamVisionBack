@@ -50,6 +50,9 @@ public class PostRestController {
 			PostResponseDto createdPostDto = PostDtoService.createPostResponseDto(createdPost);
 			responseContent.put("result", createdPostDto);
 			httpStatus = HttpStatus.CREATED;
+		} catch (AppException e) {
+			responseContent.put("message", "Error while processing request: ".concat(e.getMessage()));
+			httpStatus = e.getHttpStatus();
 		} catch (Exception e) {
 			responseContent.put("message", "Error while creating post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -94,7 +97,10 @@ public class PostRestController {
 			PostResponseDto updatedPostDto = PostDtoService.createPostResponseDto(updatedPost);
 			responseContent.put("result", updatedPostDto);
 			httpStatus = HttpStatus.CREATED;
-		} catch (Exception e) {
+		} catch (AppException e) {
+			responseContent.put("message", "Error while processing request: ".concat(e.getMessage()));
+			httpStatus = e.getHttpStatus();
+		}  catch (Exception e) {
 			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
@@ -163,7 +169,10 @@ public class PostRestController {
 			PostResponseDto foundPostDto = PostDtoService.createPostResponseDto(foundPost);
 			responseContent.put("result", foundPostDto);
 			httpStatus = HttpStatus.OK;
-		} catch (Exception e) {
+		} catch (AppException e) {
+			responseContent.put("message", "Error while processing request: ".concat(e.getMessage()));
+			httpStatus = e.getHttpStatus();
+		}  catch (Exception e) {
 			responseContent.put("message", "Error while updating thread: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
