@@ -72,7 +72,7 @@ public class UserRestController {
 	
 	
 	
-	@Operation(summary = "Devuelve los datos de un usuario atraves del token")
+	@Operation(summary = "Devuelve los datos de un usuario atraves de token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchUser(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
@@ -94,7 +94,7 @@ public class UserRestController {
 	}
 	
 	
-	@Operation(summary = "Edita los datos de un usuario atraves del token")
+	@Operation(summary = "Edita los datos de un usuario atraves de token")
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateUser(@RequestBody UserDto userDto,@RequestHeader("Authorization") String token) {
@@ -118,7 +118,7 @@ public class UserRestController {
 
 	}
 
-	@Operation(summary = "Deshabilita usuario atraves del token")
+	@Operation(summary = "Deshabilita usuario atraves de token")
 	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;

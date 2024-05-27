@@ -21,8 +21,12 @@ import com.example.demo.model.dto.InteractDto;
 import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.PurchaseDao;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/purchases")
+@Tag(name="Endpoint compras")
 public class PurchaseRestController {
 	
 	
@@ -30,6 +34,7 @@ public class PurchaseRestController {
 	private PurchaseDao purchaseDao;
 	
 	//REGISTRAR UNA COMPRA
+	@Operation(summary = "Comprar pelicula atraves de token")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> purchase(@RequestBody InteractDto interactDto ,@RequestHeader("Authorization") String token) {
@@ -54,6 +59,7 @@ public class PurchaseRestController {
 		return response;
 	}
 	
+	@Operation(summary = "Mostrar peliculas compradas de un usuario atraves de token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findProducts(@RequestHeader("Authorization") String token) {
 		
