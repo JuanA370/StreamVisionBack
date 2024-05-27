@@ -42,7 +42,7 @@ public class PurchaseRestController {
 	@Operation(summary = "Comprar pelicula atraves de token")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> purchase(@RequestBody InteractionDto interactDto ,@RequestHeader("Authorization") String token) {
+	public ResponseEntity<?> purchase(@RequestBody InteractionDto interactDto, @RequestHeader("Authorization") String token) {
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();

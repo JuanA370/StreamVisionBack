@@ -33,53 +33,48 @@ public class FavoriteDaoImpl implements FavoriteDao {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private JwtUtils jwtUtils;
-	
+
 	@Override
 	public Favorite createFavorite(Product savedProduct, Long logedUserId) {
-		
 
-			
 		UserEntity user = userRep.findById(logedUserId)
 				.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
-		
-		Favorite favorite = Favorite.builder()
-				.favoritePk(new FavoritePk(logedUserId, savedProduct.getProductId()))
-				.product(savedProduct)
-				.user(user)
-				.isFavorite(false)
-				.build();
-		
+
+		Favorite favorite = Favorite.builder().favoritePk(new FavoritePk(logedUserId, savedProduct.getProductId()))
+				.product(savedProduct).user(user).isFavorite(false).build();
+
 		Favorite createdFavorite = favoriteRep.save(favorite);
 		return createdFavorite;
 	}
 
 	@Override
-	public Favorite updateFavorite(InteractionDto interactDto, String token, String action) {
 		
+	public Favorite updateFavorite(InteractionDto interactionDto, String token, String action) {
+
 		token = token.substring(7);
 		Long logedUserId = jwtUtils.getUserIdFromToken(token);
-		Product savedProduct = productRep.findProductByIsFilmAndTmdbId(interactDto.isFilm(), interactDto.tmdbId());
+		Product savedProduct = productRep.findProductByIsFilmAndTmdbId(interactionDto.isFilm(), interactionDto.tmdbId());
 		if (savedProduct == null) {
-			Product createdProduct = productService.extractProductFromTmdbJsonApi(interactDto);
+			Product createdProduct = productService.extractProductFromTmdbJsonApi(interactionDto);
 			savedProduct = productRep.save(createdProduct);
 		}
-		
+
 		FavoritePk favoritePk = new FavoritePk(savedProduct.getProductId(), logedUserId);
 		if (!"SAVE".equals(action) && !"UNSAVE".equals(action))
-				throw new AppException("Unknown action", HttpStatus.BAD_REQUEST);
-		
+			throw new AppException("Unknown action", HttpStatus.BAD_REQUEST);
+
 		Favorite savedfavorite = favoriteRep.findFavoriteByFavoritePk(favoritePk);
 		if (savedfavorite == null)
 			savedfavorite = createFavorite(savedProduct, logedUserId);
-		
+
 		if ("SAVE".equals(action) && savedfavorite.isFavorite())
 			throw new AppException("Product already saved", HttpStatus.FORBIDDEN);
-		else if ("SAVE".equals(action) && !savedfavorite.isFavorite())
+		else if ("SAVE".equals(action) && savedfavorite.isFavorite() == false)
 			savedfavorite.setFavorite(true);
-		else if ("UNSAVE".equals(action) && !savedfavorite.isFavorite())
+		else if ("UNSAVE".equals(action) && savedfavorite.isFavorite() == false)
 			throw new AppException("Product already unsaved", HttpStatus.FORBIDDEN);
 		else if ("UNSAVE".equals(action) && savedfavorite.isFavorite())
 			savedfavorite.setFavorite(false);
@@ -90,10 +85,10 @@ public class FavoriteDaoImpl implements FavoriteDao {
 
 	@Override
 	public List<Product> readFavoriteProductsByUserId(String token) {
-		
+
 		token = token.substring(7);
 		Long logedUserId = jwtUtils.getUserIdFromToken(token);
-		
+
 		List<Product> products = favoriteRep.findFavoriteProductByUserId(logedUserId);
 		if (products == null || products.isEmpty())
 			throw new AppException("No saved products found for this user", HttpStatus.NO_CONTENT);
