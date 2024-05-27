@@ -8,11 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
+import com.example.demo.model.dto.ProductResponseDto;
+import com.example.demo.service.ProductDtoService;
 import com.example.demo.service.TmdbService;
 
 import io.swagger.v3.oas.annotations.Hidden;
@@ -29,6 +32,9 @@ public class TmdbController {
 	
 	@Autowired
 	private TmdbService apiService;
+	
+	@Autowired
+	private ProductDtoService productDtoService;
 
 	@Operation(summary = "Mostrar todos los generos de la categoria peliculas")
 	// LISTA de GENEROS de películas
@@ -234,14 +240,15 @@ public class TmdbController {
 	
 	@Operation(summary = "Mostrar una pelicula atraves de la id")
 	// Buscar Películas por ID
-	@GetMapping("/movies/search/{id_movie}")
-	public ResponseEntity<?> getMovieById(@PathVariable long id_movie) {
+	@GetMapping("/movies/search/{movieId}")
+	public ResponseEntity<?> getMovieById(@PathVariable Long movieId, @RequestHeader(value = "Authorization", required = false) String token) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			String movieById = apiService.getMovieById(id_movie);
-			responseContent.put("result", movieById);
+			String movie = apiService.getMovieById(movieId);
+			ProductResponseDto movieDto = productDtoService.createProductResponseDto(movie, token, movieId, true);
+			responseContent.put("result", movieDto);
 			httpStatus = HttpStatus.OK;
 			
 		} catch (Exception e) {
@@ -457,14 +464,15 @@ public class TmdbController {
 
 	@Operation(summary = "Mostrar una serie atraves de la id")
 	// Buscar serie por ID
-	@GetMapping("/series/search/{id_serie}")
-	public ResponseEntity<?> getSeriesById(@PathVariable long id_serie) {
+	@GetMapping("/series/search/{serieId}")
+	public ResponseEntity<?> getSeriesById(@PathVariable Long serieId, @RequestHeader(value = "Authorization", required = false) String token) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			String seriesById = apiService.getSeriesById(id_serie);;
-			responseContent.put("result", seriesById);
+			String serie = apiService.getMovieById(serieId);
+			ProductResponseDto serieDto = productDtoService.createProductResponseDto(serie, token, serieId, false);
+			responseContent.put("result", serieDto);
 			httpStatus = HttpStatus.OK;
 			
 		} catch (Exception e) {

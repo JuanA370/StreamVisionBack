@@ -54,6 +54,9 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		
 	public Favorite updateFavorite(InteractionDto interactionDto, String token, String action) {
 
+		if (!"SAVE".equals(action) && !"UNSAVE".equals(action))
+			throw new AppException("Unknown action", HttpStatus.BAD_REQUEST);
+		
 		token = token.substring(7);
 		Long logedUserId = jwtUtils.getUserIdFromToken(token);
 		Product savedProduct = productRep.findProductByIsFilmAndTmdbId(interactionDto.isFilm(), interactionDto.tmdbId());
@@ -61,12 +64,9 @@ public class FavoriteDaoImpl implements FavoriteDao {
 			Product createdProduct = productService.extractProductFromTmdbJsonApi(interactionDto);
 			savedProduct = productRep.save(createdProduct);
 		}
-
+		
 		FavoritePk favoritePk = new FavoritePk(savedProduct.getProductId(), logedUserId);
-		if (!"SAVE".equals(action) && !"UNSAVE".equals(action))
-			throw new AppException("Unknown action", HttpStatus.BAD_REQUEST);
-
-		Favorite savedfavorite = favoriteRep.findFavoriteByFavoritePk(favoritePk);
+		Favorite savedfavorite = favoriteRep.findById(favoritePk).orElse(null);
 		if (savedfavorite == null)
 			savedfavorite = createFavorite(savedProduct, logedUserId);
 
