@@ -65,7 +65,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 			savedProduct = productRep.save(createdProduct);
 		}
 		
-		FavoritePk favoritePk = new FavoritePk(savedProduct.getProductId(), logedUserId);
+		FavoritePk favoritePk = new FavoritePk(logedUserId, savedProduct.getProductId());
 		Favorite savedfavorite = favoriteRep.findById(favoritePk).orElse(null);
 		if (savedfavorite == null)
 			savedfavorite = createFavorite(savedProduct, logedUserId);
