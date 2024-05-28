@@ -54,7 +54,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		
 	public Favorite updateFavorite(InteractionDto interactionDto, String token, String action) {
 
-		if (!"SAVE".equals(action) && !"UNSAVE".equals(action))
+		if (!"SAVE".equalsIgnoreCase(action) && !"UNSAVE".equalsIgnoreCase(action))
 			throw new AppException("Unknown action", HttpStatus.BAD_REQUEST);
 		
 		token = token.substring(7);
@@ -70,13 +70,13 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		if (savedfavorite == null)
 			savedfavorite = createFavorite(savedProduct, logedUserId);
 
-		if ("SAVE".equals(action) && savedfavorite.isFavorite())
+		if ("SAVE".equalsIgnoreCase(action) && savedfavorite.isFavorite())
 			throw new AppException("Product already saved", HttpStatus.FORBIDDEN);
-		else if ("SAVE".equals(action) && savedfavorite.isFavorite() == false)
+		else if ("SAVE".equalsIgnoreCase(action) && savedfavorite.isFavorite() == false)
 			savedfavorite.setFavorite(true);
-		else if ("UNSAVE".equals(action) && savedfavorite.isFavorite() == false)
+		else if ("UNSAVE".equalsIgnoreCase(action) && savedfavorite.isFavorite() == false)
 			throw new AppException("Product already unsaved", HttpStatus.FORBIDDEN);
-		else if ("UNSAVE".equals(action) && savedfavorite.isFavorite())
+		else if ("UNSAVE".equalsIgnoreCase(action) && savedfavorite.isFavorite())
 			savedfavorite.setFavorite(false);
 
 		Favorite updatedFavorite = favoriteRep.save(savedfavorite);
@@ -87,9 +87,9 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	public List<Product> readFavoriteProductsByUserId(String token) {
 
 		token = token.substring(7);
-		Long logedUserId = jwtUtils.getUserIdFromToken(token);
+		Long loggedUserId = jwtUtils.getUserIdFromToken(token);
 
-		List<Product> products = favoriteRep.findFavoriteProductByUserId(logedUserId);
+		List<Product> products = favoriteRep.findFavoriteProductByUserId(loggedUserId);
 		return products;
 	}
 

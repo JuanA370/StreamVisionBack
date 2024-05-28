@@ -40,7 +40,7 @@ public class FavoriteRestController {
 
 	// SAVE UNSAVE
 	@Operation(summary = "Añadir o eliminar de favoritos a través del token", description = "El endpoint permite añadir o eliminar de favoritos.'SAVE' sirve para añadir a favoritos y 'UNSAVE' sirve para eliminar de favoritos")
-	@PostMapping(path = "/interact/{action}", 
+	@PostMapping(path = "/{action}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> favoriteInteractionHandler(@RequestBody InteractionDto interactDto, @RequestHeader("Authorization") String token, @PathVariable String action) {
