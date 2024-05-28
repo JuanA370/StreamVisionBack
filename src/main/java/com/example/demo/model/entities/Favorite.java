@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
@@ -33,5 +34,6 @@ public class Favorite {
 	@ManyToOne
 	@MapsId("productId")
 	@JsonIgnore
+	@JoinColumn(name = "product_id")
 	private Product product;
 }
