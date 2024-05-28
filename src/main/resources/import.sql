@@ -39,28 +39,28 @@ INSERT INTO `posts` (id, title, content, post_date, product_id, user_id, replied
 INSERT INTO `posts` (id, title, content, post_date, product_id, user_id, replied_post_id) VALUES (10, 'Post Title 10', 'Content of post 10', '2023-01-10', 10, 10, NULL);
 
 -- -- Purchase
-INSERT INTO `purchases` (user_id, product_product_id, purchase_date) VALUES (2, 1, '2023-01-01');
-INSERT INTO `purchases` (user_id, product_product_id, purchase_date) VALUES (2, 2, '2023-01-02');
-INSERT INTO `purchases` (user_id, product_product_id, purchase_date) VALUES (2, 3, '2023-01-03');
-INSERT INTO `purchases` (user_id, product_product_id, purchase_date) VALUES (2, 4, '2023-01-04');
-INSERT INTO `purchases` (user_id, product_product_id, purchase_date) VALUES (2, 5, '2023-01-05');
-INSERT INTO `purchases` (user_id, product_product_id, purchase_date) VALUES (3, 6, '2023-01-06');
-INSERT INTO `purchases` (user_id, product_product_id, purchase_date) VALUES (3, 7, '2023-01-07');
-INSERT INTO `purchases` (user_id, product_product_id, purchase_date) VALUES (3, 8, '2023-01-08');
-INSERT INTO `purchases` (user_id, product_product_id, purchase_date) VALUES (3, 9, '2023-01-09');
-INSERT INTO `purchases` (user_id, product_product_id, purchase_date) VALUES (3, 10, '2023-01-10');
+INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (2, 1, '2023-01-01');
+INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (2, 2, '2023-01-02');
+INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (2, 3, '2023-01-03');
+INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (2, 4, '2023-01-04');
+INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (2, 5, '2023-01-05');
+INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (3, 6, '2023-01-06');
+INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (3, 7, '2023-01-07');
+INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (3, 8, '2023-01-08');
+INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (3, 9, '2023-01-09');
+INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (3, 10, '2023-01-10');
 
 -- Favorite
-INSERT INTO `favorites` (user_id, product_product_id, is_favorite) VALUES (2, 1, true);
-INSERT INTO `favorites` (user_id, product_product_id, is_favorite) VALUES (2, 2, true);
-INSERT INTO `favorites` (user_id, product_product_id, is_favorite) VALUES (2, 3, true);
-INSERT INTO `favorites` (user_id, product_product_id, is_favorite) VALUES (2, 4, true);
-INSERT INTO `favorites` (user_id, product_product_id, is_favorite) VALUES (2, 5, true);
-INSERT INTO `favorites` (user_id, product_product_id, is_favorite) VALUES (3, 6, true);
-INSERT INTO `favorites` (user_id, product_product_id, is_favorite) VALUES (3, 7, true);
-INSERT INTO `favorites` (user_id, product_product_id, is_favorite) VALUES (3, 8, true);
-INSERT INTO `favorites` (user_id, product_product_id, is_favorite) VALUES (3, 9, true);
-INSERT INTO `favorites` (user_id, product_product_id, is_favorite) VALUES (3, 10, true);
+INSERT INTO `favorites` (user_id, product_id, is_favorite) VALUES (2, 1, true);
+INSERT INTO `favorites` (user_id, product_id, is_favorite) VALUES (2, 2, true);
+INSERT INTO `favorites` (user_id, product_id, is_favorite) VALUES (2, 3, true);
+INSERT INTO `favorites` (user_id, product_id, is_favorite) VALUES (2, 4, true);
+INSERT INTO `favorites` (user_id, product_id, is_favorite) VALUES (2, 5, true);
+INSERT INTO `favorites` (user_id, product_id, is_favorite) VALUES (3, 6, true);
+INSERT INTO `favorites` (user_id, product_id, is_favorite) VALUES (3, 7, true);
+INSERT INTO `favorites` (user_id, product_id, is_favorite) VALUES (3, 8, true);
+INSERT INTO `favorites` (user_id, product_id, is_favorite) VALUES (3, 9, true);
+INSERT INTO `favorites` (user_id, product_id, is_favorite) VALUES (3, 10, true);
 
 -- USER1 ADMIN
 INSERT INTO `user_roles` (user_id, role_id) VALUES (1, 2);
