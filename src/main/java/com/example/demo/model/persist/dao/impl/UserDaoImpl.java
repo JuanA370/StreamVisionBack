@@ -54,8 +54,9 @@ public class UserDaoImpl implements UserDao {
         UserEntity createdUser = userRep.save(user);
         return createdUser;
     }
-
-    public UserEntity readUserById(String token) {
+    
+    @Override
+    public UserEntity readUserByToken(String token) {
     	token= token.substring(7);
     	Long id = jwtUtils.getUserIdFromToken(token);
         UserEntity user = userRep.findById(id)
@@ -63,9 +64,17 @@ public class UserDaoImpl implements UserDao {
         
         return user;
     }
+    
+    @Override
+    public UserEntity readUserById(Long userId) {
+    	UserEntity user = userRep.findById(userId)
+        		.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+        
+        return user;
+    }
 
     @Override
-    public UserEntity deleteUserById(String token) {
+    public UserEntity deleteUserByToken(String token) {
     	token= token.substring(7);
     	Long userId = jwtUtils.getUserIdFromToken(token);
     	UserEntity savedUser = userRep.findById(userId).orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
@@ -73,6 +82,14 @@ public class UserDaoImpl implements UserDao {
     	return userRep.save(savedUser);
     }
 
+    @Override
+    public UserEntity deleteUserById(Long userId) {
+
+    	UserEntity savedUser = userRep.findById(userId).orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+    	savedUser.setActive(false);
+    	return userRep.save(savedUser);
+    }
+    
     @Override
     public UserEntity updateUser(UserDto userDto, String token) {
     	token = token.substring(7);

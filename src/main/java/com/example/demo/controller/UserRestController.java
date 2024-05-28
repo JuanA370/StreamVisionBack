@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -79,7 +80,7 @@ public class UserRestController {
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity user = userDao.readUserById(token);
+			UserEntity user = userDao.readUserByToken(token);
 			responseContent.put("result", user);
 			httpStatus = HttpStatus.OK;
 		} catch (Exception e) {
@@ -90,6 +91,24 @@ public class UserRestController {
 		return response;
 	}
 	
+	@Operation(summary = "Bucar usuario por id. Solo administradores")
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> searchUser(@PathVariable Long userId) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			UserEntity user = userDao.readUserById(userId);
+			responseContent.put("result", user);
+			httpStatus = HttpStatus.OK;
+		} catch (Exception e) {
+			responseContent.put("messager", e.getMessage());
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
 	
 	@Operation(summary = "Edita los datos de un usuario a través del token")
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
@@ -114,13 +133,13 @@ public class UserRestController {
 
 	@Operation(summary = "Deshabilitar usuario a través del token")
 	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token) {
+	public ResponseEntity<?> deleteUserByToken(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
 			
-			UserEntity updatedUser = userDao.deleteUserById(token);
+			UserEntity updatedUser = userDao.deleteUserByToken(token);
 			responseContent.put("message", updatedUser);
 			httpStatus = HttpStatus.OK;
 		} catch (Exception e) {
@@ -132,4 +151,24 @@ public class UserRestController {
 		return response;
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
+	@Operation(summary = "Deshabilitar usuario a través del id. Solo administradores")
+	@DeleteMapping(value = "{userId}",produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteUserById(@PathVariable Long userId) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			
+			UserEntity updatedUser = userDao.deleteUserById(userId);
+			responseContent.put("message", updatedUser);
+			httpStatus = HttpStatus.OK;
+		} catch (Exception e) {
+			responseContent.put("message", "Error while deleting user ".concat(e.getMessage()));
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
 }
