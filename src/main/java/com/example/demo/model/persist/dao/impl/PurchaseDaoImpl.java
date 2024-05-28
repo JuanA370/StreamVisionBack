@@ -41,7 +41,7 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	public Purchase createPurchase(InteractionDto interactDto, String token) {
 		
 		token = token.substring(7);
-		Long logedUserId = jwtUtils.getUserIdFromToken(token);
+		Long loggedUserId = jwtUtils.getUserIdFromToken(token);
 		
 		Product product = productRep.findProductByIsFilmAndTmdbId(interactDto.isFilm(), interactDto.tmdbId());
 		if (product == null) {
@@ -49,14 +49,15 @@ public class PurchaseDaoImpl implements PurchaseDao {
 			product = productRep.save(createdProduct);
 		}
 		
-		PurchasePk purchasePk = new PurchasePk(logedUserId, product.getProductId());
+		PurchasePk purchasePk = new PurchasePk(loggedUserId, product.getProductId());
 		Purchase savedPurchase = purchaseRep.findPurchaseByPurchasePk(purchasePk);
 		if (savedPurchase != null)
 			throw new AppException("You have already bought this product", HttpStatus.LOCKED);
 
-		UserEntity user = userRep.findById(logedUserId)
+		UserEntity user = userRep.findById(loggedUserId)
 				.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
 		
+		user.setCoins(user.getCoins() + 100);
 		Purchase purchase = Purchase.builder()
 				.purchasePk(purchasePk)
 				.product(product)
