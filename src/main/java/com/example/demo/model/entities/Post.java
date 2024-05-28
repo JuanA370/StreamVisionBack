@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -52,10 +55,12 @@ public class Post {
 	@JoinColumn(name = "product_id")
 	private Product product;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "replied_post_id")
 	private Post repliedPost;

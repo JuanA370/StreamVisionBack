@@ -3,6 +3,8 @@ package com.example.demo.model.entities;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -53,9 +55,11 @@ public class UserEntity {
 	private int coins;
 	private boolean active;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Post> posts;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Post> replies;
 	
