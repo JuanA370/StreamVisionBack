@@ -240,6 +240,28 @@ public class TmdbController {
 
 	
 	@Operation(summary = "Mostrar una película a través de la id")
+	@GetMapping("/movies/search/{id_movie}")
+	public ResponseEntity<?> getMovieById(@PathVariable long id_movie) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String movieById = apiService.getMovieById(id_movie);
+			responseContent.put("result", movieById);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+
+	}
+
+	
+	/*
 	// Buscar Películas por ID
 	@GetMapping("/movies/search/{movieId}")
 	public ResponseEntity<?> getMovieById(@PathVariable Long movieId, @RequestHeader(value = "Authorization", required = false) String token) {
@@ -261,7 +283,7 @@ public class TmdbController {
 		return response;
 
 	}
-
+*/
 //SERIES
 
 	
@@ -462,9 +484,32 @@ public class TmdbController {
 		return response; 
 
 	}
+	
+	
 
 	@Operation(summary = "Mostrar una serie a traves de la id")
 	// Buscar serie por ID
+	@GetMapping("/series/search/{serieId}")
+	public ResponseEntity<?> getSeriesById(@PathVariable long serieId) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			String seriesById = apiService.getSeriesById(serieId);;
+			responseContent.put("result", seriesById);
+			httpStatus = HttpStatus.OK;
+			
+		} catch (Exception e) {
+			responseContent.put("message", appException.getMessage());
+			httpStatus = appException.getHttpStatus();
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response; 
+
+	}
+	
+	/*
 	@GetMapping("/series/search/{serieId}")
 	public ResponseEntity<?> getSeriesById(@PathVariable Long serieId, @RequestHeader(value = "Authorization", required = false) String token) {
 		ResponseEntity<?> response;
@@ -484,9 +529,10 @@ public class TmdbController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response; 
 
-	}
+	}*/
 
 	 
+	@Operation(summary = "Mostrar películas a través de ")
 	// Buscar películas o series por palabra clave
 	@GetMapping("/search")
 	public ResponseEntity<?> searchMulti(@RequestParam String query) {

@@ -85,4 +85,23 @@ public class PurchaseRestController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
+	
+	@GetMapping("/check")
+	public ResponseEntity<?> checkPurcharse(@RequestHeader("Authorization") String token, @RequestBody InteractionDto interactDto){
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		
+		try {
+			boolean purchased = purchaseDao.checkPurcharse(token, interactDto);
+			responseContent.put("result", purchased);
+			httpStatus = HttpStatus.OK;
+		} catch (Exception e) {
+			responseContent.put("message", "Error while purchasing: ".concat(e.getMessage()));
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
 }
