@@ -38,12 +38,12 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	private JwtUtils jwtUtils;
 
 	@Override
-	public Favorite createFavorite(Product savedProduct, Long logedUserId) {
+	public Favorite createFavorite(Product savedProduct, Long loggedUserId) {
 
-		UserEntity user = userRep.findById(logedUserId)
+		UserEntity user = userRep.findById(loggedUserId)
 				.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
 
-		Favorite favorite = Favorite.builder().favoritePk(new FavoritePk(logedUserId, savedProduct.getProductId()))
+		Favorite favorite = Favorite.builder().favoritePk(new FavoritePk(loggedUserId, savedProduct.getProductId()))
 				.product(savedProduct).user(user).isFavorite(false).build();
 
 		Favorite createdFavorite = favoriteRep.save(favorite);

@@ -29,14 +29,14 @@ public class PostDaoImpl implements PostDao {
 	private UserRepository userRep;
 	
 	@Override
-	public Post createPost(PostDto postDto, Long logedUserId) {
+	public Post createPost(PostDto postDto, Long loggedUserId) {
 		Post repliedPost = null;
 		
 		Product savedProduct = productRep.findById(postDto.product().getProductId()).orElse(null);
 		if (savedProduct == null)
 				savedProduct = productRep.save(postDto.product());
 
-		UserEntity user = userRep.findById(logedUserId)
+		UserEntity user = userRep.findById(loggedUserId)
 				.orElseThrow(() -> new AppException("Loged user not found", HttpStatus.NOT_FOUND));
 		
 		if (postDto.repliedPostId() != null)

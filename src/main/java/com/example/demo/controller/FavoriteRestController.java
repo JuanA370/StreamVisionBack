@@ -39,11 +39,11 @@ public class FavoriteRestController {
 	private InteractionDtoService favoriteDtoService;
 
 	// SAVE UNSAVE
-	@Operation(summary = "Añadir o eliminar de favoritos atraves del token", description = "El endpoint permite añadir o eliminar de favoritos.'SAVE' sirve para añadir a favoritos y 'UNSAVE' sirve para eliminar de favoritos")
+	@Operation(summary = "Añadir o eliminar de favoritos a través del token", description = "El endpoint permite añadir o eliminar de favoritos.'SAVE' sirve para añadir a favoritos y 'UNSAVE' sirve para eliminar de favoritos")
 	@PostMapping(path = "/interact/{action}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> favoriteInteractionHnadler(@RequestBody InteractionDto interactDto, @RequestHeader("Authorization") String token, @PathVariable String action) {
+	public ResponseEntity<?> favoriteInteractionHandler(@RequestBody InteractionDto interactDto, @RequestHeader("Authorization") String token, @PathVariable String action) {
 
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
@@ -70,7 +70,7 @@ public class FavoriteRestController {
 	 * NO CONTENT NO ES UNA EXCEPCIÓN, HA TERMIANDO CON ÉXITO PERO EL USUARIO NO
 	 * TIENE COMPRAS HABLARLO CON EL FRONT
 	 */
-	@Operation(summary = "Mostrar favoritos de un usuario atraves del token")
+	@Operation(summary = "Mostrar favoritos de un usuario a través del token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchProduct(@RequestHeader("Authorization") String token) {
 

@@ -39,7 +39,7 @@ public class UserRestController {
 	@Autowired
 	private UserDao userDao;
 	
-	@Operation(summary = "Iniciar de sesion y crea token atraves de JWT")
+	@Operation(summary = "Inicio de sesión y creación token a través de JWT")
 	@GetMapping("/login")
 	public void login(@RequestBody UserLoginDto user) {
 	}
@@ -72,7 +72,7 @@ public class UserRestController {
 	
 	
 	
-	@Operation(summary = "Devuelve los datos de un usuario atraves de token")
+	@Operation(summary = "Devuelve los datos de un usuario a través del token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchUser(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
@@ -91,7 +91,7 @@ public class UserRestController {
 	}
 	
 	
-	@Operation(summary = "Edita los datos de un usuario atraves de token")
+	@Operation(summary = "Edita los datos de un usuario a través del token")
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateUser(@RequestBody UserDto userDto,@RequestHeader("Authorization") String token) {
@@ -112,7 +112,7 @@ public class UserRestController {
 
 	}
 
-	@Operation(summary = "Deshabilita usuario atraves de token")
+	@Operation(summary = "Deshabilitar usuario a través del token")
 	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;

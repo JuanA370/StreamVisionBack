@@ -23,7 +23,7 @@ public class JwtUtils {
 	private String timeExpiration;
 	
 	//Generar token de acceso
-	public String generateAccesToken(String username, Long id) {
+	public String generateAccessToken(String username, Long id) {
 		return Jwts.builder()
 				.setSubject(username)
 				.claim("userId", id)
@@ -44,7 +44,7 @@ public class JwtUtils {
 			.getBody();
 			return true;
 		} catch (Exception e) {
-			log.error("token invalido, error: " + e );
+			log.error("invalid token, error: " + e );
 			return false;
 		}
 	}

@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("")
-@Tag(name = "Endpoint peliculas")
+@Tag(name = "Endpoint películas")
 public class TmdbController {
 	
 	private final AppException appException = new AppException("Api external error", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -37,7 +37,7 @@ public class TmdbController {
 	@Autowired
 	private ProductDtoService productDtoService;
 
-	@Operation(summary = "Mostrar todos los generos de la categoria peliculas")
+	@Operation(summary = "Mostrar todos los géneros de la categoría peliculas")
 	// LISTA de GENEROS de películas
 	@GetMapping("/movies/genrelist")
 	public ResponseEntity<?> getMovieGenreList() {
@@ -61,7 +61,7 @@ public class TmdbController {
 	
 	
 
-	@Operation(summary = "Mostrar las peliculas de origen español")
+	@Operation(summary = "Mostrar las películas de origen español")
 	// Peliculas populares ESPAÑOLAS
 	@GetMapping("/movies/spanish")
 	public ResponseEntity<?> getSpanishMovie() {
@@ -127,7 +127,7 @@ public class TmdbController {
 
 	}
 
-	@Operation(summary = "Mostrar las peliculas mas populares")
+	@Operation(summary = "Mostrar las películas más populares")
 	// Películas populares
 	@GetMapping("/movies/popular")
 	public ResponseEntity<?> getPopularMovies() {
@@ -150,7 +150,7 @@ public class TmdbController {
 	}
 
 	
-	@Operation(summary = "Mostrar las peliculas que estan en cartelera")
+	@Operation(summary = "Mostrar las películas que están en cartelera")
 	// Películas en cartelera
 	@GetMapping("/movies/current")
 	public ResponseEntity<?> getCurrentMovies() {
@@ -172,7 +172,7 @@ public class TmdbController {
 
 	}
 
-	@Operation(summary = "Mostrar las peliculas que aun no han salido")
+	@Operation(summary = "Mostrar las películas que aún no han salido")
 	// Películas próximas
 	@GetMapping("/movies/upcoming")
 	public ResponseEntity<?> getUpcomingMovies() {
@@ -194,7 +194,7 @@ public class TmdbController {
 
 	}
 
-	@Operation(summary = "Mostar las peliculas mejor valoradas")
+	@Operation(summary = "Mostar las películas mejor valoradas")
 	// Películas mejor valoradas
 	@GetMapping("/movies/toprated")
 	public ResponseEntity<?> getTopRatedMovies() {
@@ -216,7 +216,7 @@ public class TmdbController {
 	}
 
 	
-	@Operation(summary = "Mostrar las peliculas de un genero atraves de la id del genero")
+	@Operation(summary = "Mostrar las películas de un género a través de la id del género")
 	// Filtrar Películas por genero
 	@GetMapping("/movies/genre/{id_genre}")
 	public ResponseEntity<?> getMoviesByGenre(@PathVariable int id_genre) {
@@ -239,7 +239,7 @@ public class TmdbController {
 	}
 
 	
-	@Operation(summary = "Mostrar una pelicula atraves de la id")
+	@Operation(summary = "Mostrar una película a través de la id")
 	// Buscar Películas por ID
 	@GetMapping("/movies/search/{movieId}")
 	public ResponseEntity<?> getMovieById(@PathVariable Long movieId, @RequestHeader(value = "Authorization", required = false) String token) {
@@ -266,7 +266,7 @@ public class TmdbController {
 
 	
 	// LISTA de GENEROS de series
-	@Operation(summary = "Mostrar todos los generos de la categoria series")
+	@Operation(summary = "Mostrar todos los géneros de la categoría series")
 	@GetMapping("/series/genrelist")
 	public ResponseEntity<?> getSerieGenreList() {
 		ResponseEntity<?> response;
@@ -353,7 +353,7 @@ public class TmdbController {
 
 	}
 
-	@Operation(summary = "Mostrar las peliculas populares")
+	@Operation(summary = "Mostrar las películas populares")
 	// Series populares
 	@GetMapping("/series/popular")
 	public ResponseEntity<?> getPopularSeries() {
@@ -397,7 +397,7 @@ public class TmdbController {
 
 	}
 
-	 @Operation(summary = "Mostrar las series en emision")
+	 @Operation(summary = "Mostrar las series en emisión")
 	// Series en emisión
 	@GetMapping("/series/onair")
 	public ResponseEntity<?> getSeriesOnAir() {
@@ -441,7 +441,7 @@ public class TmdbController {
 
 	}
 
-	@Operation(summary = "Mostrar las series de una genero atraves de la id del genero")
+	@Operation(summary = "Mostrar las series de una género a través de la id del género")
 	// Filtrar Series por genero
 	@GetMapping("/series/genre/{id_genre}")
 	public ResponseEntity<?> getSeriesByGenre(@PathVariable int id_genre) {
@@ -463,7 +463,7 @@ public class TmdbController {
 
 	}
 
-	@Operation(summary = "Mostrar una serie atraves de la id")
+	@Operation(summary = "Mostrar una serie a traves de la id")
 	// Buscar serie por ID
 	@GetMapping("/series/search/{serieId}")
 	public ResponseEntity<?> getSeriesById(@PathVariable Long serieId, @RequestHeader(value = "Authorization", required = false) String token) {

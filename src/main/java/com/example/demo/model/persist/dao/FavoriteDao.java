@@ -8,11 +8,11 @@ import com.example.demo.model.entities.Product;
 
 public interface FavoriteDao {
 	
-	public Favorite createFavorite(Product savedProduct, Long logedUserId);
+	public Favorite createFavorite(Product savedProduct, Long loggedUserId);
 	
 	public List<Product> readFavoriteProductsByUserId(String token);
 	
 	//fav unfav para saber si se guarda
-	public Favorite updateFavorite(InteractionDto interactDto, String toke, String action);
+	public Favorite updateFavorite(InteractionDto interactDto, String token, String action);
 
 }

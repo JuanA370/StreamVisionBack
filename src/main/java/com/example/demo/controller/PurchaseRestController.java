@@ -39,7 +39,7 @@ public class PurchaseRestController {
 	private InteractionDtoService favoriteDtoService;
 	
 	//REGISTRAR UNA COMPRA
-	@Operation(summary = "Comprar pelicula atraves de token")
+	@Operation(summary = "Comprar película a través del token")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> purchase(@RequestBody InteractionDto interactDto, @RequestHeader("Authorization") String token) {
@@ -65,7 +65,7 @@ public class PurchaseRestController {
 		return response;
 	}
 	
-	@Operation(summary = "Mostrar peliculas compradas de un usuario atraves de token")
+	@Operation(summary = "Mostrar películas compradas de un usuario a través del token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findProducts(@RequestHeader("Authorization") String token) {
 		

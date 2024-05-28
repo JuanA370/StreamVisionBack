@@ -76,14 +76,14 @@ public class JwtAuthentificationFilter extends UsernamePasswordAuthenticationFil
 	        UserEntity userEntity = userEntityOptional.get();
 
 	        if (userEntity.isActive()) {
-	            String token = jwtutils.generateAccesToken(userEntity.getUsername(), userEntity.getId());
+	            String token = jwtutils.generateAccessToken(userEntity.getUsername(), userEntity.getId());
 	            response.addHeader("Authorization", token);
 	            httpResponse.put("token", token);
 	            httpResponse.put("Message", "Authentication successful");
 	            httpResponse.put("Username", user.getUsername());
 	            response.setStatus(HttpStatus.OK.value());
 	        } else {
-	            httpResponse.put("Message", "User is not active and cannot log in");
+	            httpResponse.put("Message", "User is not active and can not log in");
 	            response.setStatus(HttpStatus.FORBIDDEN.value());
 	        }
 	    } else {
