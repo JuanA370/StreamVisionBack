@@ -3,7 +3,9 @@ package com.example.demo.model.entities;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
@@ -55,13 +57,10 @@ public class UserEntity {
 	private int coins;
 	private boolean active;
 
-	@JsonManagedReference
+	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Post> posts;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private List<Post> replies;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

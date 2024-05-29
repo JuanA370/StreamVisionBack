@@ -17,7 +17,7 @@ import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.PurchaseRepository;
 import com.example.demo.model.persist.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
-import com.example.demo.service.ProducExtractService;
+import com.example.demo.service.ProductExtractService;
 
 @Service
 public class PurchaseDaoImpl implements PurchaseDao {
@@ -34,7 +34,7 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	@Autowired
 	private JwtUtils jwtUtils;
 	@Autowired
-	private ProducExtractService productService;
+	private ProductExtractService productService;
 
 	// CREAR COMPRA
 	@Override

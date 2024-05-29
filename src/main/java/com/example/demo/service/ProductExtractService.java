@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class ProducExtractService {
+public class ProductExtractService {
 	
 	@Autowired
 	private TmdbService tmdbService;

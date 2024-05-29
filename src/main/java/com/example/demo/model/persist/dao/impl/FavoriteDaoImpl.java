@@ -17,7 +17,7 @@ import com.example.demo.model.persist.repository.FavoriteRepository;
 import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
-import com.example.demo.service.ProducExtractService;
+import com.example.demo.service.ProductExtractService;
 
 @Service
 public class FavoriteDaoImpl implements FavoriteDao {
@@ -32,7 +32,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	private UserRepository userRep;
 
 	@Autowired
-	private ProducExtractService productService;
+	private ProductExtractService productService;
 
 	@Autowired
 	private JwtUtils jwtUtils;
