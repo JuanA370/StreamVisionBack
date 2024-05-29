@@ -39,7 +39,7 @@ public class FavoriteRestController {
 	private InteractionDtoService favoriteDtoService;
 
 	// SAVE UNSAVE
-	@Operation(summary = "Añadir o eliminar favoritos a través del token", description = "El endpoint permite añadir o eliminar favoritos.'SAVE' sirve para añadir favoritos y 'UNSAVE' sirve para eliminar favoritos")
+	@Operation(summary = "Manejo de favoritos a traves del token", description = "El endpoint permite añadir o eliminar favoritos.'SAVE' para añadir y 'UNSAVE' para eliminar")
 	@PostMapping(path = "/{action}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -70,7 +70,7 @@ public class FavoriteRestController {
 	 * NO CONTENT NO ES UNA EXCEPCIÓN, HA TERMIANDO CON ÉXITO PERO EL USUARIO NO
 	 * TIENE COMPRAS HABLARLO CON EL FRONT
 	 */
-	@Operation(summary = "Mostrar favoritos de un usuario a través del token")
+	@Operation(summary = "Obtencion de los favoritos de un usuario a traves del token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchProduct(@RequestHeader("Authorization") String token) {
 

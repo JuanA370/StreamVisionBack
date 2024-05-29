@@ -39,12 +39,12 @@ public class UserRestController {
 	@Autowired
 	private UserDtoService userDtoService;
 
-	@Operation(summary = "Iniciar de sesion y crea token atraves de JWT")
+	@Operation(summary = "Inicio de sesion y creacion del token a traves de JWT")
 	@GetMapping("/login")
 	public void login(@RequestBody UserLoginDto user) {
 	}
 
-	@Operation(summary = "Crea un usuario")
+	@Operation(summary = "Creacion de un usuario")
 	@PostMapping
 	public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -69,7 +69,7 @@ public class UserRestController {
 		return response;
 	}
 
-	@Operation(summary = "Devuelve los datos de un usuario atraves de token")
+	@Operation(summary = "Obtencion de los datos de un usuario a traves del token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchUser(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
@@ -88,7 +88,7 @@ public class UserRestController {
 		return response;
 	}
 
-	@Operation(summary = "Edita los datos de un usuario atraves de token")
+	@Operation(summary = "Edicion de los datos de un usuario a traves del token")
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, @RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
@@ -109,7 +109,7 @@ public class UserRestController {
 
 	}
 
-	@Operation(summary = "Deshabilita usuario atraves de token")
+	@Operation(summary = "Desactivacion de un usuario a traves del token")
 	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;

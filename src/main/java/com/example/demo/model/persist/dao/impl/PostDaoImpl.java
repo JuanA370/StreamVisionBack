@@ -37,11 +37,11 @@ public class PostDaoImpl implements PostDao {
 				savedProduct = productRep.save(postDto.product());
 
 		UserEntity user = userRep.findById(loggedUserId)
-				.orElseThrow(() -> new AppException("Loged user not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new AppException("Logged user not found", HttpStatus.NOT_FOUND));
 		
 		if (postDto.repliedPostId() != null)
 			repliedPost = postRep.findById(postDto.repliedPostId())
-					.orElseThrow(() -> new AppException("Loged user not found", HttpStatus.NOT_FOUND));
+					.orElseThrow(() -> new AppException("Logged user not found", HttpStatus.NOT_FOUND));
 		
 		Post creatingThread = Post.builder()
 				.title(postDto.title())

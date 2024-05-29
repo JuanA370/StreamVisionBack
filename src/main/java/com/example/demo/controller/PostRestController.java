@@ -29,7 +29,7 @@ import com.example.demo.service.PostDtoService;
 @RequestMapping(path = "/posts")
 public class PostRestController {
 	
-	private final Long logedUserId = 1L;
+	private final Long loggedUserId = 1L;
 	
 	@Autowired
 	private PostDao postDao;
@@ -46,7 +46,7 @@ public class PostRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			Post createdPost = postDao.createPost(postDto, logedUserId);
+			Post createdPost = postDao.createPost(postDto, loggedUserId);
 			PostResponseDto createdPostDto = PostDtoService.createPostResponseDto(createdPost);
 			responseContent.put("result", createdPostDto);
 			httpStatus = HttpStatus.CREATED;
@@ -73,7 +73,7 @@ public class PostRestController {
 		
 		try {
 			postDao.deletePostById(id);
-			responseContent.put("message", "post removed");
+			responseContent.put("message", "Post removed");
 			httpStatus = HttpStatus.OK;
 		} catch (Exception e) {
 			responseContent.put("message", "Error while removing post: ".concat(e.getMessage()));
