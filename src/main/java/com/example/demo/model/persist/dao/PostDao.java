@@ -16,9 +16,7 @@ public interface PostDao {
 	public Page<Post> readPostsByUserId(Pageable pageable, Long userId);
 	
 	public Page<Post> readPostsByProductId(Pageable pageable, Long productId);
-	
-	public Page<Post> readRepliesByPostId(Pageable pageable, Long postId);
-	
+		
 	public Post readPostById(Long postId);
 	
 }

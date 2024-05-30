@@ -36,7 +36,7 @@ public class PurchaseRestController {
 	private PurchaseDao purchaseDao;
 	
 	@Autowired
-	private InteractionDtoService favoriteDtoService;
+	private InteractionDtoService interactionDtoService;
 	
 	//REGISTRAR UNA COMPRA
 	@Operation(summary = "Compra de producto a traves del token")
@@ -50,7 +50,7 @@ public class PurchaseRestController {
 		
 		try {
 			Purchase savedPurchase = purchaseDao.createPurchase(interactDto, token);
-			PurchaseResponseDto savedPurchaseDto = favoriteDtoService.createPurchaseResponseDto(savedPurchase);
+			PurchaseResponseDto savedPurchaseDto = interactionDtoService.createPurchaseResponseDto(savedPurchase);
 			responseContent.put("result", savedPurchaseDto);
 			httpStatus = HttpStatus.ACCEPTED;
 		} catch (AppException e) {

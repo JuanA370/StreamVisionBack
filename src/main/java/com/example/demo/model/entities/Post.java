@@ -19,8 +19,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -40,15 +41,14 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "Title can not be blank")
-	@Nonnull
-	@Size(max = 100,message = "Title must not have more than 100 characteres")
-	private String title;
-	
 	@NotBlank(message = "Content can not be blank")
 	@Nonnull
 	@Size(max = 400,message = "Content must not have more than 400 characteres")
 	private String content;
+	
+	@Min(value = 0)
+	@Max(value = 10)
+	private int localRating;
 	
 	@CreationTimestamp
 	private Date postDate;
@@ -60,12 +60,4 @@ public class Post {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
-
-	@ManyToOne
-	@JoinColumn(name = "replied_post_id")
-	private Post repliedPost;
-	
-	@OneToMany(mappedBy = "repliedPost", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	private List<Post> replies;
-	
 }

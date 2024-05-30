@@ -13,7 +13,7 @@ public class PostResponseDto {
 
 	private Long id;
 	private String author;
-	private String title;
+	private int localRating;
 	private String content;
 
 }

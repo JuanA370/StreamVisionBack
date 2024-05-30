@@ -34,7 +34,7 @@ public class PostDaoImpl implements PostDao {
 	
 	@Override
 	public Post createPost(PostDto postDto, String token) {
-		Post repliedPost = null;
+		
 		token = token.substring(7);
 		Long loggedUserId = jwtUtils.getUserIdFromToken(token);
 		Product savedProduct = productRep.findById(postDto.product().getProductId()).orElse(null);
@@ -44,14 +44,10 @@ public class PostDaoImpl implements PostDao {
 		UserEntity user = userRep.findById(loggedUserId)
 				.orElseThrow(() -> new AppException("Logged user not found", HttpStatus.NOT_FOUND));
 		
-		if (postDto.repliedPostId() != null)
-			repliedPost = postRep.findById(postDto.repliedPostId())
-					.orElseThrow(() -> new AppException("Logged user not found", HttpStatus.NOT_FOUND));
-		
+
 		Post creatingThread = Post.builder()
-				.title(postDto.title())
+				.localRating(postDto.localRating())
 				.content(postDto.content())
-				.repliedPost(repliedPost)
 				.product(savedProduct)
 				.user(user)
 				.build();
@@ -65,7 +61,7 @@ public class PostDaoImpl implements PostDao {
 		
 		Post savedPost = postRep.findById(postDto.id())
 				.orElseThrow(() -> new AppException("Post not found", HttpStatus.NOT_FOUND));
-		savedPost.setTitle(postDto.title());
+		savedPost.setLocalRating(postDto.localRating());
 		savedPost.setContent(postDto.content());
 		
 		Post updatedPost = postRep.save(savedPost);
@@ -73,21 +69,14 @@ public class PostDaoImpl implements PostDao {
 	}
 
 	@Override
-	public void deletePostById(Long threadId) {
+	public void deletePostById(Long postId) {
 		
-		postRep.findById(threadId)
+		postRep.findById(postId)
 			.orElseThrow(() -> new AppException("Post not found", HttpStatus.NOT_FOUND));
 		
-		postRep.deleteById(threadId);
+		postRep.deleteById(postId);
 	}
-	
-	@Override
-	public Page<Post> readRepliesByPostId(Pageable pageable, Long postId) {
-		
-		Page<Post> postReplies = postRep.findRepliesByPostId(pageable, postId);
 
-		return postReplies;
-	}
 
 	@Override
 	public Page<Post> readPostsByUserId(Pageable pageable, Long userId) {

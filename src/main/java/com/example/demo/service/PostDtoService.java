@@ -11,20 +11,20 @@ public class PostDtoService {
 
 	public PostResponseDto createPostResponseDto(Post post) {
 		
-		PostResponseDto threadResponseDto = PostResponseDto.builder()
+		PostResponseDto postResponseDto = PostResponseDto.builder()
 				.id(post.getId())
-				.title(post.getTitle())
+				.localRating(post.getLocalRating())
 				.content(post.getContent())
 				.author(post.getUser().getUsername())
 				.build();
-		return threadResponseDto;
+		return postResponseDto;
 	}
 	
 	public Page<PostResponseDto> postListToPostResponseDtoList(Page<Post> posts) {
 		
-		Page<PostResponseDto> threadResponseDtos = posts
-				.map(thread -> createPostResponseDto(thread)); 
-		return threadResponseDtos;
+		Page<PostResponseDto> postResponseDtos = posts
+				.map(post -> createPostResponseDto(post)); 
+		return postResponseDtos;
 	}
 	
 }

@@ -148,7 +148,7 @@ public class PostRestController {
 			responseContent.put("result", userPostDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (Exception e) {
-			responseContent.put("message", "Error while updating thread: ".concat(e.getMessage()));
+			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		
@@ -174,7 +174,7 @@ public class PostRestController {
 			responseContent.put("message", "Error while processing request: ".concat(e.getMessage()));
 			httpStatus = e.getHttpStatus();
 		}  catch (Exception e) {
-			responseContent.put("message", "Error while updating thread: ".concat(e.getMessage()));
+			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		
@@ -182,25 +182,5 @@ public class PostRestController {
 		return response;
 	}
 	
-	@GetMapping("/thread/{id}")
-	public ResponseEntity<?> getReplies(@PathVariable Long id, Pageable pageable){
-		
-		ResponseEntity<?> response;
-		Map<String, Object> responseContent = new HashMap<>();
-		HttpStatus httpStatus;
-		
-		try {
-			Page<Post> postReplies = postDao.readRepliesByPostId(pageable, id);
-			Page<PostResponseDto> postRepliesDtos = PostDtoService.postListToPostResponseDtoList(postReplies);
-			responseContent.put("result", postRepliesDtos);
-			httpStatus = HttpStatus.OK;
-		} catch (Exception e) {
-			responseContent.put("message", "Error while reading replies: ".concat(e.getMessage()));
-			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-		
-		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
-		return response;
-	}
-	
+
 }

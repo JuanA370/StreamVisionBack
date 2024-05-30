@@ -8,9 +8,8 @@ import lombok.Builder;
 public record PostDto (
 		
 		Long id,
-		Long repliedPostId,
 		Product product,
-		String title,
+		int localRating,
 		String content
 		
 ) { }
