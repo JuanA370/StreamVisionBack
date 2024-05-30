@@ -238,7 +238,7 @@ public class TmdbController {
 
 	}
 
-	
+	/*
 	@Operation(summary = "Obtencion de una pelicula a traves de su id")
 	@GetMapping("/movies/search/{id_movie}")
 	public ResponseEntity<?> getMovieById(@PathVariable long id_movie) {
@@ -259,9 +259,9 @@ public class TmdbController {
 		return response;
 
 	}
-
+*/
 	
-	/*
+	
 	// Buscar Películas por ID
 	@GetMapping("/movies/search/{movieId}")
 	public ResponseEntity<?> getMovieById(@PathVariable Long movieId, @RequestHeader(value = "Authorization", required = false) String token) {
@@ -283,7 +283,7 @@ public class TmdbController {
 		return response;
 
 	}
-*/
+
 //SERIES
 
 	
@@ -486,7 +486,7 @@ public class TmdbController {
 	}
 	
 	
-
+/*
 	@Operation(summary = "Obtencion de una serie a traves de su id")
 	// Buscar serie por ID
 	@GetMapping("/series/search/{serieId}")
@@ -508,15 +508,15 @@ public class TmdbController {
 		return response; 
 
 	}
+	*/
 	
-	/*
 	@GetMapping("/series/search/{serieId}")
 	public ResponseEntity<?> getSeriesById(@PathVariable Long serieId, @RequestHeader(value = "Authorization", required = false) String token) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			String serie = apiService.getMovieById(serieId);
+			String serie = apiService.getSeriesById(serieId);
 			ProductResponseDto serieDto = productDtoService.createProductResponseDto(serie, token, serieId, false);
 			responseContent.put("result", serieDto);
 			httpStatus = HttpStatus.OK;
@@ -529,7 +529,7 @@ public class TmdbController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response; 
 
-	}*/
+	}
 
 	 
 	@Operation(summary = "Obtencion de peliculas por palabra clave")
