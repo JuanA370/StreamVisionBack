@@ -15,6 +15,7 @@ import com.example.demo.model.persist.dao.PostDao;
 import com.example.demo.model.persist.repository.PostRepository;
 import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.UserRepository;
+import com.example.demo.security.jwt.JwtUtils;
 
 @Service
 public class PostDaoImpl implements PostDao {
@@ -28,10 +29,14 @@ public class PostDaoImpl implements PostDao {
 	@Autowired
 	private UserRepository userRep;
 	
+	@Autowired
+	private JwtUtils jwtUtils;
+	
 	@Override
-	public Post createPost(PostDto postDto, Long loggedUserId) {
+	public Post createPost(PostDto postDto, String token) {
 		Post repliedPost = null;
-		
+		token = token.substring(7);
+		Long loggedUserId = jwtUtils.getUserIdFromToken(token);
 		Product savedProduct = productRep.findById(postDto.product().getProductId()).orElse(null);
 		if (savedProduct == null)
 				savedProduct = productRep.save(postDto.product());

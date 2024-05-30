@@ -7,7 +7,7 @@ import com.example.demo.model.entities.Post;
 
 public interface PostDao {
 
-	public Post createPost (PostDto postDto, Long loggedUserId);
+	public Post createPost (PostDto postDto, String token);
 	
 	public Post updatePost (PostDto postDto);
 	

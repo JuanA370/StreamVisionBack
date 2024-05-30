@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,14 +40,14 @@ public class PostRestController {
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createPost(@RequestBody PostDto postDto){
+	public ResponseEntity<?> createPost(@RequestBody PostDto postDto,  @RequestHeader("Authorization") String token){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			Post createdPost = postDao.createPost(postDto, loggedUserId);
+			Post createdPost = postDao.createPost(postDto, token);
 			PostResponseDto createdPostDto = PostDtoService.createPostResponseDto(createdPost);
 			responseContent.put("result", createdPostDto);
 			httpStatus = HttpStatus.CREATED;
