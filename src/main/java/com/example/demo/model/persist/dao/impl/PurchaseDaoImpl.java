@@ -82,9 +82,9 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	}
 	
 	@Override
-	public boolean checkPurcharse(String token,InteractionDto interactDto ) {
+	public boolean checkPurchase(String token,InteractionDto interactDto ) {
 		token = token.substring(7);
-		boolean purcharsed = false;
+		boolean purchased = false;
 		Long loggedUserId = jwtUtils.getUserIdFromToken(token);
 		
 		Product product = productRep.findProductByIsFilmAndTmdbId(interactDto.isFilm(), interactDto.tmdbId());
@@ -92,9 +92,9 @@ public class PurchaseDaoImpl implements PurchaseDao {
 			PurchasePk purchasePk = new PurchasePk(loggedUserId, product.getProductId());
 			Purchase savedPurchase = purchaseRep.findPurchaseByPurchasePk(purchasePk);
 			if (savedPurchase != null)
-				purcharsed= true;
+				purchased = true;
 		}
-		return purcharsed;
+		return purchased;
 			
 	}
 		

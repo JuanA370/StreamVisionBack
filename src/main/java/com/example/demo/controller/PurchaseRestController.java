@@ -93,7 +93,7 @@ public class PurchaseRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			boolean purchased = purchaseDao.checkPurcharse(token, interactDto);
+			boolean purchased = purchaseDao.checkPurchase(token, interactDto);
 			responseContent.put("result", purchased);
 			httpStatus = HttpStatus.OK;
 		} catch (Exception e) {
