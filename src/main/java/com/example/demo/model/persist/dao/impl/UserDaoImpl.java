@@ -101,18 +101,23 @@ public class UserDaoImpl implements UserDao {
     public UserEntity updateUser(UserDto userDto, String token) {
     	token = token.substring(7);
     	String password;
+    	String email;
     	Long userID = jwtUtils.getUserIdFromToken(token);
         UserEntity savedUser = userRep.findById(userID)
         		.orElseThrow( () -> new AppException("Could not find original user", HttpStatus.NOT_FOUND));
-        if (userDto.password().isBlank() || userDto.password().isEmpty())
+        if(userDto.email() == null)
+        	email = savedUser.getEmail();
+        else
+        	email = userDto.email();
+        if (userDto.password() == null)
         	password = savedUser.getPassword();
         else
         	password = passwordEncoder.encode(userDto.password());
         savedUser = UserEntity.builder()
         		.id(savedUser.getId())
-        		.username(userDto.username())
+        		.username(savedUser.getUsername())
                 .password(password)
-                .email(userDto.email())
+                .email(email)
                 .coins(savedUser.getCoins())
                 .active(savedUser.isActive())
                 .roles(savedUser.getRoles())
