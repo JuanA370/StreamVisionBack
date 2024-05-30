@@ -188,5 +188,51 @@ public class PostRestController {
 		return response;
 	}
 	
+	
+	@GetMapping(path = "/product/movie/{tmdbId}",
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> filmPostsByTmdbId(@PathVariable Long tmdbId, Pageable pageable){
+		
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		
+		try {
+			Page<Post> forumPosts = postDao.readPostsByProductId(pageable, tmdbId);
+			Page<PostResponseDto> forumPostsDtos = PostDtoService.postListToPostResponseDtoList(forumPosts);
+			responseContent.put("result", forumPostsDtos);
+			httpStatus = HttpStatus.OK;
+		} catch (Exception e) {
+			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
+	
+	@GetMapping(path = "/product/series/{tmdbId}",
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> seriesPostsByTmdbId(@PathVariable Long tmdbId, Pageable pageable){
+		
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		
+		try {
+			Page<Post> forumPosts = postDao.readPostsByProductId(pageable, tmdbId);
+			Page<PostResponseDto> forumPostsDtos = PostDtoService.postListToPostResponseDtoList(forumPosts);
+			responseContent.put("result", forumPostsDtos);
+			httpStatus = HttpStatus.OK;
+		} catch (Exception e) {
+			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
 
 }

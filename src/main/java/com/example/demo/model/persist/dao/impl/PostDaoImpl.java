@@ -114,6 +114,13 @@ public class PostDaoImpl implements PostDao {
 	}
 
 	@Override
+	public Page<Post> readPostsByTmdbId(Pageable pageable, Long productId) {
+		
+		Page<Post> productPosts = postRep.findPostsByProductId(pageable, productId);
+
+		return productPosts;
+	}
+	@Override
 	public Post readPostById(Long postId) {
 		
 		Post foundPost = postRep.findById(postId)
