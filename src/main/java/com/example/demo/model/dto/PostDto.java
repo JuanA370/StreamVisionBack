@@ -1,6 +1,5 @@
 package com.example.demo.model.dto;
 
-import com.example.demo.model.entities.Product;
 
 import lombok.Builder;
 
@@ -8,7 +7,6 @@ import lombok.Builder;
 public record PostDto (
 		
 		Long id,
-		Product product,
 		int localRating,
 		String content
 		

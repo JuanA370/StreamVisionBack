@@ -14,10 +14,7 @@ public interface PostRepository extends JpaRepository<Post, Long>{
 	@Query("SELECT p FROM Post p WHERE p.user.id =?1")
 	public Page<Post> findPostsByUserId(Pageable pageable, Long userId);
 	
-	@Query("SELECT p FROM Post p WHERE p.product.productId =?1 AND p.repliedPost IS NULL")
+	@Query("SELECT p FROM Post p WHERE p.product.productId =?1")
 	public Page<Post> findPostsByProductId(Pageable pageable, Long productId);
-	
-	@Query("SELECT p FROM Post p WHERE p.repliedPost.id =?1")
-	public Page<Post> findRepliesByPostId(Pageable pageable, Long postId);
 	
 }

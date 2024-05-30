@@ -20,10 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.AppException;
+import com.example.demo.model.dto.InteractionDto;
+import com.example.demo.model.dto.PostCreationDto;
 import com.example.demo.model.dto.PostDto;
 import com.example.demo.model.dto.PostResponseDto;
 import com.example.demo.model.entities.Post;
 import com.example.demo.model.persist.dao.PostDao;
+import com.example.demo.service.InteractionDtoService;
 import com.example.demo.service.PostDtoService;
 
 @RestController
@@ -37,18 +40,21 @@ public class PostRestController {
 	
 	@Autowired
 	private PostDtoService PostDtoService;
+	
+	@Autowired
+	private InteractionDtoService interactionDtoService;
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createPost(@RequestBody PostDto postDto,  @RequestHeader("Authorization") String token){
+	public ResponseEntity<?> createPost(@RequestBody PostCreationDto postCreationDto, @RequestHeader("Authorization") String token){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			Post createdPost = postDao.createPost(postDto, token);
-			PostResponseDto createdPostDto = PostDtoService.createPostResponseDto(createdPost);
+			Post createdPost = postDao.createPost(postCreationDto.getInteractionDto(), postCreationDto.getPostDto(), token);
+			PostResponseDto createdPostDto = interactionDtoService.createPostResponseDto(createdPost);
 			responseContent.put("result", createdPostDto);
 			httpStatus = HttpStatus.CREATED;
 		} catch (AppException e) {

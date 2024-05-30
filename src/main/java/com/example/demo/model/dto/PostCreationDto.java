@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PostResponseDto {
-
-	private String author;
-	private int localRating;
-	private String content;
+public class PostCreationDto {
+	
+	private InteractionDto interactionDto;
+	
+	private PostDto postDto;
 
 }

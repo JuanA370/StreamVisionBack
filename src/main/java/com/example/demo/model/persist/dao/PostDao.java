@@ -2,12 +2,13 @@ package com.example.demo.model.persist.dao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.example.demo.model.dto.InteractionDto;
 import com.example.demo.model.dto.PostDto;
 import com.example.demo.model.entities.Post;
 
 public interface PostDao {
 
-	public Post createPost (PostDto postDto, String token);
+	public Post createPost (InteractionDto interactDto, PostDto postDto, String token);
 	
 	public Post updatePost (PostDto postDto);
 	

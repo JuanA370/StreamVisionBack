@@ -3,8 +3,10 @@ package com.example.demo.service;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.dto.FavoriteResponseDto;
+import com.example.demo.model.dto.PostResponseDto;
 import com.example.demo.model.dto.PurchaseResponseDto;
 import com.example.demo.model.entities.Favorite;
+import com.example.demo.model.entities.Post;
 import com.example.demo.model.entities.Purchase;
 
 @Service
@@ -28,4 +30,12 @@ public class InteractionDtoService {
 		return purchaseResponseDto;
 	}
 	
+	public PostResponseDto createPostResponseDto(Post post) {
+		PostResponseDto postResponseDto = PostResponseDto.builder()
+				.localRating(post.getLocalRating())
+				.content(post.getContent())
+				.author(post.getUser().getUsername())
+				.build();
+		return postResponseDto;
+	}
 }

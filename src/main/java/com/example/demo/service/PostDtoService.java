@@ -12,7 +12,6 @@ public class PostDtoService {
 	public PostResponseDto createPostResponseDto(Post post) {
 		
 		PostResponseDto postResponseDto = PostResponseDto.builder()
-				.id(post.getId())
 				.localRating(post.getLocalRating())
 				.content(post.getContent())
 				.author(post.getUser().getUsername())

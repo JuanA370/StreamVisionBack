@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.exceptions.AppException;
+import com.example.demo.model.dto.InteractionDto;
 import com.example.demo.model.dto.PostDto;
 import com.example.demo.model.entities.Post;
 import com.example.demo.model.entities.Product;
@@ -16,6 +17,7 @@ import com.example.demo.model.persist.repository.PostRepository;
 import com.example.demo.model.persist.repository.ProductRepository;
 import com.example.demo.model.persist.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
+import com.example.demo.service.ProductExtractService;
 
 @Service
 public class PostDaoImpl implements PostDao {
@@ -32,28 +34,45 @@ public class PostDaoImpl implements PostDao {
 	@Autowired
 	private JwtUtils jwtUtils;
 	
+	@Autowired
+	private ProductExtractService productService;
+	
 	@Override
-	public Post createPost(PostDto postDto, String token) {
+	public Post createPost(InteractionDto interactDto, PostDto postDto, String token) {
 		
 		token = token.substring(7);
+		
 		Long loggedUserId = jwtUtils.getUserIdFromToken(token);
-		Product savedProduct = productRep.findById(postDto.product().getProductId()).orElse(null);
-		if (savedProduct == null)
-				savedProduct = productRep.save(postDto.product());
+		Product product = productRep.findProductByIsFilmAndTmdbId(interactDto.isFilm(), interactDto.tmdbId());
+		try {
+			if (product == null) {
+				Product createdProduct = productService.extractProductFromTmdbJsonApi(interactDto);
+				product = productRep.save(createdProduct);
+				
+			}
+		} catch (Exception e) {
+			throw new AppException("Error creando producto", HttpStatus.NO_CONTENT);
+		}
 
+
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		UserEntity user = userRep.findById(loggedUserId)
 				.orElseThrow(() -> new AppException("Logged user not found", HttpStatus.NOT_FOUND));
 		
 
-		Post creatingThread = Post.builder()
-				.localRating(postDto.localRating())
+		Post creatingPost = Post.builder()
 				.content(postDto.content())
-				.product(savedProduct)
+				.localRating(postDto.localRating())
+				.product(product)
 				.user(user)
 				.build();
 		
-		Post savedThread = postRep.save(creatingThread);
-		return savedThread;
+		Post savedPost = postRep.save(creatingPost);
+		return savedPost;
 	}
 
 	@Override
