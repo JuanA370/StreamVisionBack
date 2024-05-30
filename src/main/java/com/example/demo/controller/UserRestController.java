@@ -1,15 +1,18 @@
 package com.example.demo.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,7 +46,6 @@ public class UserRestController {
 	@GetMapping("/login")
 	public void login(@RequestBody UserLoginDto user) {
 	}
-
 	@Operation(summary = "Creacion de un usuario")
 	@PostMapping
 	public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
@@ -68,7 +70,65 @@ public class UserRestController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/{userId}")
+	public ResponseEntity<?> searchUser(@PathVariable Long userId) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			UserEntity savedUser = userDao.readUserById(userId);
+			responseContent.put("result", savedUser);
+			httpStatus = HttpStatus.CREATED;
+		} catch (Exception e) {
+			responseContent.put("message", e.getMessage());
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@DeleteMapping("/{userId}")
+	public ResponseEntity<?> deleteUserById(@PathVariable Long userId){
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			UserEntity deletedUser = userDao.deleteUserById(userId);
+			responseContent.put("result", deletedUser);
+			httpStatus = HttpStatus.CREATED;
+		} catch (Exception e) {
+			responseContent.put("message", e.getMessage());
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/all")
+	public ResponseEntity<?> searchAllUsers(){
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			List<UserEntity> savedUsers = userDao.readAllUsers();
+			responseContent.put("result", savedUsers);
+			httpStatus = HttpStatus.CREATED;
+		} catch (Exception e) {
+			responseContent.put("message", e.getMessage());
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
+	
+	
+	
 	@Operation(summary = "Obtencion de los datos de un usuario a traves del token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchUser(@RequestHeader("Authorization") String token) {

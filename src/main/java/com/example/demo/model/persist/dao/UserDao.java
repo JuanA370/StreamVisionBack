@@ -1,5 +1,7 @@
 package com.example.demo.model.persist.dao;
 
+import java.util.List;
+
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.entities.UserEntity;
 
@@ -16,5 +18,7 @@ public interface UserDao {
 	UserEntity updateUser(UserDto userDto, String token);
 	
 	public UserEntity readUserById(Long userId);
+	
+	public List<UserEntity> readAllUsers();
 
 }

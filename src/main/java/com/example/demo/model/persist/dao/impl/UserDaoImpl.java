@@ -1,8 +1,10 @@
 package com.example.demo.model.persist.dao.impl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -69,7 +71,6 @@ public class UserDaoImpl implements UserDao {
     public UserEntity readUserById(Long userId) {
     	UserEntity user = userRep.findById(userId)
         		.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
-        
         return user;
     }
 
@@ -88,6 +89,12 @@ public class UserDaoImpl implements UserDao {
     	UserEntity savedUser = userRep.findById(userId).orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
     	savedUser.setActive(false);
     	return userRep.save(savedUser);
+    }
+    
+    @Override
+    public List<UserEntity> readAllUsers(){
+    	List<UserEntity> savedUsers = userRep.findAll();
+    	return savedUsers;
     }
     
     @Override
