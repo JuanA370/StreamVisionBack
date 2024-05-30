@@ -87,7 +87,7 @@ public class PostRestController {
 	
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updatePost(@RequestBody PostDto postDto){
+	public ResponseEntity<?> updatePost(@RequestBody PostDto postDto,  @RequestHeader("Authorization") String token){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();

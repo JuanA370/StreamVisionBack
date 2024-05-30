@@ -24,7 +24,7 @@ public class ProductExtractService {
 		Product extractedProduct = null;
 
 		String json = null;
-		if (interactDto.isFilm())
+		if (interactDto.isFilm() == true)
 			json = tmdbService.getMovieById(interactDto.tmdbId());
 		else
 			json = tmdbService.getSeriesById(interactDto.tmdbId());

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,13 +74,14 @@ public class UserRestController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/{userId}")
-	public ResponseEntity<?> searchUser(@PathVariable Long userId) {
+	public ResponseEntity<?> searchUserById(@PathVariable Long userId) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
 			UserEntity savedUser = userDao.readUserById(userId);
-			responseContent.put("result", savedUser);
+			UserResponseDto userDto = userDtoService.createUserResponseDto(savedUser);
+			responseContent.put("result", userDto);
 			httpStatus = HttpStatus.CREATED;
 		} catch (Exception e) {
 			responseContent.put("message", e.getMessage());
@@ -116,7 +118,12 @@ public class UserRestController {
 		HttpStatus httpStatus;
 		try {
 			List<UserEntity> savedUsers = userDao.readAllUsers();
-			responseContent.put("result", savedUsers);
+			List<UserResponseDto> userDtos = new ArrayList<>();
+			for (int i = 0; i < savedUsers.size(); i++)
+			{
+				userDtos.add(userDtoService.createUserResponseDto(savedUsers.get(i)));
+			}
+			responseContent.put("result", userDtos);
 			httpStatus = HttpStatus.CREATED;
 		} catch (Exception e) {
 			responseContent.put("message", e.getMessage());
@@ -131,7 +138,7 @@ public class UserRestController {
 	
 	@Operation(summary = "Obtencion de los datos de un usuario a traves del token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> searchUser(@RequestHeader("Authorization") String token) {
+	public ResponseEntity<?> searchUserByToken(@RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;

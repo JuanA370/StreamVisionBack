@@ -259,7 +259,7 @@ public class TmdbController {
 		return response;
 
 	}
-*/
+	*/
 	
 	
 	// Buscar Películas por ID
@@ -486,7 +486,7 @@ public class TmdbController {
 	}
 	
 	
-/*
+	/*
 	@Operation(summary = "Obtencion de una serie a traves de su id")
 	// Buscar serie por ID
 	@GetMapping("/series/search/{serieId}")
