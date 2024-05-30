@@ -12,6 +12,6 @@ public interface PurchaseDao {
 	
 	public List<Product> readPurchasesByUserId(String token);
 	
-	public boolean checkPurcharse(String token,InteractionDto interactDto );
+	public boolean checkPurchase(String token,InteractionDto interactDto );
 	
 }
