@@ -99,7 +99,7 @@ public class UserRestController {
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			UserEntity deletedUser = userDao.deleteUserById(userId);
+			UserResponseDto deletedUser = userDao.deleteUserById(userId);
 			responseContent.put("result", deletedUser);
 			httpStatus = HttpStatus.CREATED;
 		} catch (Exception e) {
@@ -134,6 +134,24 @@ public class UserRestController {
 		return response;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/enable/{userId}")
+	public ResponseEntity<?> enableUser(@RequestHeader("Authorization") String token,@PathVariable Long userId){
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		try {
+			UserResponseDto savedUsers = userDao.enableUserById(userId);
+			responseContent.put("result", savedUsers);
+			httpStatus = HttpStatus.CREATED;
+		} catch (Exception e) {
+			responseContent.put("message", e.getMessage());
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
 	
 	
 	@Operation(summary = "Obtencion de los datos de un usuario a traves del token")

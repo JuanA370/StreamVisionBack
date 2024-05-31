@@ -2,6 +2,7 @@ package com.example.demo.model.persist.dao.impl;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.catalina.User;
@@ -13,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.UserDto;
+import com.example.demo.model.dto.UserResponseDto;
 import com.example.demo.model.entities.ERole;
 import com.example.demo.model.entities.RoleEntity;
 import com.example.demo.model.entities.UserEntity;
@@ -84,11 +86,34 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserEntity deleteUserById(Long userId) {
-
+    public UserResponseDto deleteUserById(Long userId) {
     	UserEntity savedUser = userRep.findById(userId).orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
     	savedUser.setActive(false);
-    	return userRep.save(savedUser);
+    	UserResponseDto savedUserResponseDto = UserResponseDto.builder()
+    			.id(savedUser.getId())
+    			.username(savedUser.getUsername())
+    			.email(savedUser.getEmail())
+    			.coins(savedUser.getCoins())
+    			.active(savedUser.isActive())
+    			.build();
+    	userRep.save(savedUser);
+    	return savedUserResponseDto;
+    }
+    
+    @Override
+    public UserResponseDto enableUserById(long userId) {
+    	UserEntity savedUser = userRep.findById(userId).orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+    	savedUser.setActive(true);
+    	UserResponseDto savedUserResponseDto = UserResponseDto.builder()
+    			.id(savedUser.getId())
+    			.username(savedUser.getUsername())
+    			.email(savedUser.getEmail())
+    			.coins(savedUser.getCoins())
+    			.active(savedUser.isActive())
+    			.build();
+    	userRep.save(savedUser);
+    	return savedUserResponseDto;
+    	
     }
     
     @Override
@@ -127,6 +152,7 @@ public class UserDaoImpl implements UserDao {
         UserEntity updatedUser = userRep.save(savedUser);
         return updatedUser;
     }
+    
 
 
 }

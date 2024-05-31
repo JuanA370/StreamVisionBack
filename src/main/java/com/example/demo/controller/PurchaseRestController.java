@@ -65,6 +65,29 @@ public class PurchaseRestController {
 		return response;
 	}
 	
+	@PostMapping("/coins")
+	public ResponseEntity<?> purchaseWithCoins(@RequestBody InteractionDto interactDto, @RequestHeader("Authorization") String token) {
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		
+		try {
+			Purchase savedPurchase = purchaseDao.purcharseWithCoins(interactDto, token);
+			PurchaseResponseDto savedPurchaseDto = interactionDtoService.createPurchaseResponseDto(savedPurchase);
+			responseContent.put("result", savedPurchaseDto);
+			httpStatus = HttpStatus.ACCEPTED;
+		} catch (AppException e) {
+			responseContent.put("message", "Error while processing request: ".concat(e.getMessage()));
+			httpStatus = e.getHttpStatus();
+		} catch (Exception e) {
+			responseContent.put("message", "Error while purchasing: ".concat(e.getMessage()));
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}
+	
 	@Operation(summary = "Obtencion de productos comprados por un usuario a traves del token")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findProducts(@RequestHeader("Authorization") String token) {

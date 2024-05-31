@@ -4,7 +4,7 @@ INSERT INTO `roles` (id, name) VALUES (2, 'ADMIN');
 
 -- Users (password 1234)
 INSERT INTO `users` (id, username, password, email, coins, active) VALUES (1, 'user1', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user1@example.com', 100, true);
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (2, 'user2', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user2@example.com', 200, true);
+INSERT INTO `users` (id, username, password, email, coins, active) VALUES (2, 'user2', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user2@example.com', 800, true);
 INSERT INTO `users` (id, username, password, email, coins, active) VALUES (3, 'user3', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user3@example.com', 300, true);
 INSERT INTO `users` (id, username, password, email, coins, active) VALUES (4, 'user4', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user4@example.com', 400, true);
 INSERT INTO `users` (id, username, password, email, coins, active) VALUES (5, 'user5', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user5@example.com', 500, true);

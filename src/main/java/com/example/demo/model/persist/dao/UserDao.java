@@ -3,6 +3,7 @@ package com.example.demo.model.persist.dao;
 import java.util.List;
 
 import com.example.demo.model.dto.UserDto;
+import com.example.demo.model.dto.UserResponseDto;
 import com.example.demo.model.entities.UserEntity;
 
 public interface UserDao {
@@ -13,12 +14,14 @@ public interface UserDao {
 
 	public UserEntity deleteUserByToken(String token);
 	
-	public UserEntity deleteUserById(Long id);
+	public UserResponseDto deleteUserById(Long id);
 
 	UserEntity updateUser(UserDto userDto, String token);
 	
 	public UserEntity readUserById(Long userId);
 	
 	public List<UserEntity> readAllUsers();
+	
+	public UserResponseDto enableUserById(long userId);
 
 }
