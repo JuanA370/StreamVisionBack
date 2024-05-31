@@ -16,6 +16,6 @@ public class PostResponseDto {
 	private String author;
 	private int localRating;
 	private String content;
-	private Timestamp postDate;
+	private String postDate;
 
 }

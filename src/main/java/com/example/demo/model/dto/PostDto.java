@@ -11,5 +11,5 @@ public record PostDto (
 		Long id,
 		int localRating,
 		String content,
-		Timestamp postDate
+		String postDate
 ) { }

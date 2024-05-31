@@ -1,6 +1,7 @@
 package com.example.demo.model.persist.dao.impl;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,12 +61,14 @@ public class PostDaoImpl implements PostDao {
 				.orElseThrow(() -> new AppException("Logged user not found", HttpStatus.NOT_FOUND));
 		
 		Timestamp curDate = new Timestamp(System.currentTimeMillis());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		String dateString = dateFormat.format(curDate);
 		Post creatingPost = Post.builder()
 				.content(postDto.content())
 				.localRating(postDto.localRating())
 				.product(product)
 				.user(user)
-				.postDate(curDate)
+				.postDate(dateString)
 				.build();
 		
 		Post savedPost = postRep.save(creatingPost);

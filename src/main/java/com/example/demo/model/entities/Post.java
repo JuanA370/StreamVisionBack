@@ -51,8 +51,7 @@ public class Post {
 	@Max(value = 10)
 	private int localRating;
 	
-	@CreationTimestamp
-	private Timestamp postDate;
+	private String postDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id")
