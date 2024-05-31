@@ -18,7 +18,10 @@ public interface PostDao {
 	
 	public Page<Post> readPostsByProductId(Pageable pageable, Long productId);
 		
-	public Page<Post> readPostsByTmdbId(Pageable pageable, Long tmdbId);
+	public Page<Post> readMoviePostsByTmdbId(Pageable pageable, Long tmdbId);
+	
+	public Page<Post> readSeriesPostsByTmdbId(Pageable pageable, Long tmdbId);
+
 
 	public Post readPostById(Long postId);
 	

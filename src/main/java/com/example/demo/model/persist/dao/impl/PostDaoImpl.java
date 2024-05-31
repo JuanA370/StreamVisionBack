@@ -114,12 +114,23 @@ public class PostDaoImpl implements PostDao {
 	}
 
 	@Override
-	public Page<Post> readPostsByTmdbId(Pageable pageable, Long productId) {
+	public Page<Post> readMoviePostsByTmdbId(Pageable pageable, Long tmdbId) {
 		
-		Page<Post> productPosts = postRep.findPostsByProductId(pageable, productId);
+		Product product = productRep.findProductByIsFilmAndTmdbId(true, tmdbId);
+		Page<Post> productPosts = postRep.findPostsByProductId(pageable, product.getProductId());
 
 		return productPosts;
 	}
+	
+	@Override
+	public Page<Post> readSeriesPostsByTmdbId(Pageable pageable, Long tmdbId) {
+		
+		Product product = productRep.findProductByIsFilmAndTmdbId(false, tmdbId);
+		Page<Post> productPosts = postRep.findPostsByProductId(pageable, product.getProductId());
+
+		return productPosts;
+	}
+	
 	@Override
 	public Post readPostById(Long postId) {
 		

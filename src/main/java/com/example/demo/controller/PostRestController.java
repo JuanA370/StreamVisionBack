@@ -25,9 +25,13 @@ import com.example.demo.model.dto.PostCreationDto;
 import com.example.demo.model.dto.PostDto;
 import com.example.demo.model.dto.PostResponseDto;
 import com.example.demo.model.entities.Post;
+import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.PostDao;
 import com.example.demo.service.InteractionDtoService;
 import com.example.demo.service.PostDtoService;
+import com.example.demo.service.TmdbService;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping(path = "/posts")
@@ -43,6 +47,10 @@ public class PostRestController {
 	
 	@Autowired
 	private InteractionDtoService interactionDtoService;
+	
+	@Autowired
+	private TmdbService tmdbService;
+	
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -116,6 +124,7 @@ public class PostRestController {
 		return response;
 	}
 	
+	/*
 	@GetMapping(path = "/product/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -138,6 +147,7 @@ public class PostRestController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
+	*/
 	
 	@GetMapping(path= "/user/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
@@ -192,14 +202,15 @@ public class PostRestController {
 	@GetMapping(path = "/product/movie/{tmdbId}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> filmPostsByTmdbId(@PathVariable Long tmdbId, Pageable pageable){
+	public ResponseEntity<?> moviePostsByTmdbId(@PathVariable Long tmdbId, Pageable pageable){
 		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		
 		try {
-			Page<Post> forumPosts = postDao.readPostsByProductId(pageable, tmdbId);
+			
+			Page<Post> forumPosts = postDao.readMoviePostsByTmdbId(pageable, tmdbId);
 			Page<PostResponseDto> forumPostsDtos = PostDtoService.postListToPostResponseDtoList(forumPosts);
 			responseContent.put("result", forumPostsDtos);
 			httpStatus = HttpStatus.OK;
@@ -222,7 +233,7 @@ public class PostRestController {
 		HttpStatus httpStatus;
 		
 		try {
-			Page<Post> forumPosts = postDao.readPostsByProductId(pageable, tmdbId);
+			Page<Post> forumPosts = postDao.readSeriesPostsByTmdbId(pageable, tmdbId);
 			Page<PostResponseDto> forumPostsDtos = PostDtoService.postListToPostResponseDtoList(forumPosts);
 			responseContent.put("result", forumPostsDtos);
 			httpStatus = HttpStatus.OK;
