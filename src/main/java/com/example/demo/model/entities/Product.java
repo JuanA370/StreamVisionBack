@@ -30,7 +30,7 @@ public class Product {
 	private Long tmdbId;
 
 	@Column
-	private String original_title;
+	private String title;
 	private String poster_path;
 	private boolean isFilm;
 	

@@ -197,7 +197,7 @@ public class PostRestController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
-	
+	/*
 	
 	@GetMapping(path = "/product/movie/{tmdbId}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
@@ -245,5 +245,5 @@ public class PostRestController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
-
+*/
 }
