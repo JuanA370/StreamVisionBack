@@ -102,8 +102,8 @@ public class UserDaoImpl implements UserDao {
     	token = token.substring(7);
     	String password;
     	String email;
-    	Long userID = jwtUtils.getUserIdFromToken(token);
-        UserEntity savedUser = userRep.findById(userID)
+    	Long userId = jwtUtils.getUserIdFromToken(token);
+        UserEntity savedUser = userRep.findById(userId)
         		.orElseThrow( () -> new AppException("Could not find original user", HttpStatus.NOT_FOUND));
         if(userDto.email() == null)
         	email = savedUser.getEmail();
