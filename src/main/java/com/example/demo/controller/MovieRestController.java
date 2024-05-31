@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exceptions.AppException;
 import com.example.demo.model.dto.PostResponseDto;
 import com.example.demo.model.entities.Post;
 import com.example.demo.model.persist.dao.PostDao;
@@ -34,10 +35,8 @@ public class MovieRestController {
 	
 	
 	@GetMapping(path = "/{tmdbId}",
-			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> moviePostsByTmdbId(@PathVariable Long tmdbId, Pageable pageable){
-		
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
@@ -49,7 +48,7 @@ public class MovieRestController {
 			responseContent.put("result", forumPostsDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (Exception e) {
-			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
+			responseContent.put("message", "Error while getting posts: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		

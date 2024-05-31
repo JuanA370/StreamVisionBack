@@ -14,4 +14,5 @@ public interface PurchaseDao {
 	
 	public boolean checkPurchase(String token,InteractionDto interactDto );
 	
+	public Purchase purcharseWithCoins(InteractionDto interactDto, String token);
 }

@@ -1,6 +1,7 @@
 package com.example.demo.model.entities;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -50,8 +51,7 @@ public class Post {
 	@Max(value = 10)
 	private int localRating;
 	
-	@CreationTimestamp
-	private Date postDate;
+	private String postDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id")

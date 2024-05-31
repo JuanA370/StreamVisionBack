@@ -1,6 +1,7 @@
 package com.example.demo.model.persist.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,6 +69,42 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		return createdPurchase;
 	}
 	
+	@Override
+	public Purchase purcharseWithCoins(InteractionDto interactDto, String token) {
+		
+		token = token.substring(7);
+		Long loggedUserId = jwtUtils.getUserIdFromToken(token);
+		
+		Optional<UserEntity> savedOptionalUser = userRep.findById(loggedUserId);
+		UserEntity savedUser = savedOptionalUser.get();
+		if(savedUser.getCoins() < 750) 
+			throw new AppException("You do not have enough coins", HttpStatus.PAYMENT_REQUIRED);
+		savedUser.setCoins(savedUser.getCoins() -750);
+		userRep.save(savedUser);
+		Product product = productRep.findProductByIsFilmAndTmdbId(interactDto.isFilm(), interactDto.tmdbId());
+		if (product == null) {
+			Product createdProduct = productService.extractProductFromTmdbJsonApi(interactDto);
+			product = productRep.save(createdProduct);
+		}
+		
+		PurchasePk purchasePk = new PurchasePk(loggedUserId, product.getProductId());
+		Purchase savedPurchase = purchaseRep.findPurchaseByPurchasePk(purchasePk);
+		if (savedPurchase != null)
+			throw new AppException("You have already bought this product", HttpStatus.LOCKED);
+
+		UserEntity user = userRep.findById(loggedUserId)
+				.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+		
+		user.setCoins(user.getCoins() + 100);
+		Purchase purchase = Purchase.builder()
+				.purchasePk(purchasePk)
+				.product(product)
+				.user(user)
+				.build();
+		
+		Purchase createdPurchase = purchaseRep.save(purchase);
+		return createdPurchase;
+	}
 	
 
 	@Override
