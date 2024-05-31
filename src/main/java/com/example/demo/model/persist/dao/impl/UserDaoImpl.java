@@ -152,7 +152,6 @@ public class UserDaoImpl implements UserDao {
         UserEntity updatedUser = userRep.save(savedUser);
         return updatedUser;
     }
-<<<<<<< HEAD
     public boolean readUserByUsernameOREmail(String string) {
     	Optional<UserEntity> savedUser = userRep.findByUsername(string);
     	if (savedUser.isEmpty() || !savedUser.isPresent()) 
@@ -160,9 +159,5 @@ public class UserDaoImpl implements UserDao {
     	
     	return savedUser.isPresent();
     }	
-=======
-    
-
->>>>>>> branch 'fix-2' of https://github.com/JuanEVN/StreamVisionBack.git
 
 }

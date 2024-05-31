@@ -22,10 +22,8 @@ public interface UserDao {
 	
 	public List<UserEntity> readAllUsers();
 	
-<<<<<<< HEAD
 	public boolean readUserByUsernameOREmail(String string);
-=======
+	
 	public UserResponseDto enableUserById(long userId);
->>>>>>> branch 'fix-2' of https://github.com/JuanEVN/StreamVisionBack.git
 
 }
