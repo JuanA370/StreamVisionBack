@@ -20,5 +20,7 @@ public interface UserDao {
 	public UserEntity readUserById(Long userId);
 	
 	public List<UserEntity> readAllUsers();
+	
+	public boolean readUserByUsernameOREmail(String string);
 
 }

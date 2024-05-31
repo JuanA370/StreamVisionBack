@@ -2,6 +2,7 @@ package com.example.demo.model.persist.dao.impl;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.catalina.User;
@@ -127,6 +128,12 @@ public class UserDaoImpl implements UserDao {
         UserEntity updatedUser = userRep.save(savedUser);
         return updatedUser;
     }
-
+    public boolean readUserByUsernameOREmail(String string) {
+    	Optional<UserEntity> savedUser = userRep.findByUsername(string);
+    	if (savedUser.isEmpty() || !savedUser.isPresent()) 
+    		savedUser= userRep.findByEmail(string);	
+    	
+    	return savedUser.isPresent();
+    }	
 
 }
