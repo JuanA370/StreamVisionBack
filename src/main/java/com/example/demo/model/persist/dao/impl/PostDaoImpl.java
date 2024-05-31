@@ -1,5 +1,7 @@
 package com.example.demo.model.persist.dao.impl;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,21 +56,16 @@ public class PostDaoImpl implements PostDao {
 			throw new AppException("Error creando producto", HttpStatus.NO_CONTENT);
 		}
 
-
-		try {
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 		UserEntity user = userRep.findById(loggedUserId)
 				.orElseThrow(() -> new AppException("Logged user not found", HttpStatus.NOT_FOUND));
 		
-
+		Timestamp curDate = new Timestamp(System.currentTimeMillis());
 		Post creatingPost = Post.builder()
 				.content(postDto.content())
 				.localRating(postDto.localRating())
 				.product(product)
 				.user(user)
+				.postDate(curDate)
 				.build();
 		
 		Post savedPost = postRep.save(creatingPost);

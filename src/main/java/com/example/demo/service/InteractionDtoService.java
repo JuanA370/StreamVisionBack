@@ -35,6 +35,7 @@ public class InteractionDtoService {
 				.localRating(post.getLocalRating())
 				.content(post.getContent())
 				.author(post.getUser().getUsername())
+				.postDate(post.getPostDate())
 				.build();
 		return postResponseDto;
 	}
