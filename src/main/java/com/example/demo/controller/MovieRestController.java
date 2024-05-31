@@ -49,7 +49,7 @@ public class MovieRestController {
 			responseContent.put("result", forumPostsDtos);
 			httpStatus = HttpStatus.OK;
 		} catch (Exception e) {
-			responseContent.put("message", "Error while updating post: ".concat(e.getMessage()));
+			responseContent.put("message", "Error while getting posts: ".concat(e.getMessage()));
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		

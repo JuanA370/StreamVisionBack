@@ -27,16 +27,16 @@ INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES
 INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (10, 22980, 'Watch What Happens Live with Andy Cohen', '/onSD9UXfJwrMXWhq7UY7hGF2S1h.jpg', false);
 
 -- -- Posts
-INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (1, 1, 'Content of post 1', '2023-01-01', 1, 1);
-INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (2, 2, 'Content of post 2', '2023-01-02', 2, 2);
-INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (3, 3, 'Content of post 3', '2023-01-03', 3, 3);
-INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (4, 4, 'Content of post 4', '2023-01-04', 4, 4);
-INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (5, 5, 'Content of post 5', '2023-01-05', 5, 5);
-INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (6, 6, 'Content of post 6', '2023-01-06', 6, 6);
-INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (7, 7, 'Content of post 7', '2023-01-07', 7, 7);
-INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (8, 8, 'Content of post 8', '2023-01-08', 8, 8);
-INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (9, 9, 'Content of post 9', '2023-01-09', 9, 9);
-INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (10, 10, 'Content of post 10', '2023-01-10', 10, 10);
+INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (1, 1, 'Content of post 1', '2023-01-01 00:00:00', 1, 1);
+INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (2, 2, 'Content of post 2', '2023-01-02 00:00:00', 2, 2);
+INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (3, 3, 'Content of post 3', '2023-01-03 00:00:00', 3, 3);
+INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (4, 4, 'Content of post 4', '2023-01-04 00:00:00', 4, 4);
+INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (5, 5, 'Content of post 5', '2023-01-05 00:00:00', 5, 5);
+INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (6, 6, 'Content of post 6', '2023-01-06 00:00:00', 6, 6);
+INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (7, 7, 'Content of post 7', '2023-01-07 00:00:00', 7, 7);
+INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (8, 8, 'Content of post 8', '2023-01-08 00:00:00', 8, 8);
+INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (9, 9, 'Content of post 9', '2023-01-09 00:00:00', 9, 9);
+INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (10, 10, 'Content of post 10', current_timestamp(), 10, 10);
 
 -- -- Purchase
 INSERT INTO `purchases` (user_id, product_id, purchase_date) VALUES (2, 1, '2023-01-01');
