@@ -58,8 +58,8 @@ public class TmdbService {
 
 	}
 	
-	public String getMoviesByGenre(int id_genre) {
-		String search = url + "/discover/movie?api_key=" + apiKey + language + "&with_genres=" + id_genre;
+	public String getMoviesByGenre(int id_genre,int page) {
+		String search = url + "/discover/movie?api_key=" + apiKey + language + "&with_genres=" + id_genre+"&page="+page;
 		
 		return restTemplate.getForObject(search, String.class);
  
@@ -128,8 +128,8 @@ public class TmdbService {
 
 	}
 	
-	public String getSeriesByGenre(int id_genre) {
-		String search = url + "/discover/tv?api_key=" + apiKey + language + "&with_genres=" + id_genre;
+	public String getSeriesByGenre(int id_genre, int page) {
+		String search = url + "/discover/tv?api_key=" + apiKey + language + "&with_genres=" + id_genre+"&page="+page;
 		
 		return restTemplate.getForObject(search, String.class);
  
