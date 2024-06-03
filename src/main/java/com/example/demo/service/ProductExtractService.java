@@ -40,7 +40,7 @@ public class ProductExtractService {
 			else
 				extractedProduct.setOfficialName(extractedProduct.getName());
 			*/
-			json = tmdbService.getSeriesById(interactDto.tmdbId());
+			//json = tmdbService.getSeriesById(interactDto.tmdbId());
 			System.out.println("Aqui lo que buscas" + extractedProduct);
 			
 			extractedProduct.setFilm(interactDto.isFilm());
