@@ -15,16 +15,16 @@ INSERT INTO `users` (id, username, password, email, coins, active) VALUES (9, 'u
 INSERT INTO `users` (id, username, password, email, coins, active) VALUES (10, 'user10', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user10@example.com', 1000, true);
 
 -- -- Products
-INSERT INTO `products` (product_id, tmdb_id, title, name, official_name, poster_path, is_film) VALUES (1, 823464, 'Godzilla x Kong: The New Empire', null, 'Godzilla x Kong: The New Empire','/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg', true);
-INSERT INTO `products` (product_id, tmdb_id, title, name, official_name, poster_path, is_film) VALUES (2, 653346, 'Kingdom of the Planet of the Apes', null, 'Kingdom of the Planet of the Apes', '/gKkl37BQuKTanygYQG1pyYgLVgf.jpg', true);
-INSERT INTO `products` (product_id, tmdb_id, title, name, official_name, poster_path, is_film) VALUES (3, 786892, 'Furiosa: A Mad Max Saga', null, 'Furiosa: A Mad Max Saga', '/iADOJ8Zymht2JPMoy3R7xceZprc.jpg', true);
-INSERT INTO `products` (product_id, tmdb_id, title, name, official_name, poster_path, is_film) VALUES (4, 929590, 'In the near future, a group of war journalists attempt to survive while reporting the truth as the United States stands on the brink of civil war.', null, 'In the near future, a group of war journalists attempt to survive while reporting the truth as the United States stands on the brink of civil war.', '/sh7Rg8Er3tFcN9BpKIPOMvALgZd.jpg', true);
-INSERT INTO `products` (product_id, tmdb_id, title, name, official_name, poster_path, is_film) VALUES (5, 746036, 'Fresh off an almost career-ending accident, stuntman Colt Seavers has to track down a missing movie star, solve a conspiracy and try to win back the love of his life while still doing his day job.', null, 'Fresh off an almost career-ending accident, stuntman Colt Seavers has to track down a missing movie star, solve a conspiracy and try to win back the love of his life while still doing his day job.', '/tSz1qsmSJon0rqjHBxXZmrotuse.jpg', true);
-INSERT INTO `products` (product_id, tmdb_id, title, name, official_name, poster_path, is_film) VALUES (6, 1416, 'Greys Anatomy', null, 'Greys Anatomy', '/jcEl8SISNfGdlQFwLzeEtsjDvpw.jpg', false);
-INSERT INTO `products` (product_id, tmdb_id, title, name, official_name, poster_path, is_film) VALUES (7, 2734, 'Law & Order: Special Victims Unit', null, 'Law & Order: Special Victims Unit', '/onmSVwYsPMYtO8OjLdjS8FfRNKb.jpg', false);
-INSERT INTO `products` (product_id, tmdb_id, title, name, official_name, poster_path, is_film) VALUES (8, 94722, 'Tagesschau', null, 'Tagesschau', '/7dFZJ2ZJJdcmkp05B9NWlqTJ5tq.jpg', false);
-INSERT INTO `products` (product_id, tmdb_id, title, name, official_name, poster_path, is_film) VALUES (9, 121, 'Doctor Who', 'Doctor Who', null, '/xinqAmYrZ1TEwowcQhgTkZVtVE0.jpg', false);
-INSERT INTO `products` (product_id, tmdb_id, title, name, official_name, poster_path, is_film) VALUES (10, 22980, 'Watch What Happens Live with Andy Cohen', null, 'Watch What Happens Live with Andy Cohen', '/onSD9UXfJwrMXWhq7UY7hGF2S1h.jpg', false);
+INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (1, 823464, 'Godzilla x Kong: The New Empire', '/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg', true);
+INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (2, 653346, 'Kingdom of the Planet of the Apes', '/gKkl37BQuKTanygYQG1pyYgLVgf.jpg', true);
+INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (3, 786892, 'Furiosa: A Mad Max Saga', '/iADOJ8Zymht2JPMoy3R7xceZprc.jpg', true);
+INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (4, 929590, 'In the near future, a group of war journalists attempt to survive while reporting the truth as the United States stands on the brink of civil war.', '/sh7Rg8Er3tFcN9BpKIPOMvALgZd.jpg', true);
+INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (5, 746036, 'Fresh off an almost career-ending accident, stuntman Colt Seavers has to track down a missing movie star, solve a conspiracy and try to win back the love of his life while still doing his day job.', '/tSz1qsmSJon0rqjHBxXZmrotuse.jpg',true);
+INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (6, 1416, 'Greys Anatomy', '/jcEl8SISNfGdlQFwLzeEtsjDvpw.jpg', false);
+INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (7, 2734, 'Law & Order: Special Victims Unit', '/onmSVwYsPMYtO8OjLdjS8FfRNKb.jpg', false);
+INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (8, 94722, 'Tagesschau', '/7dFZJ2ZJJdcmkp05B9NWlqTJ5tq.jpg', false);
+INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (9, 121, 'Doctor Who', '/xinqAmYrZ1TEwowcQhgTkZVtVE0.jpg', false);
+INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (10, 22980, 'Watch What Happens Live with Andy Cohen', '/onSD9UXfJwrMXWhq7UY7hGF2S1h.jpg', false);
 
 -- -- Posts
 INSERT INTO `posts` (id, local_rating, content, post_date, product_id, user_id) VALUES (1, 1, 'Godzilla es mejor que kong', '2023-01-01 00:00:00', 1, 1);
