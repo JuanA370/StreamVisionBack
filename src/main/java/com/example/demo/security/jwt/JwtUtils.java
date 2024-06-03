@@ -2,6 +2,7 @@ package com.example.demo.security.jwt;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Set;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -23,10 +24,11 @@ public class JwtUtils {
 	private String timeExpiration;
 	
 	//Generar token de acceso
-	public String generateAccessToken(String username, Long id) {
+	public String generateAccessToken(String username, Long id, Set<String> roles) {
 		return Jwts.builder()
 				.setSubject(username)
 				.claim("userId", id)
+				.claim("roles", roles)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(timeExpiration)))
 				.signWith(gentSignatureKey(), SignatureAlgorithm.HS256)

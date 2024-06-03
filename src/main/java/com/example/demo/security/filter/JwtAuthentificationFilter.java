@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -76,7 +77,7 @@ public class JwtAuthentificationFilter extends UsernamePasswordAuthenticationFil
 	        UserEntity userEntity = userEntityOptional.get();
 
 	        if (userEntity.isActive()) {
-	            String token = jwtutils.generateAccessToken(userEntity.getUsername(), userEntity.getId());
+	        	String token = jwtutils.generateAccessToken(userEntity.getUsername(), userEntity.getId(), userEntity.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toSet()));
 	            response.addHeader("Authorization", token);
 	            httpResponse.put("token", token);
 	            httpResponse.put("Message", "Authentication successful");
