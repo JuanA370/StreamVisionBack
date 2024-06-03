@@ -152,7 +152,12 @@ public class UserDaoImpl implements UserDao {
         UserEntity updatedUser = userRep.save(savedUser);
         return updatedUser;
     }
-    
-
+    public boolean readUserByUsernameOREmail(String string) {
+    	Optional<UserEntity> savedUser = userRep.findByUsername(string);
+    	if (savedUser.isEmpty() || !savedUser.isPresent()) 
+    		savedUser= userRep.findByEmail(string);	
+    	
+    	return savedUser.isPresent();
+    }	
 
 }

@@ -63,13 +63,13 @@ public class TmdbController {
 
 	@Operation(summary = "Obtencion de las peliculas de origen español")
 	// Peliculas populares ESPAÑOLAS
-	@GetMapping("/movies/spanish")
-	public ResponseEntity<?> getSpanishMovie() {
+	@GetMapping("/movies/spanish/{page}")
+	public ResponseEntity<?> getSpanishMovie(@PathVariable int page) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			String spanishMovie = apiService.getSpanishMovie();
+			String spanishMovie = apiService.getSpanishMovie(page);
 			responseContent.put("result", spanishMovie);
 			httpStatus = HttpStatus.OK;
 			
@@ -218,13 +218,13 @@ public class TmdbController {
 	
 	@Operation(summary = "Obtencion de las películas de un genero a traves del id del genero")
 	// Filtrar Películas por genero
-	@GetMapping("/movies/genre/{id_genre}")
-	public ResponseEntity<?> getMoviesByGenre(@PathVariable int id_genre) {
+	@GetMapping("/movies/genre/{id_genre}/{page}")
+	public ResponseEntity<?> getMoviesByGenre(@PathVariable int id_genre,@PathVariable int page) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			String moviesByGenre = apiService.getMoviesByGenre(id_genre);
+			String moviesByGenre = apiService.getMoviesByGenre(id_genre,page);
 			responseContent.put("result", moviesByGenre);
 			httpStatus = HttpStatus.OK;
 			
@@ -311,13 +311,13 @@ public class TmdbController {
 
 	@Operation(summary = "Obtencion de las series de origen español")
 	// Series populares ESPAÑOLAS
-	@GetMapping("/series/spanish")
-	public ResponseEntity<?> getSpanishSerie() {
+	@GetMapping("/series/spanish/{page}")
+	public ResponseEntity<?> getSpanishSerie(@PathVariable int page) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			String spanishSerie = 	apiService.getSpanishSerie();;
+			String spanishSerie = 	apiService.getSpanishSerie(page);;
 			responseContent.put("result", spanishSerie);
 			httpStatus = HttpStatus.OK;
 			
@@ -465,13 +465,13 @@ public class TmdbController {
 
 	@Operation(summary = "Obtencion de las series de un genero a traves de la id del genero")
 	// Filtrar Series por genero
-	@GetMapping("/series/genre/{id_genre}")
-	public ResponseEntity<?> getSeriesByGenre(@PathVariable int id_genre) {
+	@GetMapping("/series/genre/{id_genre}/{page}")
+	public ResponseEntity<?> getSeriesByGenre(@PathVariable int id_genre,@PathVariable int page) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			String seriesByGenre = apiService.getSeriesByGenre(id_genre);
+			String seriesByGenre = apiService.getSeriesByGenre(id_genre,page);
 			responseContent.put("result", seriesByGenre);
 			httpStatus = HttpStatus.OK;
 			

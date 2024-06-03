@@ -175,7 +175,7 @@ public class UserRestController {
 
 	@Operation(summary = "Edicion de los datos de un usuario a traves del token")
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, @RequestHeader("Authorization") String token) {
+	public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDto, @RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
@@ -193,7 +193,25 @@ public class UserRestController {
 		return response;
 
 	}
-
+	@Operation(summary = "Obtencion de la existencia de un usuario con unos datos concretos en el correo o username")
+	@GetMapping("/{founded}")
+	public ResponseEntity<?> getUser(@RequestBody String dato){
+		ResponseEntity<?> response;
+		Map<String, Object> responseContent = new HashMap<>();
+		HttpStatus httpStatus;
+		boolean founded;
+		try {
+			founded = userDao.readUserByUsernameOREmail(dato);
+			responseContent.put("result", founded);
+			httpStatus = HttpStatus.OK;
+		} catch (Exception e) {
+			responseContent.put("messager", e.getMessage());
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
+		return response;
+	}	
+		
 	@Operation(summary = "Desactivacion de un usuario a traves del token")
 	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token) {

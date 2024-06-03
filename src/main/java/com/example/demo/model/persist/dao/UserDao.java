@@ -22,6 +22,8 @@ public interface UserDao {
 	
 	public List<UserEntity> readAllUsers();
 	
+	public boolean readUserByUsernameOREmail(String string);
+	
 	public UserResponseDto enableUserById(long userId);
 
 }
