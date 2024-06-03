@@ -67,6 +67,7 @@ public class PostDaoImpl implements PostDao {
 				.content(postDto.content())
 				.localRating(postDto.localRating())
 				.product(product)
+				.id(postDto.id())
 				.user(user)
 				.postDate(dateString)
 				.build();

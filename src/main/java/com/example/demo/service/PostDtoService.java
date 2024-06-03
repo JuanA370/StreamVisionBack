@@ -22,6 +22,7 @@ public class PostDtoService {
 				.localRating(post.getLocalRating())
 				.content(post.getContent())
 				.author(post.getUser().getUsername())
+				.id(post.getId())
 				.postDate(post.getPostDate())
 				.build();
 		return postResponseDto;

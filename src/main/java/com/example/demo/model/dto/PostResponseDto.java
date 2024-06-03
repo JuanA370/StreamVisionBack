@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class PostResponseDto {
 
 	private String author;
+	private Long id;
 	private int localRating;
 	private String content;
 	private String postDate;
