@@ -175,7 +175,7 @@ public class UserRestController {
 
 	@Operation(summary = "Edicion de los datos de un usuario a traves del token")
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, @RequestHeader("Authorization") String token) {
+	public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDto, @RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;

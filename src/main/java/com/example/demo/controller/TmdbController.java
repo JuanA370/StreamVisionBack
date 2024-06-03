@@ -63,13 +63,13 @@ public class TmdbController {
 
 	@Operation(summary = "Obtencion de las peliculas de origen español")
 	// Peliculas populares ESPAÑOLAS
-	@GetMapping("/movies/spanish")
-	public ResponseEntity<?> getSpanishMovie() {
+	@GetMapping("/movies/spanish/{page}")
+	public ResponseEntity<?> getSpanishMovie(@PathVariable int page) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			String spanishMovie = apiService.getSpanishMovie();
+			String spanishMovie = apiService.getSpanishMovie(page);
 			responseContent.put("result", spanishMovie);
 			httpStatus = HttpStatus.OK;
 			
@@ -311,13 +311,13 @@ public class TmdbController {
 
 	@Operation(summary = "Obtencion de las series de origen español")
 	// Series populares ESPAÑOLAS
-	@GetMapping("/series/spanish")
-	public ResponseEntity<?> getSpanishSerie() {
+	@GetMapping("/series/spanish/{page}")
+	public ResponseEntity<?> getSpanishSerie(@PathVariable int page) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;
 		try {
-			String spanishSerie = 	apiService.getSpanishSerie();;
+			String spanishSerie = 	apiService.getSpanishSerie(page);;
 			responseContent.put("result", spanishSerie);
 			httpStatus = HttpStatus.OK;
 			

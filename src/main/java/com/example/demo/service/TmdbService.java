@@ -65,12 +65,14 @@ public class TmdbService {
  
 	}
 	
-	public String getSpanishMovie() {
+	public String getSpanishMovie(int page) {
 
-		String search = url + "/discover/movie?api_key=" + apiKey + language + "&with_origin_country=ES&with_original_language=es";
+		String search = url + "/discover/movie?api_key=" + apiKey + language + "&with_origin_country=ES&with_original_language=es"+"&page="+page;
 		
 		return restTemplate.getForObject(search, String.class);
 	}
+	
+	
 	
 	public String getActionMovie() {
 		String search = url + "/discover/movie?api_key=" + apiKey + language + "&with_genres=28";
@@ -135,9 +137,9 @@ public class TmdbService {
  
 	}
 	
-	public String getSpanishSerie() {
+	public String getSpanishSerie(int page) {
 
-		String search = url + "/discover/tv?api_key=" + apiKey + language + "&with_origin_country=ES&with_original_language=es";
+		String search = url + "/discover/tv?api_key=" + apiKey + language + "&with_origin_country=ES&with_original_language=es"+"&page="+page;
 		
 		return restTemplate.getForObject(search, String.class);
 	}
