@@ -34,7 +34,12 @@ public class ProductExtractService {
 		
         try {
 			extractedProduct = objectMapper.readValue(json, Product.class);
-			System.out.println(extractedProduct);
+			if (interactDto.isFilm() == true)
+				extractedProduct.setOfficialName(extractedProduct.getTitle());
+			else
+				extractedProduct.setOfficialName(extractedProduct.getName());
+			json = tmdbService.getSeriesById(interactDto.tmdbId());
+			System.out.println("Aqui lo que buscas" + extractedProduct);
 			
 			extractedProduct.setFilm(interactDto.isFilm());
 			extractedProduct.setTmdbId(interactDto.tmdbId());
