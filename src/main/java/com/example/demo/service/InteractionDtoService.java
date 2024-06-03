@@ -15,7 +15,7 @@ public class InteractionDtoService {
 	public FavoriteResponseDto createFavoriteResponseDto(Favorite favorite) {
 		FavoriteResponseDto favoriteResponseDto = FavoriteResponseDto.builder()
 				.username(favorite.getUser().getUsername())
-				.title(favorite.getProduct().getOfficialName())
+				.title(favorite.getProduct().getTitle())
 				.saved(favorite.isFavorite())
 				.build();
 		return favoriteResponseDto;
@@ -24,7 +24,7 @@ public class InteractionDtoService {
 	public PurchaseResponseDto createPurchaseResponseDto(Purchase purchase) {
 		PurchaseResponseDto purchaseResponseDto = PurchaseResponseDto.builder()
 				.username(purchase.getUser().getUsername())
-				.title(purchase.getProduct().getOfficialName())
+				.title(purchase.getProduct().getTitle())
 				.purchased(true)
 				.build();
 		return purchaseResponseDto;

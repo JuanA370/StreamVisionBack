@@ -31,8 +31,8 @@ public class Product {
 
 	@Column
 	private String title;
-	private String name;
-	private String officialName;
+	//private String name;
+	//private String officialName;
 	private String poster_path;
 	private boolean isFilm;
 	
