@@ -95,7 +95,6 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		UserEntity user = userRep.findById(loggedUserId)
 				.orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
 		
-		user.setCoins(user.getCoins() + 100);
 		Purchase purchase = Purchase.builder()
 				.purchasePk(purchasePk)
 				.product(product)
