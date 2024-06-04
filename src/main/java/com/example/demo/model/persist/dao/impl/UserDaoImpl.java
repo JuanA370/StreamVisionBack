@@ -1,5 +1,6 @@
 package com.example.demo.model.persist.dao.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -116,10 +117,23 @@ public class UserDaoImpl implements UserDao {
     	
     }
     
+ 
     @Override
-    public List<UserEntity> readAllUsers(){
-    	List<UserEntity> savedUsers = userRep.findAll();
-    	return savedUsers;
+    public List<UserEntity> readAllUsers() {
+        List<UserEntity> savedUsers = userRep.findAll();
+        List<UserEntity> normalUsers = new ArrayList<>();
+        
+        for (UserEntity user : savedUsers) {
+            Set<RoleEntity> roles = user.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName() != ERole.ADMIN) {
+                	normalUsers.add(user);
+                    break; // No need to continue checking roles once ADMIN role is found
+                }
+            }
+        }
+        
+        return normalUsers;
     }
     
     @Override
