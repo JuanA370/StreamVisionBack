@@ -534,8 +534,8 @@ public class TmdbController {
 	 
 	@Operation(summary = "Obtencion de peliculas por palabra clave")
 	// Buscar películas o series por palabra clave
-	@GetMapping("/search/{language}")
-	public ResponseEntity<?> searchMulti(@PathVariable String language,@RequestParam String query) {
+	@GetMapping("/search/{language}/{query}")
+	public ResponseEntity<?> searchMulti(@PathVariable String language,@PathVariable String query) {
 		ResponseEntity<?> response;
 		Map<String, Object> responseContent = new HashMap<>();
 		HttpStatus httpStatus;

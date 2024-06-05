@@ -163,12 +163,14 @@ public class TmdbService {
 
 	}
 	public JsonNode searchMovies(String word,String language) {
-        String search = url + "/search/movie?api_key=" + apiKey + "&query=" + word + "&language"+ language;
+
+		String search = url + "/search/movie?api_key=" + apiKey + "&language=" + language + "&query=" + word;
+
         return restTemplate.getForObject(search, JsonNode.class);
     }
  
     public JsonNode searchSeries(String word,String language) {
-        String search = url + "/search/tv?api_key=" + apiKey + "&query=" + word + "&language"+language;
+        String search = url + "/search/tv?api_key=" + apiKey + "&language="+language+ "&query=" + word ;
         return restTemplate.getForObject(search, JsonNode.class);
     }
  
