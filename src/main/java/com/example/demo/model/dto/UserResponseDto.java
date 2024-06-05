@@ -9,6 +9,7 @@ public record UserResponseDto(
 		String username,
 		String email,
 		int coins,
-		boolean active
+		boolean active,
+		String language
 		
 ) { }

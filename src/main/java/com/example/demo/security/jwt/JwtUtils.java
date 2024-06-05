@@ -24,11 +24,12 @@ public class JwtUtils {
 	private String timeExpiration;
 	
 	//Generar token de acceso
-	public String generateAccessToken(String username, Long id, Set<String> roles) {
+	public String generateAccessToken(String username, Long id, Set<String> roles,String language) {
 		return Jwts.builder()
 				.setSubject(username)
 				.claim("userId", id)
 				.claim("roles", roles)
+				.claim("language", language)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(timeExpiration)))
 				.signWith(gentSignatureKey(), SignatureAlgorithm.HS256)

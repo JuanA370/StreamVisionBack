@@ -25,9 +25,9 @@ public class ProductExtractService {
 
 		String json = null;
 		if (interactDto.isFilm() == true)
-			json = tmdbService.getMovieById(interactDto.tmdbId());
+			json = tmdbService.getMovieById(interactDto.tmdbId(),"es");
 		else
-			json = tmdbService.getSeriesById(interactDto.tmdbId());
+			json = tmdbService.getSeriesById(interactDto.tmdbId(),"es");
 		
 		if (json == null)
 			throw new AppException("Error loading external api information", HttpStatus.INTERNAL_SERVER_ERROR);

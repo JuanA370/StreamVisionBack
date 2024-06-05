@@ -53,6 +53,7 @@ public class UserDaoImpl implements UserDao {
                 .email(userDto.email())
                 .coins(100)
                 .active(true)
+                .language("es")
                 .roles(roles)
                 .build();
         
@@ -95,6 +96,7 @@ public class UserDaoImpl implements UserDao {
     			.username(savedUser.getUsername())
     			.email(savedUser.getEmail())
     			.coins(savedUser.getCoins())
+    			.language(savedUser.getLanguage())
     			.active(savedUser.isActive())
     			.build();
     	userRep.save(savedUser);
@@ -110,6 +112,7 @@ public class UserDaoImpl implements UserDao {
     			.username(savedUser.getUsername())
     			.email(savedUser.getEmail())
     			.coins(savedUser.getCoins())
+    			.language(savedUser.getLanguage())
     			.active(savedUser.isActive())
     			.build();
     	userRep.save(savedUser);
@@ -141,6 +144,7 @@ public class UserDaoImpl implements UserDao {
     	token = token.substring(7);
     	String password;
     	String email;
+    	String language;
     	Long userId = jwtUtils.getUserIdFromToken(token);
         UserEntity savedUser = userRep.findById(userId)
         		.orElseThrow( () -> new AppException("Could not find original user", HttpStatus.NOT_FOUND));
@@ -152,12 +156,18 @@ public class UserDaoImpl implements UserDao {
         	password = savedUser.getPassword();
         else
         	password = passwordEncoder.encode(userDto.password());
+        if (userDto.language() == null)
+        	language = savedUser.getLanguage();
+        else
+        	language = userDto.language();
+        	
         savedUser = UserEntity.builder()
         		.id(savedUser.getId())
         		.username(savedUser.getUsername())
                 .password(password)
                 .email(email)
                 .coins(savedUser.getCoins())
+                .language(language)
                 .active(savedUser.isActive())
                 .roles(savedUser.getRoles())
                 .build();

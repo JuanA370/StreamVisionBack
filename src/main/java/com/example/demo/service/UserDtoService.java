@@ -14,6 +14,7 @@ public class UserDtoService {
 				.username(user.getUsername())
 				.email(user.getEmail())
 				.coins(user.getCoins())
+				.language(user.getLanguage())
 				.active(user.isActive())
 				.build();
 		return userDto;

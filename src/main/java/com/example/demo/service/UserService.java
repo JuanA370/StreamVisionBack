@@ -25,7 +25,7 @@ public class UserService {
         List<UserEntity> users = userRepository.findAll();
         
         for (UserEntity user : users) {
-            String token = jwtUtils.generateAccessToken(user.getUsername(), user.getId(), user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toSet()));
+            String token = jwtUtils.generateAccessToken(user.getUsername(), user.getId(), user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toSet()),user.getLanguage());
             UserTokenDto userTokenDTO = new UserTokenDto(user.getUsername(), token);
             userTokens.add(userTokenDTO);
         }

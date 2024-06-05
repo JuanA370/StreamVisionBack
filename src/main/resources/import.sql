@@ -3,16 +3,16 @@ INSERT INTO `roles` (id, name) VALUES (1, 'USER');
 INSERT INTO `roles` (id, name) VALUES (2, 'ADMIN');
 
 -- Users (password 1234)
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (1, 'user1', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user1@example.com', 100, true);
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (2, 'user2', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user2@example.com', 800, true);
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (3, 'user3', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user3@example.com', 300, true);
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (4, 'user4', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user4@example.com', 400, true);
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (5, 'user5', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user5@example.com', 500, true);
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (6, 'user6', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user6@example.com', 600, true);
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (7, 'user7', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user7@example.com', 700, true);
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (8, 'user8', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user8@example.com', 800, true);
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (9, 'user9', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user9@example.com', 900, true);
-INSERT INTO `users` (id, username, password, email, coins, active) VALUES (10, 'user10', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user10@example.com', 1000, true);
+INSERT INTO `users` (id, username, password, email,language, coins, active) VALUES (1, 'user1', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user1@example.com',"en", 100, true);
+INSERT INTO `users` (id, username, password, email,language, coins, active) VALUES (2, 'user2', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user2@example.com',"es", 800, true);
+INSERT INTO `users` (id, username, password, email,language, coins, active) VALUES (3, 'user3', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user3@example.com',"en", 300, true);
+INSERT INTO `users` (id, username, password, email,language, coins, active) VALUES (4, 'user4', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user4@example.com',"es", 400, true);
+INSERT INTO `users` (id, username, password, email,language, coins, active) VALUES (5, 'user5', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user5@example.com',"es", 500, true);
+INSERT INTO `users` (id, username, password, email,language, coins, active) VALUES (6, 'user6', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user6@example.com',"es", 600, true);
+INSERT INTO `users` (id, username, password, email,language, coins, active) VALUES (7, 'user7', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user7@example.com',"es", 700, true);
+INSERT INTO `users` (id, username, password, email,language, coins, active) VALUES (8, 'user8', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user8@example.com',"es", 800, true);
+INSERT INTO `users` (id, username, password, email,language, coins, active) VALUES (9, 'user9', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user9@example.com',"es", 900, true);
+INSERT INTO `users` (id, username, password, email,language, coins, active) VALUES (10, 'user10', '$2a$10$n2WAoytGIzWl/swzvy5dN.yyeuaPEY3dp9KTlPlw7tBYcj3Hu7v6q', 'user10@example.com',"es", 1000, true);
 
 -- -- Products
 INSERT INTO `products` (product_id, tmdb_id, title, poster_path, is_film) VALUES (1, 823464, 'Godzilla x Kong: The New Empire', '/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg', true);

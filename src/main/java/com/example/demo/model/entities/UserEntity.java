@@ -55,7 +55,9 @@ public class UserEntity {
 	private String email;
 
 	private int coins;
+	private String language;
 	private boolean active;
+	
 
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
