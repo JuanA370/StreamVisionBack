@@ -23,6 +23,7 @@ import com.example.demo.model.entities.Product;
 import com.example.demo.model.persist.dao.PurchaseDao;
 import com.example.demo.service.InteractionDtoService;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -65,6 +66,7 @@ public class PurchaseRestController {
 		return response;
 	}
 	
+	@Operation(summary = "Compra de producto con monedas a traves del token")
 	@PostMapping("/coins")
 	public ResponseEntity<?> purchaseWithCoins(@RequestBody InteractionDto interactDto, @RequestHeader("Authorization") String token) {
 		ResponseEntity<?> response;
@@ -109,6 +111,7 @@ public class PurchaseRestController {
 		return response;
 	}
 	
+	@Hidden
 	@GetMapping("/check")
 	public ResponseEntity<?> checkPurcharse(@RequestHeader("Authorization") String token, @RequestBody InteractionDto interactDto){
 		ResponseEntity<?> response;

@@ -47,6 +47,8 @@ public class UserRestController {
 	@GetMapping("/login")
 	public void login(@RequestBody UserLoginDto user) {
 	}
+	
+	
 	@Operation(summary = "Creacion de un usuario")
 	@PostMapping
 	public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
@@ -72,6 +74,7 @@ public class UserRestController {
 		return response;
 	}
 	
+	@Operation(summary = "Obtencion de los datos de un usuario a traves de la id. Solo administrador")
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/{userId}")
 	public ResponseEntity<?> searchUserById(@PathVariable Long userId) {
@@ -92,6 +95,7 @@ public class UserRestController {
 		return response;
 	}
 	
+	@Operation(summary = "Desactivacion de un usuario a traves de la id. Solo administrador")
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<?> deleteUserById(@PathVariable Long userId){
@@ -110,6 +114,8 @@ public class UserRestController {
 		response = new ResponseEntity<Map<String, Object>>(responseContent, httpStatus);
 		return response;
 	}
+	
+	@Operation(summary = "Obtencion de los datos de todos los usuarios. Solo administrador")
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/all")
 	public ResponseEntity<?> searchAllUsers(){
@@ -134,6 +140,7 @@ public class UserRestController {
 		return response;
 	}
 	
+	@Operation(summary = "Activacion de usuario a traves de la id. Solo administrador")
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/enable/{userId}")
 	public ResponseEntity<?> enableUser(@RequestHeader("Authorization") String token,@PathVariable Long userId){
