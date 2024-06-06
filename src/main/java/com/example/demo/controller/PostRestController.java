@@ -34,6 +34,8 @@ import com.example.demo.service.TmdbService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping(path = "/posts")
 public class PostRestController {
@@ -52,7 +54,7 @@ public class PostRestController {
 	@Autowired
 	private TmdbService tmdbService;
 	
-
+	@Operation(summary = "Creacion de un post a traves del token")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> createPost(@RequestBody PostCreationDto postCreationDto, @RequestHeader("Authorization") String token){
@@ -78,6 +80,7 @@ public class PostRestController {
 		return response;
 	}
 	
+	@Operation(summary = "Borrado de un post")
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(path = "/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
@@ -101,6 +104,7 @@ public class PostRestController {
 		return response;
 	}
 	
+	@Operation(summary = "Edicion de un post a traves del token")
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updatePost(@RequestBody PostDto postDto,  @RequestHeader("Authorization") String token){
@@ -151,6 +155,7 @@ public class PostRestController {
 	}
 	*/
 	
+	@Operation(summary = "Obtencion de todos los posts de un usuario")
 	@GetMapping(path= "/user/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -174,6 +179,7 @@ public class PostRestController {
 		return response;
 	}
 	
+	@Operation(summary = "Obtencion de un post a traves del id")
 	@GetMapping(path = "/{id}",
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
