@@ -29,7 +29,7 @@ Backend para una plataforma web de películas desarrollada como parte de mis pr�
 
 ## 🧪 Estado del proyecto
 
-✅ Funcional y en fase de mejora.  
+✅ Funcional.  
 📌 Pendiente de añadir Swagger para documentación de la API.  
 📁 Repositorio frontend vinculado: [StreamVideoFront](https://github.com/JuanA370/StreamVideoFront)
 
@@ -37,6 +37,6 @@ Backend para una plataforma web de películas desarrollada como parte de mis pr�
 
 ## 🛠️ Cómo ejecutar
 
-1. Clona el repositorio:
-```bash
-git clone https://github.com/JuanA370/StreamVisionBack.git
+1. Clona el repositorio: git clone https://github.com/JuanA370/StreamVisionBack.git
+2. Configura application.properties o application.yml con tu base de datos.
+3. Ejecuta con Maven: ./mvnw spring-boot:run
